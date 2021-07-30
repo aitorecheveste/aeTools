@@ -1,10 +1,11 @@
 # aeTools
-Aitor Echeveste Nuke Tools
 
 
 Hello, thanks you for download my tools.
 
-- You only need to copy the folder "Aitor_Echeveste" in yout computer in the following link: ./users/"YourUser"/.nuke
+# How to install
+
+- You only need to download and copy the folder "Aitor_Echeveste" in your computer in the following path: ./users/"YourUser"/.nuke
 
 - Copy and paste this line in your init.py
   nuke.pluginAddPath("./Aitor_Echeveste")
