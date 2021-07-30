@@ -1,0 +1,873 @@
+Group {
+ name aeFiller
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\n    \n    \n    \nif k.name() in \[\"steps\"]:\n  s = int(k.value())\n  if s<1:\n    k.setValue(1)\n  else:    \n    i = nuke.toNode('Dot1')\n    i2 = nuke.toNode('Invert1')\n    o = nuke.toNode('Transform3')  \n    r = int(n\['steps'].value())\n    st = int(1)\n    b0 = nuke.toNode(\"Invert1\")\n    b0x = b0.xpos()\n    b0y = b0.ypos()\n    b0n = b0.name()\n                \n    for n in nuke.allNodes():\n      if n.xpos()>b0.xpos()+5:\n          nuke.delete(n)\n    \n    \n    for x in range(1,r+st,st):\n      #blur1\n      b = nuke.nodes.Blur()\n      b.setInput(0, i)\n      b.setXYpos(b0x+x*100,b0y)\n      b\['size'].setSingleValue(False)\n      b\['size'].setExpression(\"parent.swidth\", 0)\n      b\['size'].setExpression(\"parent.sheight\", 1)\n      #blur2\n      b2 = nuke.nodes.Blur()\n      b2.setInput(0, i2)\n      b2.setXYpos(b0x+x*100,b0y+40)\n      b2\['size'].setSingleValue(False)\n      b2\['size'].setExpression(\"parent.swidth\", 0)\n      b2\['size'].setExpression(\"parent.sheight\", 1)\n      #grade1\n      g = nuke.nodes.Grade()\n      g.setXYpos(b0x+x*100,b0y+80)\n      g.setInput(0, b2)\n      g\['channels'].setValue('rgba')\n      g\['blackpoint'].setValue(-0.0001)\n      #Merge1\n      m = nuke.nodes.Merge()\n      m.setXYpos(b0x+x*100,b0y+106)\n      m.setInput(1, b)\n      m.setInput(0, g)\n      m\['operation'].setValue(\"divide\")\n      #Merge2\n      if x < r:\n         m2 = nuke.nodes.Merge()\n         m2.setXYpos(b0x+x*100,b0y+132)\n         m2.setInput(1, b2)\n         m2.setInput(0, g)\n         m2\['operation'].setValue(\"divide\")\n    \n      i = m\n      i2 = m2\n    \n    o.setInput(0, i)"
+ tile_color 0xa0500ff
+ note_font "Verdana Bold"
+ note_font_color 0xffffffff
+ icon aeFiller_Node.png
+ addUserKnob {20 aeFiller}
+ addUserKnob {41 "Local GPU: " T BlinkScript1.gpuName}
+ addUserKnob {6 useGPUIfAvailable l "Use GPU if available" +STARTLINE}
+ useGPUIfAvailable true
+ addUserKnob {6 vectorize l "Vectorize on CPU" -STARTLINE}
+ vectorize true
+ addUserKnob {26 ""}
+ addUserKnob {4 outmask l "     output mask" t "Select the alpha that you want to output" M {input matte union "" "" "" "" ""}}
+ outmask union
+ addUserKnob {41 alpha l "     premult by" t "premultipy by the alpha that you choose." -STARTLINE T Premult2.alpha}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_6 l "<b><font color=#ffffff>Filler</font><b>"}
+ addUserKnob {7 swidth l width t "Amount of 'in-fill' in the horizon for one iteration. " R 0 10}
+ swidth 10
+ addUserKnob {7 sheight l height t "Amount of 'in-fill' in the vertical for one iteration. " R 0 10}
+ sheight 10
+ addUserKnob {3 steps t "Number of blur iterations to combine together."}
+ steps 7
+ addUserKnob {7 angle t "Adjust the direction of the 'in-fill'." R -180 180}
+ addUserKnob {26 ""}
+ addUserKnob {26 text l "<b><font color=#ffffff>Detail</font><b>"}
+ addUserKnob {7 kernel_size l surface t "Adjust the amount of detail. (With this slide you adjust the low and high frequencies)." R 0 5}
+ kernel_size 3
+ addUserKnob {26 ""}
+ addUserKnob {7 multiply l highlights t "Increase the amount of light that you want to rescue." R 0 5}
+ addUserKnob {7 highlights l range t "Adjust the range of the highlight to mid lights that you want to rescue.\n\none is the highest values.\ncero is the midtones values."}
+ highlights 0.5
+ addUserKnob {26 ""}
+ addUserKnob {26 text_5 l "<b><font color=#ffffff>Displace</font><b>"}
+ addUserKnob {7 horizontal t "Displace the detail in horizontal direction to change the original." R -100 100}
+ addUserKnob {7 vertical t "Displace the detail in vertical direction to change the original." R -100 100}
+ addUserKnob {26 ""}
+ addUserKnob {41 maskChannel l mask T Keymix2.maskChannel}
+ addUserKnob {6 invert_mask_2 l invert -STARTLINE}
+ addUserKnob {41 which l mix T Dissolve1.which}
+ addUserKnob {26 ""}
+ addUserKnob {26 about_1 l "" +STARTLINE T "<span style=\"color:#666\"><br/><b>aeFiller v1.5</b> - <a  style=\"color:#666;text-decoration: none;\">Aitor Echeveste</a>  © 2021</span>"}
+ addUserKnob {20 About}
+ addUserKnob {26 text_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_2 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_4 l "" +STARTLINE T "<font color=#ffffff><font size=\"7\">aeFiller</font><font size=\"6\"> v1.5</font>\n"}
+ addUserKnob {26 about_1_1 l "" +STARTLINE T "by Aitor Echeveste © 2021"}
+ addUserKnob {26 text_1_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_3 l "" +STARTLINE T "   "}
+ addUserKnob {26 website l "" +STARTLINE T "<b><a href=\"http://www.aitorecheveste.com\"><span style=\"color:#C8C8C8;\">www.aitorecheveste.com</span></a><b>"}
+}
+ Input {
+  inputs 0
+  name matte
+  xpos 354
+  ypos -881
+  number 1
+ }
+set N4642dc00 [stack 0]
+ Dot {
+  name Dot31
+  note_font_size 41
+  xpos 199
+  ypos -877
+ }
+set N4642d800 [stack 0]
+ Dot {
+  name Dot10
+  note_font_size 41
+  xpos 199
+  ypos -795
+ }
+ Dot {
+  name Dot18
+  note_font_size 41
+  xpos 199
+  ypos -744
+ }
+set N4642d000 [stack 0]
+ Dot {
+  name Dot16
+  note_font_size 41
+  xpos 199
+  ypos -683
+ }
+ Dot {
+  name Dot4
+  note_font_size 41
+  xpos 48
+  ypos -683
+ }
+set N4642c800 [stack 0]
+ Dot {
+  name Dot5
+  note_font_size 41
+  xpos 50
+  ypos -176
+ }
+set N4642c400 [stack 0]
+ Dot {
+  name Dot25
+  note_font_size 41
+  xpos 50
+  ypos 467
+ }
+ Dot {
+  name Dot26
+  note_font_size 41
+  xpos -601
+  ypos 467
+ }
+set N463e3800 [stack 0]
+ Dot {
+  name Dot27
+  note_font_size 41
+  xpos -601
+  ypos 717
+ }
+push $N463e3800
+ Input {
+  inputs 0
+  name img
+  xpos -801
+  ypos -1665
+  addUserKnob {20 User}
+  addUserKnob {7 blur R 0 500}
+  addUserKnob {3 iterations}
+ }
+ NoOp {
+  name inputbbox
+  xpos -801
+  ypos -1641
+  addUserKnob {20 User}
+  addUserKnob {15 bbox}
+  bbox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+ }
+ Dot {
+  name Dot22
+  note_font_size 41
+  xpos -767
+  ypos -1575
+ }
+set N463e2800 [stack 0]
+ Dot {
+  name Dot29
+  note_font_size 41
+  xpos -848
+  ypos -1575
+ }
+set N463e2400 [stack 0]
+ Dot {
+  name Dot23
+  note_font_size 41
+  xpos -886
+  ypos -1575
+ }
+ Switch {
+  inputs 2
+  which {{outmask==2?0:outmask x30 0}}
+  name Switch2
+  xpos -918
+  ypos 464
+ }
+ AddChannels {
+  channels rgba
+  name AddChannels2
+  xpos -918
+  ypos 488
+ }
+ Dot {
+  name Dot24
+  note_font_size 41
+  xpos -884
+  ypos 569
+ }
+ Input {
+  inputs 0
+  name mask
+  xpos -999
+  ypos 246
+  number 2
+ }
+push $N463e2800
+push $N4642c800
+push $N4642d800
+push $N463e2800
+ Dot {
+  name Dot20
+  note_font_size 41
+  xpos 158
+  ypos -1575
+ }
+ Dot {
+  name Dot6
+  xpos 158
+  ypos -1429
+ }
+set N463e0800 [stack 0]
+ AddChannels {
+  channels rgba
+  name AddChannels1
+  xpos 124
+  ypos -1099
+ }
+ BlinkScript {
+  recompileCount 136
+  ProgramGroup 1
+  KernelDescription "2 \"RankFilter\" iterate componentWise 8f4632feddf6438e381689a2ba97b17de2940d93cef050361f5f241bb1ec4f00 2 \"imageIn\" Read Ranged2D \"imageOut\" Write Point 2 \"filter size\" Int 1 AQAAAA== \"number picker\" Float 1 AACAPw== 2 \"size\" 1 1 \"number_picker\" 1 1 2 \"imageInrangeMin\" Int 2 1 AAAAAAAAAAA= \"imageInrangeMax\" Int 2 1 AAAAAAAAAAA="
+  kernelSource "kernel RankFilter : public ImageComputationKernel<eComponentWise>\n\{\n  Image<eRead, eAccessRanged2D, eEdgeClamped> imageIn; \n  Image<eWrite, eAccessPoint> imageOut;          \n\nparam:\n  int size;  //The filter size\n  float number_picker; \n\nlocal:\n\n\n  void define() \{\n    defineParam(size, \"filter size\", 1); \n    defineParam(number_picker, \"number picker\", 1.0f); \n  \}\n\n  void init()\n  \{\n    imageIn.setRange(-size-1, -size-1, size+1, size+1);\n\n  \}\n\n  void process()\n  \{\n\n    float vals\[512]; ///creates array is this to big?\n\n    float size_ref = size; \n\n   \n\n    for (int j = -size_ref, index = 0; j <= size_ref; j++) \{ //this section is just collecting all the values in the filter size and putting them in the array\n      for (int i = -size_ref; i <= size_ref; i++, index++) \{\n        vals\[index] = imageIn(i, j);\n      \}\n    \}\n\n\n    float tempvaluesforsorting;\n    int filterSizeref = (2 * size_ref + 1) * (2 * size_ref + 1); //  setting the amount of times to run the sort\n\n    for (int i = 0; i < filterSizeref; i++) \{     //this is sorting the values\n      for (int j = 0; j < (filterSizeref - i - 1); j++) \{\n        if (vals\[j] > vals\[j + 1]) \{\n          tempvaluesforsorting = vals\[j];\n          vals\[j] = vals\[j + 1];\n          vals\[j + 1] = tempvaluesforsorting;\n        \}\n      \}\n    \}\n\n  \n    int normalised = number_picker *((2 * size_ref + 1) * (2 * size_ref + 1)-1);\n\n    imageOut() = vals\[normalised]; // selecting a certain value in the aray\n    \n  \}\n\};"
+  vectorize false
+  rebuild ""
+  "RankFilter_filter size" {{parent.kernel_size}}
+  "RankFilter_number picker" 0.5
+  rebuild_finalise ""
+  name BlinkScript1
+  xpos 124
+  ypos -1075
+ }
+ Dot {
+  name Dot7
+  xpos 158
+  ypos -960
+ }
+set N463a7800 [stack 0]
+ Dot {
+  name Dot12
+  note_font_size 41
+  xpos -29
+  ypos -960
+ }
+set N463a7400 [stack 0]
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos -271
+  ypos -960
+ }
+set N463a7000 [stack 0]
+ Invert {
+  name Invert2
+  xpos -521
+  ypos -970
+ }
+push $N463e0800
+ Dot {
+  name Dot8
+  xpos -586
+  ypos -1432
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  name Merge15
+  xpos -620
+  ypos -965
+ }
+ Expression {
+  channel0 {rgba.red -rgba.green -rgba.blue none}
+  expr0 r/2
+  expr1 g/2
+  expr2 b/2
+  name Expression1
+  xpos -620
+  ypos -926
+ }
+set N463a6000 [stack 0]
+ Dot {
+  name Dot33
+  note_font_size 41
+  xpos -1042
+  ypos -923
+ }
+set N463a5c00 [stack 0]
+ TransformMasked {
+  translate {{parent.horizontal} {parent.vertical}}
+  center {960 540}
+  name Transform5
+  xpos -1076
+  ypos -886
+ }
+push $N463a5c00
+ Dot {
+  name Dot30
+  note_font_size 41
+  xpos -1159
+  ypos -923
+ }
+ Keymix {
+  inputs 3
+  name Keymix5
+  xpos -1193
+  ypos -886
+ }
+ Dot {
+  name Dot32
+  note_font_size 41
+  xpos -1159
+  ypos -683
+ }
+push $N463a6000
+ Keymix {
+  inputs 3
+  name Keymix4
+  xpos -620
+  ypos -692
+ }
+ Dot {
+  name Dot9
+  note_font_size 41
+  xpos -584
+  ypos 141
+ }
+push $N4642d000
+push $N463a7000
+ Keyer {
+  operation "luminance key"
+  range {{parent.highlights} 1 1 1}
+  name LIGHT
+  xpos -305
+  ypos -850
+ }
+ Blur {
+  channels rgba
+  size 1
+  name Blur15
+  label "\[value size]"
+  xpos -305
+  ypos -812
+ }
+ Premult {
+  name Premult1
+  xpos -305
+  ypos -774
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge23
+  xpos -305
+  ypos -748
+ }
+push $N463a7400
+ Dot {
+  name Dot17
+  note_font_size 41
+  xpos -29
+  ypos -447
+ }
+ Merge2 {
+  inputs 2
+  operation divide
+  name Merge22
+  xpos -303
+  ypos -451
+ }
+ Multiply {
+  value {{parent.multiply}}
+  name Multiply1
+  label "\[value value]"
+  xpos -303
+  ypos -235
+ }
+ Dot {
+  name Dot15
+  note_font_size 41
+  xpos -269
+  ypos 56
+ }
+push $N4642c400
+ Constant {
+  inputs 0
+  color 1
+  name Constant1
+  xpos 245
+  ypos -583
+  postage_stamp false
+ }
+ Reformat {
+  type "to box"
+  box_width {{inputbbox.bbox.r}}
+  box_height {{inputbbox.bbox.t x1001 2160}}
+  box_fixed true
+  name Reformat1
+  xpos 245
+  ypos -559
+ }
+push $N463a7800
+ Dot {
+  name Dot11
+  xpos 158
+  ypos -701
+ }
+set N46355000 [stack 0]
+ Dot {
+  name Dot14
+  xpos 81
+  ypos -701
+ }
+ Dot {
+  name Dot13
+  xpos 81
+  ypos -556
+ }
+push $N46355000
+ Transform {
+  scale 0.9
+  center {1920 1080}
+  name Transform4
+  xpos 124
+  ypos -644
+ }
+push $N46355000
+ Crop {
+  box {{input.bbox.x-150 x1 0} {input.bbox.y-150 x1 0} {input.bbox.r+150 x1 1920} {input.bbox.t+150 x1 1080}}
+  crop false
+  name Crop1
+  xpos 245
+  ypos -704
+ }
+ Blur {
+  size 50
+  name Blur17
+  xpos 245
+  ypos -680
+ }
+ Unpremult {
+  name Unpremult1
+  xpos 245
+  ypos -644
+ }
+ Transform {
+  scale 0.9
+  center {1920 1080}
+  name Transform6
+  xpos 245
+  ypos -620
+ }
+ Merge2 {
+  inputs 2
+  name Merge17
+  xpos 124
+  ypos -620
+ }
+ Transform {
+  scale 0.9
+  center {1920 1080}
+  invert_matrix true
+  name Transform7
+  xpos 124
+  ypos -596
+ }
+ Keymix {
+  inputs 3
+  name Keymix3
+  xpos 124
+  ypos -565
+ }
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos 158
+  ypos -483
+ }
+set N4630a000 [stack 0]
+ Transform {
+  rotate {{parent.angle}}
+  center {2048 1463}
+  name Transform1
+  xpos 236
+  ypos -486
+ }
+push $N4642dc00
+ NoOp {
+  name mattebbox
+  xpos 354
+  ypos -857
+  addUserKnob {20 User}
+  addUserKnob {15 bbox}
+  bbox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle4
+  xpos 354
+  ypos -485
+ }
+ Transform {
+  rotate {{parent.angle}}
+  center {2048 1463}
+  name Transform2
+  xpos 354
+  ypos -399
+ }
+set N46309000 [stack 0]
+ Merge2 {
+  inputs 2
+  operation out
+  also_merge all
+  name Merge1
+  xpos 236
+  ypos -399
+ }
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos 270
+  ypos -276
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur1
+  xpos 454
+  ypos -285
+ }
+push $N46309000
+ Clamp {
+  name Clamp1
+  xpos 354
+  ypos -375
+ }
+ Invert {
+  name Invert1
+  xpos 354
+  ypos -285
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur2
+  xpos 454
+  ypos -245
+ }
+set N4629f400 [stack 0]
+ Grade {
+  channels rgba
+  blackpoint -0.0001
+  name Grade1
+  xpos 454
+  ypos -205
+ }
+set N4629f000 [stack 0]
+ Merge {
+  inputs 2
+  operation divide
+  name Merge2
+  xpos 454
+  ypos -179
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur3
+  xpos 554
+  ypos -285
+ }
+push $N4629f400
+push $N4629f000
+ Merge {
+  inputs 2
+  operation divide
+  name Merge3
+  xpos 454
+  ypos -153
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur4
+  xpos 554
+  ypos -245
+ }
+set N4629e000 [stack 0]
+ Grade {
+  channels rgba
+  blackpoint -0.0001
+  name Grade2
+  xpos 554
+  ypos -205
+ }
+set N4629dc00 [stack 0]
+ Merge {
+  inputs 2
+  operation divide
+  name Merge4
+  xpos 554
+  ypos -179
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur5
+  xpos 654
+  ypos -285
+ }
+push $N4629e000
+push $N4629dc00
+ Merge {
+  inputs 2
+  operation divide
+  name Merge5
+  xpos 554
+  ypos -153
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur6
+  xpos 654
+  ypos -245
+ }
+set N4629cc00 [stack 0]
+ Grade {
+  channels rgba
+  blackpoint -0.0001
+  name Grade3
+  xpos 654
+  ypos -205
+ }
+set N4629c800 [stack 0]
+ Merge {
+  inputs 2
+  operation divide
+  name Merge6
+  xpos 654
+  ypos -179
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur7
+  xpos 754
+  ypos -285
+ }
+push $N4629cc00
+push $N4629c800
+ Merge {
+  inputs 2
+  operation divide
+  name Merge7
+  xpos 654
+  ypos -153
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur8
+  xpos 754
+  ypos -245
+ }
+set N96cb400 [stack 0]
+ Grade {
+  channels rgba
+  blackpoint -0.0001
+  name Grade4
+  xpos 754
+  ypos -205
+ }
+set N96cb000 [stack 0]
+ Merge {
+  inputs 2
+  operation divide
+  name Merge8
+  xpos 754
+  ypos -179
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur9
+  xpos 854
+  ypos -285
+ }
+push $N96cb400
+push $N96cb000
+ Merge {
+  inputs 2
+  operation divide
+  name Merge9
+  xpos 754
+  ypos -153
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur10
+  xpos 854
+  ypos -245
+ }
+set N96ca000 [stack 0]
+ Grade {
+  channels rgba
+  blackpoint -0.0001
+  name Grade5
+  xpos 854
+  ypos -205
+ }
+set N96c9c00 [stack 0]
+ Merge {
+  inputs 2
+  operation divide
+  name Merge10
+  xpos 854
+  ypos -179
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur11
+  xpos 954
+  ypos -285
+ }
+push $N96ca000
+push $N96c9c00
+ Merge {
+  inputs 2
+  operation divide
+  name Merge11
+  xpos 854
+  ypos -153
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur12
+  xpos 954
+  ypos -245
+ }
+set N96c8c00 [stack 0]
+ Grade {
+  channels rgba
+  blackpoint -0.0001
+  name Grade6
+  xpos 954
+  ypos -205
+ }
+set N96c8800 [stack 0]
+ Merge {
+  inputs 2
+  operation divide
+  name Merge12
+  xpos 954
+  ypos -179
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur13
+  xpos 1054
+  ypos -285
+ }
+push $N96c8c00
+push $N96c8800
+ Merge {
+  inputs 2
+  operation divide
+  name Merge13
+  xpos 954
+  ypos -153
+ }
+ Blur {
+  size {{parent.swidth} {parent.sheight}}
+  name Blur14
+  xpos 1054
+  ypos -245
+ }
+ Grade {
+  channels rgba
+  blackpoint -0.0001
+  name Grade7
+  xpos 1054
+  ypos -205
+ }
+ Merge {
+  inputs 2
+  operation divide
+  name Merge14
+  xpos 1054
+  ypos -179
+ }
+ Transform {
+  rotate {{parent.angle*-1}}
+  center {2048 1463}
+  name Transform3
+  xpos 345
+  ypos -179
+ }
+push $N4630a000
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos 124
+  ypos -185
+ }
+ Merge2 {
+  inputs 2
+  operation plus
+  mix 0.25
+  name Merge24
+  xpos 124
+  ypos 51
+ }
+ MergeExpression {
+  inputs 2
+  expr0 "Ar > .5 ? Br + (2*(Ar-.5)) : Br + 2*Ar -1"
+  expr1 "Ag > .5 ? Bg + (2*(Ag-.5)) : Bg + 2*Ag -1"
+  expr2 "Ab > .5 ? Bb + (2*(Ab-.5)) : Bb + 2*Ab -1"
+  name MergeExpression
+  xpos 124
+  ypos 138
+ }
+ Dot {
+  name Dot21
+  note_font_size 41
+  xpos 158
+  ypos 249
+ }
+ Keymix {
+  inputs 3
+  maskChannel -rgba.alpha
+  invertMask {{!invert_mask_2}}
+  name Keymix2
+  xpos -799
+  ypos 240
+  disable {{"!\[exists parent.input2]"}}
+ }
+push $N463e2400
+ Dot {
+  name Dot28
+  note_font_size 41
+  xpos -846
+  ypos 324
+ }
+ Dissolve {
+  inputs 2
+  which 1
+  name Dissolve1
+  xpos -799
+  ypos 315
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -799
+  ypos 560
+  disable {{"\[string first \".a\" \[channels \[input this 1]]]>-1?0:1" x4 1}}
+ }
+ Remove {
+  channels alpha
+  name Remove1
+  xpos -799
+  ypos 596
+  disable {{outmask==2?1:!Copy1.disable}}
+ }
+ ChannelMerge {
+  inputs 2
+  name ChannelMerge1
+  xpos -799
+  ypos 702
+  disable {{outmask==2?0:1}}
+ }
+ Premult {
+  alpha -rgba.alpha
+  name Premult2
+  xpos -799
+  ypos 754
+ }
+ Crop {
+  box {{"inputbbox.bbox\n\n<mattebbox.bbox?\n\ninputbbox.bbox+1:inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)\n\n"} {"inputbbox.bbox\n\n<mattebbox.bbox?\n\ninputbbox.bbox+1:inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)"} {"inputbbox.bbox\n\n>mattebbox.bbox?\n\ninputbbox.bbox-1: inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)"} {"inputbbox.bbox\n\n>mattebbox.bbox?\n\ninputbbox.bbox-1: inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)"}}
+  name Crop3
+  xpos -799
+  ypos 800
+ }
+ Output {
+  name Output1
+  xpos -799
+  ypos 928
+ }
+end_group
