@@ -21,7 +21,7 @@ Is a very light gizmo with which you can smartly break the edges of your mattes,
 # aeFiller
 Fill in the track marks or elements that you want to erase from the plate without losing the detail of the surface, powerer by blink script. I included the option of rescue all the surface detail, also you can rescue the highlights of the surface. If it's necessari you can ofset the surface detail if you want to keep the ditail but the original detail makes appear the clean up.
 
-#aeRelight2D
+# aeRelight2D
 Make relights of our footage without needed any render passes. It's especially useful when we try to illuminate smoke or atmospheric elements. An important thing is to adjust the amount of emboss well, depending on the incident light it will have to be negative or positive. we can also adjust the smoothness of our emboss. I hope you liked it.
 
 
