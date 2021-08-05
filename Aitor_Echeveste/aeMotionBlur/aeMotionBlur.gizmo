@@ -1,0 +1,250 @@
+Group {
+ name aeMotionBlur
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == \"motionblur\":\n  if k.value()==\"custom\":\n    n\['rotation'].setEnabled(True)\n  else:\n    n\['rotation'].setEnabled(False)\n\n"
+ tile_color 0xa0500ff
+ note_font "Verdana Bold"
+ addUserKnob {20 aeMotionBlur}
+ addUserKnob {41 channels T VectorBlur1.channels}
+ addUserKnob {26 gpuName l "" +STARTLINE T ""}
+ addUserKnob {41 useGPUIfAvailable l "Use GPU if available" T VectorBlur1.useGPUIfAvailable}
+ addUserKnob {26 ""}
+ addUserKnob {4 motionblur l "motion blur" M {footage custom}}
+ addUserKnob {7 power l amount R 0 10}
+ power 2
+ addUserKnob {7 rotation +DISABLED R -180 180}
+ addUserKnob {26 ""}
+ addUserKnob {41 motion_falloff l "motion falloff" T VectorBlur1.motion_falloff}
+ addUserKnob {41 offset l "shutter offset" T VectorBlur1.offset}
+ addUserKnob {26 ""}
+ addUserKnob {41 mix T VectorBlur1.mix}
+ addUserKnob {26 ""}
+ addUserKnob {26 about_1 l "" +STARTLINE T "<span style=\"color:#666\"><br/><b>aeMotionBlur v1.0</b> - <a  style=\"color:#666;text-decoration: none;\">Aitor Echeveste</a>  © 2021</span>"}
+ addUserKnob {20 About}
+ addUserKnob {26 text_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_2 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_4 l "" +STARTLINE T "<font color=#ffffff><font size=\"7\">aeMotionBlur</font><font size=\"4\"> v1.0</font>\n"}
+ addUserKnob {26 about_1_1 l "" +STARTLINE T "by Aitor Echeveste Izquierdo © 2021"}
+ addUserKnob {26 text_1_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_3 l "" +STARTLINE T "   "}
+ addUserKnob {26 website l "" +STARTLINE T "<b><a href=\"http://www.aitorecheveste.com\"><span style=\"color:#C8C8C8;\">www.aitorecheveste.com</span></a><b>"}
+ addUserKnob {26 "" l " "}
+}
+ Expression {
+  inputs 0
+  expr0 x
+  expr1 y
+  expr2 0
+  name vectormap
+  xpos -115
+  ypos 472
+  hide_input true
+ }
+ Transform {
+  scale 1.25
+  center {967 544}
+  name Transform3
+  xpos -115
+  ypos 496
+ }
+set Nf7a4c800 [stack 0]
+ Input {
+  inputs 0
+  name mask
+  xpos -57
+  ypos 595
+  number 1
+ }
+ NoOp {
+  name mattebbox
+  xpos -57
+  ypos 619
+  addUserKnob {20 User}
+  addUserKnob {15 bbox}
+  bbox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+ }
+ Expression {
+  inputs 0
+  expr3 1
+  name alpha
+  xpos 37
+  ypos 650
+  hide_input true
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch1
+  xpos -57
+  ypos 650
+  disable {{"!\[exists parent.input1]"}}
+ }
+ Dot {
+  name Dot6
+  note_font_size 41
+  xpos -23
+  ypos 688
+ }
+set Nb93db000 [stack 0]
+push $Nf7a4c800
+ Dot {
+  name Dot2
+  note_font_size 41
+  xpos -158
+  ypos 499
+ }
+set Nb93dac00 [stack 0]
+ Dot {
+  name Dot5
+  note_font_size 41
+  xpos -227
+  ypos 499
+ }
+ Transform {
+  translate {{sin(radians(rotation))*50} {cos(radians(rotation))*50}}
+  center {967 544}
+  black_outside false
+  name Transform1
+  xpos -261
+  ypos 594
+ }
+ Dot {
+  name Dot4
+  note_font_size 41
+  xpos -227
+  ypos 688
+ }
+push $Nb93dac00
+ Keymix {
+  inputs 3
+  name Keymix1
+  xpos -192
+  ypos 679
+ }
+ Dot {
+  name Dot1
+  note_font_size 41
+  xpos -158
+  ypos 775
+ }
+ Merge2 {
+  inputs 2
+  operation minus
+  name Merge1
+  xpos -115
+  ypos 772
+ }
+ Dot {
+  name Dot3
+  note_font_size 41
+  xpos -81
+  ypos 866
+ }
+push $Nb93db000
+ Input {
+  inputs 0
+  name img
+  xpos 287
+  ypos 418
+ }
+ NoOp {
+  name inputbbox
+  xpos 287
+  ypos 442
+  addUserKnob {20 User}
+  addUserKnob {15 bbox}
+  bbox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+ }
+ NoOp {
+  name inputf
+  xpos 287
+  ypos 553
+  addUserKnob {20 User}
+  addUserKnob {12 inputf}
+  inputf {{input.width} {input.height}}
+ }
+set Nb93d8400 [stack 0]
+ Dot {
+  name Dot21
+  note_font_size 41
+  xpos 177
+  ypos 556
+ }
+ VectorGenerator {
+  motionEstimation Regularized
+  Tolerances 1
+  name VectorGenerator4
+  xpos 143
+  ypos 609
+ }
+ Expression {
+  inputs 0
+  expr0 x
+  expr1 y
+  expr2 0
+  name vectormap2
+  xpos 235
+  ypos 685
+  hide_input true
+ }
+ Keymix {
+  inputs 3
+  name Keymix2
+  xpos 143
+  ypos 679
+ }
+ Dot {
+  name Dot22
+  note_font_size 41
+  xpos 177
+  ypos 818
+ }
+push $Nb93d8400
+ Copy {
+  inputs 2
+  from0 forward.u
+  to0 forward.u
+  from1 forward.v
+  to1 forward.v
+  name Copy5
+  xpos 287
+  ypos 803
+  disable {{parent.motionblur}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy1
+  xpos 287
+  ypos 851
+  disable {{!parent.motionblur}}
+ }
+ AddChannels {
+  name AddChannels1
+  xpos 287
+  ypos 899
+ }
+ VectorBlur2 {
+  channels rgba
+  uv forward
+  scale {{lerp(0,5,parent.power)}}
+  soft_lines true
+  name VectorBlur1
+  xpos 287
+  ypos 935
+ }
+ Crop {
+  box {{"inputbbox.bbox\n\n<mattebbox.bbox?\n\ninputbbox.bbox+1:inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)\n\n"} {"inputbbox.bbox\n\n<mattebbox.bbox?\n\ninputbbox.bbox+1:inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)"} {"inputbbox.bbox\n\n>mattebbox.bbox?\n\ninputbbox.bbox-1: inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)"} {"inputbbox.bbox\n\n>mattebbox.bbox?\n\ninputbbox.bbox-1: inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)"}}
+  name Crop3
+  xpos 287
+  ypos 1003
+ }
+ Output {
+  name Output1
+  xpos 287
+  ypos 1027
+ }
+end_group
