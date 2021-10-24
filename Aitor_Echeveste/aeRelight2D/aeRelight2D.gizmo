@@ -1,7 +1,7 @@
 Group {
  name aeRelight2D
  onCreate "n = nuke.thisNode()\nw = n.format().width()/2\nh = n.format().height()/2\ncenter = \[w,h]\n\nif n.knob('create').value()==False:\n    n.knob('light').setValue(center)\n    n.knob('create').setValue(1)"
- tile_color 0xa0500ff
+ tile_color 0xffffffff
  label "\[value Operations.menu2]"
  note_font "Verdana Bold"
  addUserKnob {20 aeRelight2D}
@@ -125,7 +125,7 @@ Group {
   ypos -500
   addUserKnob {20 User}
  }
-set Nb9485400 [stack 0]
+set N6100bc00 [stack 0]
  Saturation {
   saturation 0
   name Saturation1
@@ -159,7 +159,7 @@ set Nb9485400 [stack 0]
   xpos 911
   ypos -404
  }
-set Nb9484400 [stack 0]
+set N6100ac00 [stack 0]
  Dot {
   name Dot3
   note_font_size 41
@@ -184,7 +184,7 @@ set Nb9484400 [stack 0]
   xpos 982
   ypos -239
  }
-push $Nb9484400
+push $N6100ac00
  Dot {
   name Dot2
   note_font_size 41
@@ -209,7 +209,7 @@ push $Nb9484400
   xpos 783
   ypos -289
  }
-push $Nb9484400
+push $N6100ac00
  Copy {
   inputs 2
   from0 rgba.red
@@ -322,14 +322,14 @@ push $Nb9484400
   xpos 751
   ypos 447
  }
-set Nb9b33000 [stack 0]
-push $Nb9485400
+set N60fb1c00 [stack 0]
+push $N6100bc00
  Dot {
   name Dot4
   xpos 463
   ypos 352
  }
-set Nb9b32c00 [stack 0]
+set N60fb1800 [stack 0]
  Dot {
   name Dot5
   xpos 564
@@ -351,7 +351,7 @@ set Nb9b32c00 [stack 0]
   ypos 602
   number 1
  }
-push $Nb9b33000
+push $N60fb1c00
  Merge2 {
   inputs 2
   operation mask
@@ -367,7 +367,7 @@ push $Nb9b33000
   xpos 751
   ypos 686
  }
-set Nb9b31800 [stack 0]
+set N60fb0400 [stack 0]
  Grade {
   channels rgba
   multiply {{parent.color+1} {parent.color+1} {parent.color+1} 1}
@@ -375,10 +375,10 @@ set Nb9b31800 [stack 0]
   xpos 717
   ypos 796
  }
- set Cb9b31400 [stack 0]
-push $Nb9b31800
-push $Nb9b32c00
-clone $Cb9b31400 {
+ set C60f4fc00 [stack 0]
+push $N60fb0400
+push $N60fb1800
+clone $C60f4fc00 {
   inputs 1+1
   xpos 429
   ypos 683

@@ -1,34 +1,33 @@
 Group {
  name aePowerPin
  onCreate "n = nuke.thisNode()\nc = n.knob('create').getValue()\n\nif c == 0:\n    \n    if n.inputs()<1:\n        w = nuke.root().width()\n        h = nuke.root().height()\n    else:\n        for a in n.dependencies():\n            w = a.width()\n            h = a.height()\n\n    n.knob('from1').setValue(\[0,0])\n    n.knob('from2').setValue(\[w,0])\n    n.knob('from3').setValue(\[w,h])\n    n.knob('from4').setValue(\[0,h])\n    n.knob('to1').setValue(\[0,0])\n    n.knob('to2').setValue(\[w,0])\n    n.knob('to3').setValue(\[w,h])\n    n.knob('to4').setValue(\[0,h])\n    n.knob('create').setValue(1)"
- tile_color 0xa0500ff
+ tile_color 0x7e65ceff
  note_font "Verdana Bold"
  note_font_color 0xffffffff
- icon aeFiller_Node.png
+ icon aePowerPin_Node.png
  addUserKnob {20 aePowerPin}
  addUserKnob {12 to1}
  addUserKnob {6 enable1 -STARTLINE}
  enable1 true
  addUserKnob {12 to2}
- to2 {640 0}
+ to2 {1920 0}
  addUserKnob {6 enable2 -STARTLINE}
  enable2 true
  addUserKnob {12 to3}
- to3 {640 480}
+ to3 {1920 1080}
  addUserKnob {6 enable3 -STARTLINE}
  enable3 true
  addUserKnob {12 to4}
- to4 {0 480}
+ to4 {0 1080}
  addUserKnob {6 enable4 -STARTLINE}
  enable4 true
  addUserKnob {26 _1 l "" +STARTLINE T "          "}
  addUserKnob {22 copy_from l "\"Get 'Copy 'from'" t "Copy 'from' " T "nuke.thisNode().knob('to1').fromScript(nuke.thisNode().knob('from1').toScript())\nnuke.thisNode().knob('to2').fromScript(nuke.thisNode().knob('from2').toScript())\nnuke.thisNode().knob('to3').fromScript(nuke.thisNode().knob('from3').toScript())\nnuke.thisNode().knob('to4').fromScript(nuke.thisNode().knob('from4').toScript())\n" +STARTLINE}
  addUserKnob {26 text_1_2_6 l "" -STARTLINE T " "}
- addUserKnob {22 get_from l "Get 'corner pin'" -STARTLINE T "c2 = nuke.thisNode()\nmyCornerList = \[]\nwith nuke.root():\n    for i in nuke.allNodes(\"CornerPin2D\"):\n      corner = i\[\"name\"].value()\n      myCornerList.append(corner)\n    \n    def listToString(list):\n      str1 = \" \"\n      return (str1.join(list))\n      \n    if len(myCornerList) > 0: \n        stringCorners = listToString(myCornerList)\n        qBD = nuke.Panel(\"Get 'corner pin'\")\n        qBD.addEnumerationPulldown('Target Corner', stringCorners)\n        qBD.show()\n        myTargetName = qBD.value(\"Target Corner\")\n\n        groupNode = nuke.thisNode()\n        with groupNode:\n            c1 = nuke.toNode(myTargetName)\n            c2\['from1'].setValue(c1\['from1'].getValue())\n            c2\['from2'].setValue(c1\['from2'].getValue())\n            c2\['from3'].setValue(c1\['from3'].getValue())\n            c2\['from4'].setValue(c1\['from4'].getValue())\n            c2\['to1'].copyAnimations(c1\['to1'].animations())\n            c2\['to1'].setValue(c1\['to1'].getValue())\n            c2\['to2'].copyAnimations(c1\['to2'].animations())\n            c2\['to2'].setValue(c1\['to2'].getValue())\n            c2\['to3'].copyAnimations(c1\['to3'].animations())\n            c2\['to3'].setValue(c1\['to3'].getValue())\n            c2\['to4'].copyAnimations(c1\['to4'].animations())\n            c2\['to4'].setValue(c1\['to4'].getValue())\n    else: pass\n"}
+ addUserKnob {22 get_from l "Get 'corner pin'" -STARTLINE T "c2 = nuke.thisNode()\nmyCornerList = \[]\nwith nuke.root():\n    for i in nuke.allNodes(\"CornerPin2D\"):\n      corner = i\[\"name\"].value()\n      myCornerList.append(corner)\n    \n    def listToString(list):\n      str1 = \" \"\n      return (str1.join(list))\n      \n    if len(myCornerList) > 0: \n        stringCorners = listToString(myCornerList)\n        qBD = nuke.Panel(\"Get 'corner pin'\")\n        qBD.addEnumerationPulldown('Target Corner', stringCorners)\n        qBD.show()\n        myTargetName = qBD.value(\"Target Corner\")\n\n        groupNode = nuke.thisNode()\n        with groupNode:\n            c1 = nuke.toNode(myTargetName)\n            c2\['from1'].setValue(c1\['from1'].getValue())\n            c2\['from2'].setValue(c1\['from2'].getValue())\n            c2\['from3'].setValue(c1\['from3'].getValue())\n            c2\['from4'].setValue(c1\['from4'].getValue())\n            c2\['to1'].copyAnimations(c1\['to1'].animations())\n            c2\['to1'].setValue(c1\['to1'].getValue())\n            c2\['to2'].copyAnimations(c1\['to2'].animations())\n            c2\['to2'].setValue(c1\['to2'].getValue())\n            c2\['to3'].copyAnimations(c1\['to3'].animations())\n            c2\['to3'].setValue(c1\['to3'].getValue())\n            c2\['to4'].copyAnimations(c1\['to4'].animations())\n            c2\['to4'].setValue(c1\['to4'].getValue())\n    else:\n        nuke.message(\"There are no cornerpins in your script\") "}
  addUserKnob {26 text_1_2_6_2 l "" -STARTLINE T " "}
  addUserKnob {22 default l "Set to default" -STARTLINE T "n = nuke.thisNode()\nw = nuke.root().width()\nh = nuke.root().height()\n\nk=n.allKnobs()\nfor i in k:\n\ti.clearAnimated()\n\nn.knob('from1').setValue(\[0,0])\nn.knob('from2').setValue(\[w,0])\nn.knob('from3').setValue(\[w,h])\nn.knob('from4').setValue(\[0,h])\nn.knob('to1').setValue(\[0,0])\nn.knob('to2').setValue(\[w,0])\nn.knob('to3').setValue(\[w,h])\nn.knob('to4').setValue(\[0,h])\n\nn.knob('size2').setValue(0)\nn.knob('width').setValue(0)\nn.knob('heigth').setValue(0)\nn.knob('top').setValue(0)\nn.knob('bottom').setValue(0)\nn.knob('right').setValue(0)\nn.knob('left').setValue(0)\n\nn.knob('tl').setValue(1)\nn.knob('tr').setValue(1)\nn.knob('bl').setValue(1)\nn.knob('br').setValue(1)\nn.knob('rt').setValue(1)\nn.knob('rb').setValue(1)\nn.knob('lt').setValue(1)\nn.knob('lb').setValue(1)"}
  addUserKnob {20 PowerPin l " power Pin" t "This a corner pin improved with x,y offset and different knobs to control the individual cornes, also have guide lines.\n\nAnother improved is that you can export directly from a traker or planar traker.\n\nThanks to my mate Nacho Hoyos, for this awesome idea!" n 1}
- PowerPin 0
  addUserKnob {26 text_1_2_5 l "" +STARTLINE T "     "}
  addUserKnob {26 ""}
  addUserKnob {7 size2 l size t "Control the size of the corners." R -100 100}
@@ -38,41 +37,35 @@ Group {
  addUserKnob {7 heigth l "offset y" t "move the height to the top/bottom." R -100 100}
  addUserKnob {26 text_1_2_1_1 l "" -STARTLINE T "          "}
  addUserKnob {26 ""}
- addUserKnob {7 top t "Adjust the top cornes." R -50 50}
- addUserKnob {26 text_1 l "" -STARTLINE T "  "}
- addUserKnob {6 tl l "" t "Activate/desactivate the right top corner." -STARTLINE}
- tl true
- addUserKnob {6 tr l "" t "Activate/desactivate the left top corner." -STARTLINE}
- tr true
- addUserKnob {7 bottom t "Adjust the bottom cornes." R -50 50}
- addUserKnob {26 text_1_1 l "" -STARTLINE T "  "}
- addUserKnob {6 bl l "" t "Activate/desactivate the right bottom corner." -STARTLINE}
- bl true
- addUserKnob {6 br l "" t "Activate/desactivate the right bottom corner." -STARTLINE}
- br true
- addUserKnob {7 right t "Adjust the right side cornes." R -50 50}
+ addUserKnob {7 right t "Adjust the right side cornes." R -100 100}
  addUserKnob {26 text_1_1_1 l "" -STARTLINE T "  "}
  addUserKnob {6 rt l "" t "Activate/desactivate the top right corner." -STARTLINE}
  rt true
  addUserKnob {6 rb l "" t "Activate/desactivate the top left corner." -STARTLINE}
  rb true
- addUserKnob {7 left t "Adjust the left side cornes." R -50 50}
+ addUserKnob {7 left t "Adjust the left side cornes." R -100 100}
  addUserKnob {26 text_1_1_1_1 l "" -STARTLINE T "  "}
  addUserKnob {6 lt l "" t "Activate/desactivate the bottom right corner." -STARTLINE}
  lt true
  addUserKnob {6 lb l "" t "Activate/desactivate the bottom left corner." -STARTLINE}
  lb true
+ addUserKnob {7 top t "Adjust the top cornes." R -100 100}
+ addUserKnob {26 text_1 l "" -STARTLINE T "  "}
+ addUserKnob {6 tl l "" t "Activate/desactivate the right top corner." -STARTLINE}
+ tl true
+ addUserKnob {6 tr l "" t "Activate/desactivate the left top corner." -STARTLINE}
+ tr true
+ addUserKnob {7 bottom t "Adjust the bottom cornes." R -100 100}
+ addUserKnob {26 text_1_1 l "" -STARTLINE T "  "}
+ addUserKnob {6 bl l "" t "Activate/desactivate the right bottom corner." -STARTLINE}
+ bl true
+ addUserKnob {6 br l "" t "Activate/desactivate the right bottom corner." -STARTLINE}
+ br true
  addUserKnob {26 ""}
- addUserKnob {26 _2_2 l "" +STARTLINE T "          "}
- addUserKnob {26 text l " " T " "}
- addUserKnob {26 warning_1 l "" -STARTLINE T "<a  style=\"color:#666;text-decoration: none;\">Be careful, any of these three options enabled<br> breaks the concatenation between transformations.<br>You can use it only for preview the resault.</a>"}
- addUserKnob {26 text_2 l " " -STARTLINE T " "}
- addUserKnob {26 _2 l "" +STARTLINE T "          "}
- addUserKnob {6 preview l guidelines t "Activate/desactivate guide lines" +STARTLINE}
+ addUserKnob {6 preview l "see guidelines" t "Activate/desactivate guide lines" +STARTLINE}
  addUserKnob {26 text_1_2_5_1_1_1 l "" -STARTLINE T "     "}
  addUserKnob {6 block l "block guidelines" t "Block the guide lines to the first corner pin values." -STARTLINE}
  addUserKnob {26 text_1_2_5_1_1_1_1 l "" -STARTLINE T "     "}
- addUserKnob {6 keep l "keep original alpha" t "Keep the original alpha form from the original corner points." -STARTLINE}
  addUserKnob {26 text_2_1 l " " T " "}
  addUserKnob {7 th l thicknes t "Control the guide line thickness" R 1 5}
  th 4
@@ -85,43 +78,43 @@ Group {
  addUserKnob {26 ""}
  addUserKnob {26 _2_1 l "" +STARTLINE T "          "}
  addUserKnob {20 endGroup n -1}
- addUserKnob {26 text_1_2_7_1_2 l "" +STARTLINE T "          "}
  addUserKnob {20 extra l "extra matrix" n 1}
  extra 0
- addUserKnob {41 matrix l "" +STARTLINE T Matrix2.matrix}
+ addUserKnob {41 matrix_2 l "" +STARTLINE T Matrix2.matrix}
  addUserKnob {20 endGroup_1 l endGroup n -1}
- addUserKnob {6 inv l invert t "Invert the transform." +STARTLINE}
- addUserKnob {41 filter t "Change the transform filter." T Transform1.filter}
- addUserKnob {6 cla l clamp t "Clamp values." -STARTLINE}
- addUserKnob {6 black l "black outside  " t Blackoutside. -STARTLINE}
- black true
- addUserKnob {6 crop l "crop BBox" t "Crop BBox to root format" -STARTLINE}
- addUserKnob {7 motion l "motion blur" t "Active and control the amount of motion blur." R 0 4}
- addUserKnob {7 shu l shutter t "Change the camera shutter." R 0 2}
- shu 0.5
- addUserKnob {41 shutteroffset l "shutter offset" t "Change the shutter offset." T Transform1.shutteroffset}
- addUserKnob {7 cu l " " -STARTLINE R -1 1}
  addUserKnob {26 _3 l "" +STARTLINE T "          "}
  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+ addUserKnob {6 inv l invert +STARTLINE}
+ addUserKnob {41 filter T Transform1.filter}
+ addUserKnob {6 clamp -STARTLINE}
+ addUserKnob {6 blackOutside l "black outside" -STARTLINE}
+ blackOutside true
+ addUserKnob {6 crop -STARTLINE}
+ crop true
+ addUserKnob {7 motionblur R 0 4}
+ addUserKnob {7 shutter R 0 2}
+ shutter 0.5
+ addUserKnob {41 shutteroffset l "shutter offset" T Transform1.shutteroffset}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T Transform1.shuttercustomoffset}
  addUserKnob {26 ""}
- addUserKnob {26 about l "" +STARTLINE T "<span style=\"color:#666\"><br/><b>aePowerPin v1.5</b> - <a  style=\"color:#666;text-decoration: none;\">Aitor Echeveste</a>  © 2021</span>"}
+ addUserKnob {26 about l "" +STARTLINE T "<span style=\"color:#666\"><br/><b>aePowerPin v2.0</b> - <a  style=\"color:#666;text-decoration: none;\">Aitor Echeveste</a>  © 2021</span>"}
  addUserKnob {20 From}
  addUserKnob {12 from1}
  addUserKnob {12 from2}
- from2 {640 0}
+ from2 {1920 0}
  addUserKnob {12 from3}
- from3 {640 480}
+ from3 {1920 1080}
  addUserKnob {12 from4}
- from4 {0 480}
+ from4 {0 1080}
  addUserKnob {26 text_1_2_6_1_1 l "" +STARTLINE T " "}
- addUserKnob {22 set_to l "Set to input" t "Set to input format." T "f = None\ntry:\n  f = nuke.thisNode().input(0).format()\nexcept:\n  f = nuke.root().format()\nf1 = nuke.thisNode().knob('from1').fromScript(\"0 0\")\nf2 = nuke.thisNode().knob('from2').fromScript(str(f.width()) + \" 0\")\nf3 = nuke.thisNode().knob('from3').fromScript(str(f.width()) + \" \" + str(f.height()))\nf4 = nuke.thisNode().knob('from4').fromScript(\"0 \" + str(f.height()))\n" +STARTLINE}
+ addUserKnob {22 set_to l "Set to input" t "Set to input format." T "f = None\ntry:\n  f = nuke.thisNode().input(0).format()\nexcept:\n  f = nuke.root().format()\nf1 = nuke.thisNode().knob('from1').fromScript(\"0 0\")\nf2 = nuke.thisNode().knob('from2').fromScript(str(f.width()) + \" 0\")\nf3 = nuke.thisNode().knob('from3').fromScript(str(f.width()) + \" \" + str(f.height()))\nf4 = nuke.thisNode().knob('from4').fromScript(\"0 \" + str(f.height()))" +STARTLINE}
  addUserKnob {26 text_1_2_6_1 l "" t "Copy to." -STARTLINE T " "}
  addUserKnob {22 copy_to l "Copy 'to'" t "Copy to." -STARTLINE T "nuke.thisNode().knob('from1').fromScript(nuke.thisNode().knob('to1').toScript())\nnuke.thisNode().knob('from2').fromScript(nuke.thisNode().knob('to2').toScript())\nnuke.thisNode().knob('from3').fromScript(nuke.thisNode().knob('to3').toScript())\nnuke.thisNode().knob('from4').fromScript(nuke.thisNode().knob('to4').toScript())\n"}
  addUserKnob {6 create +INVISIBLE +STARTLINE}
  addUserKnob {20 About}
  addUserKnob {26 _4 l "" +STARTLINE T "   "}
  addUserKnob {26 _5 l "" +STARTLINE T "   "}
- addUserKnob {26 aePowerPinv1 l "" +STARTLINE T "<font color=#ffffff><font size=\"7\">aePowerPin</font><font size=\"6\"> v1.5</font>\n"}
+ addUserKnob {26 aePowerPinv1 l "" +STARTLINE T "<font color=#ffffff><font size=\"7\">aePowerPin</font><font size=\"6\"> v2.0</font>\n"}
  addUserKnob {26 aitor_echeveste_izquierdo l "" +STARTLINE T "by Aitor Echeveste Izquierdo © 2021"}
  addUserKnob {26 _7 l "" +STARTLINE T "   "}
  addUserKnob {26 ""}
@@ -133,7 +126,7 @@ Group {
   inputs 0
   name lines
   xpos -275
-  ypos 423
+  ypos 475
   hide_input true
   addUserKnob {20 User}
   addUserKnob {12 a -STARTLINE}
@@ -172,18 +165,7 @@ Group {
   addUserKnob {12 ecl4 -STARTLINE}
   ecl4 {{ml4 x1 nan x29 nan} {power.to3.y+(ml4*-power.to3.x) x1 nan x29 nan}}
  }
- Matrix {
-  matrix {
-      {1 0 0 0}
-      {0 1 0 0}
-      {0 0 1 0}
-      {0 0 0 1}
-    }
-  name Matrix2
-  xpos -275
-  ypos 449
- }
-set Nf7acb000 [stack 0]
+set N613c5c00 [stack 0]
  Rectangle {
   cliptype none
   area {{curve} {th>1?-th/2:0} {power2.m4==0?3000:hypot(lines.h.x-lines.f.x,lines.h.y-lines.f.y)} {th>1?th/2:1}}
@@ -202,7 +184,7 @@ set Nf7acb000 [stack 0]
   ypos 525
   disable {{"block==1?(lines.ml4==inf?1:preview==1?0:1):!preview\n" x1 1}}
  }
-push $Nf7acb000
+push $N613c5c00
  Rectangle {
   cliptype none
   area {{curve} {th>1?-th/2:0} {power2.m3==0?3000:hypot(lines.g.x-lines.e.x,lines.g.y-lines.e.y)} {th>1?th/2:1}}
@@ -221,7 +203,7 @@ push $Nf7acb000
   ypos 525
   disable {{"block==1?(lines.ml3==inf?1:preview==1?0:1):!preview\n" x1 1}}
  }
-push $Nf7acb000
+push $N613c5c00
  Rectangle {
   cliptype none
   area {{curve} {th>1?-th/2:0} {hypot(lines.d.x-lines.c.x,lines.d.y-lines.c.y)} {th>1?th/2:1}}
@@ -241,7 +223,7 @@ push $Nf7acb000
   disable {{!preview}}
  }
 push 0
-push $Nf7acb000
+push $N613c5c00
  Rectangle {
   cliptype none
   area {{curve} {th>1?-th/2:0} {hypot(lines.b.x-lines.a.x,lines.b.y-lines.a.y)} {th>1?th/2:1}}
@@ -262,10 +244,81 @@ push $Nf7acb000
  }
  Input {
   inputs 0
-  name Input
-  xpos -555
-  ypos 361
+  name img
+  xpos -488
+  ypos 453
  }
+set N6133f400 [stack 0]
+ Transform {
+  scale {{lerp(1,1.002,size2)}}
+  center {960 540}
+  name scale
+  selected true
+  xpos -488
+  ypos 477
+ }
+ CornerPin2D {
+  to1 {{"parent.CornerPin2D2.to1\n+(power.to1-parent.CornerPin2D2.to1)\n+(power2.to1-parent.CornerPin2D2.to1)"} {"parent.CornerPin2D2.to1\n+(power.to1-parent.CornerPin2D2.to1)\n+(power2.to1-parent.CornerPin2D2.to1)"}}
+  to2 {{"parent.CornerPin2D2.to2\n+(power.to2-parent.CornerPin2D2.to2)\n+(power2.to2-parent.CornerPin2D2.to2)" x89 526} {"parent.CornerPin2D2.to2\n+(power.to2-parent.CornerPin2D2.to2)\n+(power2.to2-parent.CornerPin2D2.to2)" x89 84}}
+  to3 {{"parent.CornerPin2D2.to3\n+(power.to3-parent.CornerPin2D2.to3)\n+(power2.to3-parent.CornerPin2D2.to3)"} {"parent.CornerPin2D2.to3\n+(power.to3-parent.CornerPin2D2.to3)\n+(power2.to3-parent.CornerPin2D2.to3)"}}
+  to4 {{"parent.CornerPin2D2.to4\n+(power.to4-parent.CornerPin2D2.to4)\n+(power2.to4-parent.CornerPin2D2.to4)"} {"parent.CornerPin2D2.to4\n+(power.to4-parent.CornerPin2D2.to4)\n+(power2.to4-parent.CornerPin2D2.to4)"}}
+  "extra matrix" 1
+  transform_matrix {
+      {{parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix}}
+      {{parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix}}
+      {{parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix}}
+      {{parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix}}
+    }
+  invert {{parent.inv}}
+  filter {{parent.Transform1.filter x90 2}}
+  clamp {{parent.clamp}}
+  black_outside {{parent.blackOutside}}
+  motionblur {{parent.motionblur}}
+  shutter {{parent.shutter}}
+  shutteroffset {{parent.Transform1.shutteroffset x90 1}}
+  from1 {{parent.CornerPin2D2.from1} {parent.CornerPin2D2.from1}}
+  from2 {{parent.CornerPin2D2.from2} {parent.CornerPin2D2.from2}}
+  from3 {{parent.CornerPin2D2.from3} {parent.CornerPin2D2.from3}}
+  from4 {{parent.CornerPin2D2.from4} {parent.CornerPin2D2.from4}}
+  name powerPin
+  xpos -488
+  ypos 501
+ }
+set N6133ec00 [stack 0]
+ Dot {
+  name Dot1
+  xpos -344
+  ypos 504
+ }
+ Merge2 {
+  inputs 5+1
+  Achannels rgb
+  mix {{opacity.a}}
+  name Merge1
+  xpos -378
+  ypos 525
+  disable {{!preview}}
+ }
+push $N6133ec00
+ Switch {
+  inputs 2
+  which {{"preview + block"}}
+  name Switch1
+  xpos -488
+  ypos 525
+ }
+ Reformat {
+  name Reformat1
+  xpos -488
+  ypos 549
+  disable {{!parent.crop}}
+ }
+ Output {
+  name Output1
+  xpos -488
+  ypos 573
+ }
+push $N6133f400
  CornerPin2D {
   to1 {{parent.to1 x57 84} {parent.to1 x57 58}}
   enable1 {{parent.enable1}}
@@ -276,45 +329,38 @@ push $Nf7acb000
   to4 {{parent.to4 x1 180 x57 134} {parent.to4 x1 316 x57 340}}
   enable4 {{parent.enable4}}
   "extra matrix" 1
-  transform_matrix {
-      {{parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix}}
-      {{parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix}}
-      {{parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix}}
-      {{parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix}}
-    }
-  invert {{parent.inv}}
-  black_outside {{parent.black}}
+  invert false
+  black_outside false
   shutteroffset centred
   from1 {{parent.from1} {parent.from1}}
   from2 {{parent.from2} {parent.from2}}
   from3 {{parent.from3} {parent.from3}}
   from4 {{parent.from4} {parent.from4}}
   name CornerPin2D2
-  xpos -555
-  ypos 385
+  xpos -275
+  ypos 339
+  hide_input true
   addUserKnob {20 User}
   addUserKnob {7 fx}
   fx {{"\[exists parent.input]==0?input.width:width"}}
   addUserKnob {7 fy}
   fy {{"\[exists parent.input]==0?input.height:height"}}
  }
-set Nf7ac8800 [stack 0]
-push $Nf7ac8800
  CornerPin2D {
   to1 {{w1} {w1}}
   to2 {{w2} {w2}}
   to3 {{w3 x1 561.5} {w3 x1 365}}
   to4 {{w4} {w4}}
   invert false
-  black_outside {{parent.black}}
+  black_outside false
   shutteroffset centred
   from1 {{parent.CornerPin2D2.to1} {parent.CornerPin2D2.to1}}
   from2 {{parent.CornerPin2D2.to2} {parent.CornerPin2D2.to2}}
   from3 {{parent.CornerPin2D2.to3} {parent.CornerPin2D2.to3}}
   from4 {{parent.CornerPin2D2.to4} {parent.CornerPin2D2.to4}}
   name power
-  xpos -555
-  ypos 409
+  xpos -275
+  ypos 363
   disable {{m==0?1:0}}
   addUserKnob {20 User}
   addUserKnob {26 width}
@@ -328,13 +374,13 @@ push $Nf7ac8800
   ec2 {{m2} {power.from3.y+(m2*-power.from3.x)}}
   addUserKnob {26 ""}
   addUserKnob {12 w4}
-  w4 {{power.from4.x+((left*lt)+plusw-size2)} {(w4.x)*power.ec2.x+power.ec2.y}}
+  w4 {{power.from4.x+((left*lt)+plusw)} {(w4.x)*power.ec2.x+power.ec2.y}}
   addUserKnob {12 w3 -STARTLINE}
-  w3 {{(((rigth2*rt))+plusw+size2)+power.from3.x} {(w3.x)*power.ec2.x+power.ec2.y}}
+  w3 {{(((rigth2*rt))+plusw)+power.from3.x} {(w3.x)*power.ec2.x+power.ec2.y}}
   addUserKnob {12 w1}
-  w1 {{((left*lb)+plusw-size2)*pro+power.from1.x} {(w1.x)*power.ec.x+power.ec.y}}
+  w1 {{((left*lb)+plusw)*pro+power.from1.x} {(w1.x)*power.ec.x+power.ec.y}}
   addUserKnob {12 w2 -STARTLINE}
-  w2 {{pro*(((rigth2*rb))+plusw+size2)+power.from2.x} {(w2.x)*power.ec.x+power.ec.y}}
+  w2 {{pro*(((rigth2*rb))+plusw)+power.from2.x} {(w2.x)*power.ec.x+power.ec.y}}
   addUserKnob {7 scale}
   scale {{sqrt(pow2(CornerPin2D2.to2.x-CornerPin2D2.to1.x)+pow2(CornerPin2D2.to2.y-CornerPin2D2.to1.y))}}
   addUserKnob {7 scale2 -STARTLINE}
@@ -355,15 +401,15 @@ push $Nf7ac8800
   to3 {{m4==0?from3+power.plusw*rb:h3} {m4==0?from3+top*tr+plush+size2:h3}}
   to4 {{m3==0?from4:h4} {m3==0?from4+size2+plush+top*tl:h4}}
   invert false
-  black_outside {{parent.black}}
-  shutteroffset custom
+  black_outside false
+  shutteroffset centred
   from1 {{parent.power.from1} {parent.power.from1}}
   from2 {{parent.power.from2} {parent.power.from2}}
   from3 {{parent.power.from3} {parent.power.from3}}
   from4 {{parent.power.from4 x1 182} {parent.power.from4 x1 1382}}
   name power2
-  xpos -555
-  ypos 433
+  xpos -275
+  ypos 387
   addUserKnob {20 User}
   addUserKnob {7 m3}
   m3 {{(power2.from4.y-power2.from1.y)/(power2.from4.x-power2.from1.x)==inf?0:(power2.from4.y-power2.from1.y)/(power2.from4.x-power2.from1.x)}}
@@ -375,13 +421,13 @@ push $Nf7ac8800
   ec4 {{m4} {power.from3.y+(m4*-power.from3.x)}}
   addUserKnob {26 ""}
   addUserKnob {12 h4}
-  h4 {{"m3==0?power2.from4:\n\n(h4.y-power2.ec3.y)/(power2.ec3.x)"} {"m3==0?power2.from4:\npower2.from4.y+(plush2+(top*tl)+size2)*proportion\n"}}
+  h4 {{"m3==0?power2.from4:\n\n(h4.y-power2.ec3.y)/(power2.ec3.x)"} {"m3==0?power2.from4:\npower2.from4.y+(plush2+(top*tl))*proportion\n"}}
   addUserKnob {12 h3 -STARTLINE}
-  h3 {{"m4==0?power2.from4:\n\n(h3.y-power2.ec4.y)/(power2.ec4.x)"} {"m4==0?power2.from4:\n\npower2.from3.y+plush2+(top*tr)+size2\n"}}
+  h3 {{"m4==0?power2.from4:\n\n(h3.y-power2.ec4.y)/(power2.ec4.x)"} {"m4==0?power2.from4:\n\npower2.from3.y+plush2+(top*tr)\n"}}
   addUserKnob {12 h1}
-  h1 {{m3==0?power2.from4:(h1.y-power2.ec3.y)/(power2.ec3.x)} {m3==0?0:power2.from1.y+(plush+(bottom*bl)-size2)*proportion}}
+  h1 {{m3==0?power2.from4:(h1.y-power2.ec3.y)/(power2.ec3.x)} {m3==0?0:power2.from1.y+(plush+(bottom*bl))*proportion}}
   addUserKnob {12 h2 -STARTLINE}
-  h2 {{"m4==0?power2.from4:\n(h2.y-power2.ec4.y)/(power2.ec4.x)" x57 nan} {"m4==0?power2.from4:\npower2.from2.y+(plush+(bottom*br)-size2)" x57 nan}}
+  h2 {{"m4==0?power2.from4:\n(h2.y-power2.ec4.y)/(power2.ec4.x)" x57 nan} {"m4==0?power2.from4:\npower2.from2.y+(plush+(bottom*br))" x57 nan}}
   addUserKnob {7 scale}
   scale {{sqrt(pow2(CornerPin2D2.to4.x-CornerPin2D2.to1.x)+pow2(CornerPin2D2.to4.y-CornerPin2D2.to1.y))}}
   addUserKnob {7 scale2 l scale -STARTLINE}
@@ -398,69 +444,24 @@ push $Nf7ac8800
   top {{parent.top}}
   addUserKnob {7 bottom R -100 0}
   bottom {{-parent.bottom}}
-  addUserKnob {7 p}
  }
  Transform {
-  translate {{0 x1 0} {0 x1 0}}
-  rotate {{0 x1 0}}
-  scale {{1 x1 nan} {1 x1 1}}
-  skewX {{0 x1 0}}
-  skewY {{0 x1 0}}
-  center {{-10000000 x1 -10000000} {-10000000 x1 -10000000}}
-  clamp {{parent.cla}}
-  black_outside {{parent.black}}
-  motionblur {{parent.motion}}
-  shutter {{parent.shu}}
+  scale {{-nan(ind)} 1}
+  center {-10000000 -10000000}
   shutteroffset centred
-  shuttercustomoffset {{parent.cu}}
   name Transform1
-  xpos -555
-  ypos 455
+  xpos -275
+  ypos 411
  }
-set Nf7a4ec00 [stack 0]
- Copy {
-  inputs 2
-  from0 rgba.alpha
-  to0 rgba.alpha
-  bbox B
-  name Copy1
-  xpos -378
-  ypos 449
-  disable {{!keep x3 1}}
- }
- Premult {
-  channels all
-  name Premult1
-  xpos -378
-  ypos 487
-  disable {{!keep}}
- }
- Merge2 {
-  inputs 5+1
-  Achannels rgb
-  mix {{opacity.a}}
-  name Merge1
-  xpos -378
-  ypos 525
-  disable {{!preview}}
- }
-push $Nf7a4ec00
- Switch {
-  inputs 2
-  which {{"preview + block + keep"}}
-  name Switch1
-  xpos -555
-  ypos 525
- }
- Reformat {
-  name Reformat1
-  xpos -555
-  ypos 549
-  disable {{!parent.crop}}
- }
- Output {
-  name Output1
-  xpos -555
-  ypos 590
+ Matrix {
+  matrix {
+      {1 0 0 0}
+      {0 1 0 0}
+      {0 0 1 0}
+      {0 0 0 1}
+    }
+  name Matrix2
+  xpos -275
+  ypos 435
  }
 end_group

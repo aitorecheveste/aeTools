@@ -1,7 +1,7 @@
 Group {
  name aeFiller
  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\n    \n    \n    \nif k.name() in \[\"steps\"]:\n  s = int(k.value())\n  if s<1:\n    k.setValue(1)\n  else:    \n    i = nuke.toNode('Dot1')\n    i2 = nuke.toNode('Invert1')\n    o = nuke.toNode('Transform3')  \n    r = int(n\['steps'].value())\n    st = int(1)\n    b0 = nuke.toNode(\"Invert1\")\n    b0x = b0.xpos()\n    b0y = b0.ypos()\n    b0n = b0.name()\n                \n    for n in nuke.allNodes():\n      if n.xpos()>b0.xpos()+5:\n          nuke.delete(n)\n    \n    \n    for x in range(1,r+st,st):\n      #blur1\n      b = nuke.nodes.Blur()\n      b.setInput(0, i)\n      b.setXYpos(b0x+x*100,b0y)\n      b\['size'].setSingleValue(False)\n      b\['size'].setExpression(\"parent.swidth\", 0)\n      b\['size'].setExpression(\"parent.sheight\", 1)\n      #blur2\n      b2 = nuke.nodes.Blur()\n      b2.setInput(0, i2)\n      b2.setXYpos(b0x+x*100,b0y+40)\n      b2\['size'].setSingleValue(False)\n      b2\['size'].setExpression(\"parent.swidth\", 0)\n      b2\['size'].setExpression(\"parent.sheight\", 1)\n      #grade1\n      g = nuke.nodes.Grade()\n      g.setXYpos(b0x+x*100,b0y+80)\n      g.setInput(0, b2)\n      g\['channels'].setValue('rgba')\n      g\['blackpoint'].setValue(-0.0001)\n      #Merge1\n      m = nuke.nodes.Merge()\n      m.setXYpos(b0x+x*100,b0y+106)\n      m.setInput(1, b)\n      m.setInput(0, g)\n      m\['operation'].setValue(\"divide\")\n      #Merge2\n      if x < r:\n         m2 = nuke.nodes.Merge()\n         m2.setXYpos(b0x+x*100,b0y+132)\n         m2.setInput(1, b2)\n         m2.setInput(0, g)\n         m2\['operation'].setValue(\"divide\")\n    \n      i = m\n      i2 = m2\n    \n    o.setInput(0, i)"
- tile_color 0xa0500ff
+ tile_color 0xea3f52ff
  note_font "Verdana Bold"
  note_font_color 0xffffffff
  icon aeFiller_Node.png
@@ -59,14 +59,14 @@ Group {
   ypos -881
   number 1
  }
-set N4642dc00 [stack 0]
+set N60f4e800 [stack 0]
  Dot {
   name Dot31
   note_font_size 41
   xpos 199
   ypos -877
  }
-set N4642d800 [stack 0]
+set N60f4e400 [stack 0]
  Dot {
   name Dot10
   note_font_size 41
@@ -79,7 +79,7 @@ set N4642d800 [stack 0]
   xpos 199
   ypos -744
  }
-set N4642d000 [stack 0]
+set N60f4dc00 [stack 0]
  Dot {
   name Dot16
   note_font_size 41
@@ -92,14 +92,14 @@ set N4642d000 [stack 0]
   xpos 48
   ypos -683
  }
-set N4642c800 [stack 0]
+set N60f4d400 [stack 0]
  Dot {
   name Dot5
   note_font_size 41
   xpos 50
   ypos -176
  }
-set N4642c400 [stack 0]
+set N60f4d000 [stack 0]
  Dot {
   name Dot25
   note_font_size 41
@@ -112,14 +112,14 @@ set N4642c400 [stack 0]
   xpos -601
   ypos 467
  }
-set N463e3800 [stack 0]
+set N60f4c800 [stack 0]
  Dot {
   name Dot27
   note_font_size 41
   xpos -601
   ypos 717
  }
-push $N463e3800
+push $N60f4c800
  Input {
   inputs 0
   name img
@@ -143,14 +143,14 @@ push $N463e3800
   xpos -767
   ypos -1575
  }
-set N463e2800 [stack 0]
+set N60f07400 [stack 0]
  Dot {
   name Dot29
   note_font_size 41
   xpos -848
   ypos -1575
  }
-set N463e2400 [stack 0]
+set N60f07000 [stack 0]
  Dot {
   name Dot23
   note_font_size 41
@@ -183,10 +183,10 @@ set N463e2400 [stack 0]
   ypos 246
   number 2
  }
-push $N463e2800
-push $N4642c800
-push $N4642d800
-push $N463e2800
+push $N60f07400
+push $N60f4d400
+push $N60f4e400
+push $N60f07400
  Dot {
   name Dot20
   note_font_size 41
@@ -198,7 +198,7 @@ push $N463e2800
   xpos 158
   ypos -1429
  }
-set N463e0800 [stack 0]
+set N60f05400 [stack 0]
  AddChannels {
   channels rgba
   name AddChannels1
@@ -224,27 +224,27 @@ set N463e0800 [stack 0]
   xpos 158
   ypos -960
  }
-set N463a7800 [stack 0]
+set N60f04800 [stack 0]
  Dot {
   name Dot12
   note_font_size 41
   xpos -29
   ypos -960
  }
-set N463a7400 [stack 0]
+set N60f04400 [stack 0]
  Dot {
   name Dot3
   note_font_size 41
   xpos -271
   ypos -960
  }
-set N463a7000 [stack 0]
+set N60ec7c00 [stack 0]
  Invert {
   name Invert2
   xpos -521
   ypos -970
  }
-push $N463e0800
+push $N60f05400
  Dot {
   name Dot8
   xpos -586
@@ -266,14 +266,14 @@ push $N463e0800
   xpos -620
   ypos -926
  }
-set N463a6000 [stack 0]
+set N60ec6c00 [stack 0]
  Dot {
   name Dot33
   note_font_size 41
   xpos -1042
   ypos -923
  }
-set N463a5c00 [stack 0]
+set N60ec6800 [stack 0]
  TransformMasked {
   translate {{parent.horizontal} {parent.vertical}}
   center {960 540}
@@ -281,7 +281,7 @@ set N463a5c00 [stack 0]
   xpos -1076
   ypos -886
  }
-push $N463a5c00
+push $N60ec6800
  Dot {
   name Dot30
   note_font_size 41
@@ -300,7 +300,7 @@ push $N463a5c00
   xpos -1159
   ypos -683
  }
-push $N463a6000
+push $N60ec6c00
  Keymix {
   inputs 3
   name Keymix4
@@ -313,8 +313,8 @@ push $N463a6000
   xpos -584
   ypos 141
  }
-push $N4642d000
-push $N463a7000
+push $N60f4dc00
+push $N60ec7c00
  Keyer {
   operation "luminance key"
   range {{parent.highlights} 1 1 1}
@@ -342,7 +342,7 @@ push $N463a7000
   xpos -305
   ypos -748
  }
-push $N463a7400
+push $N60f04400
  Dot {
   name Dot17
   note_font_size 41
@@ -369,7 +369,7 @@ push $N463a7400
   xpos -269
   ypos 56
  }
-push $N4642c400
+push $N60f4d000
  Constant {
   inputs 0
   color 1
@@ -387,13 +387,13 @@ push $N4642c400
   xpos 245
   ypos -559
  }
-push $N463a7800
+push $N60f04800
  Dot {
   name Dot11
   xpos 158
   ypos -701
  }
-set N46355000 [stack 0]
+set N60e75c00 [stack 0]
  Dot {
   name Dot14
   xpos 81
@@ -404,7 +404,7 @@ set N46355000 [stack 0]
   xpos 81
   ypos -556
  }
-push $N46355000
+push $N60e75c00
  Transform {
   scale 0.9
   center {1920 1080}
@@ -412,7 +412,7 @@ push $N46355000
   xpos 124
   ypos -644
  }
-push $N46355000
+push $N60e75c00
  Crop {
   box {{input.bbox.x-150 x1 0} {input.bbox.y-150 x1 0} {input.bbox.r+150 x1 1920} {input.bbox.t+150 x1 1080}}
   crop false
@@ -464,7 +464,7 @@ push $N46355000
   xpos 158
   ypos -483
  }
-set N4630a000 [stack 0]
+set N60e32c00 [stack 0]
  Transform {
   rotate {{parent.angle}}
   center {2048 1463}
@@ -472,7 +472,7 @@ set N4630a000 [stack 0]
   xpos 236
   ypos -486
  }
-push $N4642dc00
+push $N60f4e800
  NoOp {
   name mattebbox
   xpos 354
@@ -496,7 +496,7 @@ push $N4642dc00
   xpos 354
   ypos -399
  }
-set N46309000 [stack 0]
+set N60e31c00 [stack 0]
  Merge2 {
   inputs 2
   operation out
@@ -517,7 +517,7 @@ set N46309000 [stack 0]
   xpos 454
   ypos -285
  }
-push $N46309000
+push $N60e31c00
  Clamp {
   name Clamp1
   xpos 354
@@ -534,7 +534,7 @@ push $N46309000
   xpos 454
   ypos -245
  }
-set N4629f400 [stack 0]
+set N60e30400 [stack 0]
  Grade {
   channels rgba
   blackpoint -0.0001
@@ -542,7 +542,7 @@ set N4629f400 [stack 0]
   xpos 454
   ypos -205
  }
-set N4629f000 [stack 0]
+set N60dbfc00 [stack 0]
  Merge {
   inputs 2
   operation divide
@@ -556,8 +556,8 @@ set N4629f000 [stack 0]
   xpos 554
   ypos -285
  }
-push $N4629f400
-push $N4629f000
+push $N60e30400
+push $N60dbfc00
  Merge {
   inputs 2
   operation divide
@@ -571,7 +571,7 @@ push $N4629f000
   xpos 554
   ypos -245
  }
-set N4629e000 [stack 0]
+set N60dbec00 [stack 0]
  Grade {
   channels rgba
   blackpoint -0.0001
@@ -579,7 +579,7 @@ set N4629e000 [stack 0]
   xpos 554
   ypos -205
  }
-set N4629dc00 [stack 0]
+set N60dbe800 [stack 0]
  Merge {
   inputs 2
   operation divide
@@ -593,8 +593,8 @@ set N4629dc00 [stack 0]
   xpos 654
   ypos -285
  }
-push $N4629e000
-push $N4629dc00
+push $N60dbec00
+push $N60dbe800
  Merge {
   inputs 2
   operation divide
@@ -608,7 +608,7 @@ push $N4629dc00
   xpos 654
   ypos -245
  }
-set N4629cc00 [stack 0]
+set N60dbd800 [stack 0]
  Grade {
   channels rgba
   blackpoint -0.0001
@@ -616,7 +616,7 @@ set N4629cc00 [stack 0]
   xpos 654
   ypos -205
  }
-set N4629c800 [stack 0]
+set N60dbd400 [stack 0]
  Merge {
   inputs 2
   operation divide
@@ -630,8 +630,8 @@ set N4629c800 [stack 0]
   xpos 754
   ypos -285
  }
-push $N4629cc00
-push $N4629c800
+push $N60dbd800
+push $N60dbd400
  Merge {
   inputs 2
   operation divide
@@ -645,7 +645,7 @@ push $N4629c800
   xpos 754
   ypos -245
  }
-set N96cb400 [stack 0]
+set N60dbc400 [stack 0]
  Grade {
   channels rgba
   blackpoint -0.0001
@@ -653,7 +653,7 @@ set N96cb400 [stack 0]
   xpos 754
   ypos -205
  }
-set N96cb000 [stack 0]
+set N60d47c00 [stack 0]
  Merge {
   inputs 2
   operation divide
@@ -667,8 +667,8 @@ set N96cb000 [stack 0]
   xpos 854
   ypos -285
  }
-push $N96cb400
-push $N96cb000
+push $N60dbc400
+push $N60d47c00
  Merge {
   inputs 2
   operation divide
@@ -682,7 +682,7 @@ push $N96cb000
   xpos 854
   ypos -245
  }
-set N96ca000 [stack 0]
+set N60d46c00 [stack 0]
  Grade {
   channels rgba
   blackpoint -0.0001
@@ -690,7 +690,7 @@ set N96ca000 [stack 0]
   xpos 854
   ypos -205
  }
-set N96c9c00 [stack 0]
+set N60d46800 [stack 0]
  Merge {
   inputs 2
   operation divide
@@ -704,8 +704,8 @@ set N96c9c00 [stack 0]
   xpos 954
   ypos -285
  }
-push $N96ca000
-push $N96c9c00
+push $N60d46c00
+push $N60d46800
  Merge {
   inputs 2
   operation divide
@@ -719,7 +719,7 @@ push $N96c9c00
   xpos 954
   ypos -245
  }
-set N96c8c00 [stack 0]
+set N60d45800 [stack 0]
  Grade {
   channels rgba
   blackpoint -0.0001
@@ -727,7 +727,7 @@ set N96c8c00 [stack 0]
   xpos 954
   ypos -205
  }
-set N96c8800 [stack 0]
+set N60d45400 [stack 0]
  Merge {
   inputs 2
   operation divide
@@ -741,8 +741,8 @@ set N96c8800 [stack 0]
   xpos 1054
   ypos -285
  }
-push $N96c8c00
-push $N96c8800
+push $N60d45800
+push $N60d45400
  Merge {
   inputs 2
   operation divide
@@ -777,7 +777,7 @@ push $N96c8800
   xpos 345
   ypos -179
  }
-push $N4630a000
+push $N60e32c00
  Keymix {
   inputs 3
   name Keymix1
@@ -816,7 +816,7 @@ push $N4630a000
   ypos 240
   disable {{"!\[exists parent.input2]"}}
  }
-push $N463e2400
+push $N60f07000
  Dot {
   name Dot28
   note_font_size 41

@@ -1,8 +1,9 @@
 Group {
- name aeMotionBlur
+ name aeMotionBlur1
  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == \"motionblur\":\n  if k.value()==\"custom\":\n    n\['rotation'].setEnabled(True)\n  else:\n    n\['rotation'].setEnabled(False)\n\n"
- tile_color 0xa0500ff
+ tile_color 0xd85f3aff
  note_font "Verdana Bold"
+ note_font_color 0xffffffff
  addUserKnob {20 aeMotionBlur}
  addUserKnob {41 channels T VectorBlur1.channels}
  addUserKnob {26 gpuName l "" +STARTLINE T ""}
@@ -47,7 +48,7 @@ Group {
   xpos -115
   ypos 496
  }
-set Nf7a4c800 [stack 0]
+set N61c5b400 [stack 0]
  Input {
   inputs 0
   name mask
@@ -85,15 +86,15 @@ set Nf7a4c800 [stack 0]
   xpos -23
   ypos 688
  }
-set Nb93db000 [stack 0]
-push $Nf7a4c800
+set N61c5a000 [stack 0]
+push $N61c5b400
  Dot {
   name Dot2
   note_font_size 41
   xpos -158
   ypos 499
  }
-set Nb93dac00 [stack 0]
+set N61c59c00 [stack 0]
  Dot {
   name Dot5
   note_font_size 41
@@ -114,7 +115,7 @@ set Nb93dac00 [stack 0]
   xpos -227
   ypos 688
  }
-push $Nb93dac00
+push $N61c59c00
  Keymix {
   inputs 3
   name Keymix1
@@ -140,7 +141,7 @@ push $Nb93dac00
   xpos -81
   ypos 866
  }
-push $Nb93db000
+push $N61c5a000
  Input {
   inputs 0
   name img
@@ -163,7 +164,7 @@ push $Nb93db000
   addUserKnob {12 inputf}
   inputf {{input.width} {input.height}}
  }
-set Nb93d8400 [stack 0]
+set N61bff000 [stack 0]
  Dot {
   name Dot21
   note_font_size 41
@@ -199,7 +200,7 @@ set Nb93d8400 [stack 0]
   xpos 177
   ypos 818
  }
-push $Nb93d8400
+push $N61bff000
  Copy {
   inputs 2
   from0 forward.u

@@ -2,7 +2,7 @@ Group {
  name aeTransform
  onCreate "n = nuke.thisNode()\nw = n.format().width()/2\nh = n.format().height()/2\n\ncenter = \[w,h]    \n\nif n.knob('create').value()==False:\n    n.knob('center').setValue(center)\n    n.knob('create').setValue(1)\n"
  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\nif k.name() == \"smart\":\n    s = n.knob('smart').getValue()\n    if s == 0: \n        groupNode = nuke.thisNode()\n        with groupNode:\n            m = nuke.toNode('mask')\n            s = nuke.toNode('STMap')\n            s.setInput(2, m)\n    else:\n        groupNode = nuke.thisNode()\n        with groupNode:\n            m = nuke.toNode('no_filter')\n            s = nuke.toNode('STMap')\n            s.setInput(2, m)"
- tile_color 0xa0500ff
+ tile_color 0x7e65ceff
  note_font "Verdana Bold"
  note_font_color 0xffffffff
  icon aeTransform_Node.png
@@ -35,11 +35,11 @@ Group {
  smart true
  addUserKnob {26 ""}
  addUserKnob {6 create +INVISIBLE +STARTLINE}
- addUserKnob {26 about_1 l "" +STARTLINE T "<span style=\"color:#666\"><br/><b>aeTransform v1.5</b> - <a  style=\"color:#666;text-decoration: none;\">Aitor Echeveste</a>  © 2021</span>"}
+ addUserKnob {26 about_1 l "" +STARTLINE T "<span style=\"color:#666\"><br/><b>aeTransform v2.0</b> - <a  style=\"color:#666;text-decoration: none;\">Aitor Echeveste</a>  © 2021</span>"}
  addUserKnob {20 About}
  addUserKnob {26 text_1 l "" +STARTLINE T "   "}
  addUserKnob {26 text_2 l "" +STARTLINE T "   "}
- addUserKnob {26 text_4 l "" +STARTLINE T "<font color=#ffffff><font size=\"7\">aeTransform</font><font size=\"5\"> v1.5</font>\n"}
+ addUserKnob {26 text_4 l "" +STARTLINE T "<font color=#ffffff><font size=\"7\">aeTransform</font><font size=\"5\"> v2.0</font>\n"}
  addUserKnob {26 about_1_1 l "" +STARTLINE T "by Aitor Echeveste Izquierdo © 2021"}
  addUserKnob {26 text_1_1 l "" +STARTLINE T "   "}
  addUserKnob {26 ""}
@@ -53,7 +53,7 @@ Group {
   ypos 531
   number 1
  }
-set Nb95ff800 [stack 0]
+set N61770800 [stack 0]
  NoOp {
   name mattebbox
   xpos 606
@@ -98,59 +98,48 @@ set Nb95ff800 [stack 0]
   ypos 346
   disable {{!blackoutsideBefore}}
  }
-set Nb95fe000 [stack 0]
- Expression {
-  expr0 (x+0.5)/input.width
-  expr1 (y+0.5)/input.height
-  expr2 0
-  name uvmap
+set N61706c00 [stack 0]
+ Reformat {
+  type "to box"
+  box_width {{input.format.width}}
+  box_height {{input.format.height}}
+  box_fixed true
+  name Reformat1
   xpos 474
   ypos 346
-  addUserKnob {20 User}
  }
- Reformat {
-  type scale
-  scale 4
-  name Reformat7
+ Crop {
+  box {{-parent.Reformat1.box_width} {-parent.Reformat1.box_height} {parent.Reformat1.box_width*2} {parent.Reformat1.box_height*2}}
+  name Crop1
   xpos 474
   ypos 370
  }
- Grade {
-  black -1.5
-  white 2.5
-  black_clamp false
-  name Grade2
-  xpos 474
-  ypos 394
- }
- Reformat {
-  type scale
-  scale 0.25
-  resize none
-  pbb true
-  name Reformat8
+ Expression {
+  expr0 (x+0.5)/width
+  expr1 (y+.5)/height
+  name Expression1
   xpos 474
   ypos 418
  }
-set Nb95fcc00 [stack 0]
+set N61705c00 [stack 0]
  Dot {
   name Dot2
   xpos 343
   ypos 421
  }
-push $Nb95ff800
-push $Nb95fcc00
+push $N61770800
+push $N61705c00
  Transform {
   rotate {{parent.rotate x1 0}}
   skewX {{parent.skew_x x1 0}}
   skewY {{skew_y x1 0}}
-  center {1024 778}
+  center {960 540}
   black_outside false
   name Transform1
-  xpos 603
+  xpos 607
   ypos 418
  }
-push $Nb95fcc00
+push $N61705c00
  Keymix {
   inputs 3
   name Keymix1
@@ -172,11 +161,11 @@ push $Nb95fcc00
   xpos 309
   ypos 602
  }
-push $Nb95fe000
+push $N61706c00
  NoOp {
   name inputbbox
-  xpos 121
-  ypos 729
+  xpos 126
+  ypos 723
   addUserKnob {20 User}
   addUserKnob {15 bbox}
   bbox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
@@ -186,25 +175,30 @@ push $Nb95fe000
   channels rgba
   uv rgb
   name STMap
-  selected true
   xpos 309
   ypos 723
  }
  Crop {
-  box {{"cropformat==1?0:\n\n\ninputbbox.bbox<mattebbox.bbox?\n\ninputbbox.bbox+1-addpixels\n\n:inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)-addpixels\n\n"} {"cropformat==1?0:\n\ninputbbox.bbox<mattebbox.bbox?\n\ninputbbox.bbox+1-addpixels\n\n:inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)-addpixels"} {"cropformat==1?root.width-1:\n\ninputbbox.bbox>mattebbox.bbox?\n\ninputbbox.bbox-1+addpixels\n\n:inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)+addpixels"} {"cropformat==1?root.height-1:\n\ninputbbox.bbox>mattebbox.bbox?\n\ninputbbox.bbox-1+addpixels\n:inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)+addpixels"}}
+  box {{"inputbbox.bbox<mattebbox.bbox?\n\ninputbbox.bbox+1-addpixels\n\n:inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)-addpixels\n\n"} {"inputbbox.bbox<mattebbox.bbox?\n\ninputbbox.bbox+1-addpixels\n\n:inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)-addpixels"} {"inputbbox.bbox>mattebbox.bbox?\n\ninputbbox.bbox-1+addpixels\n\n:inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)+addpixels"} {"inputbbox.bbox>mattebbox.bbox?\n\ninputbbox.bbox-1+addpixels\n:inputbbox.bbox+(mattebbox.bbox- inputbbox.bbox)+addpixels"}}
   name Crop3
   xpos 309
-  ypos 759
+  ypos 747
+ }
+ Reformat {
+  name Reformat2
+  xpos 309
+  ypos 771
+  disable {{!cropformat}}
  }
  BlackOutside {
   name BlackOutsideAfter
   xpos 309
-  ypos 783
+  ypos 809
   disable {{!blackoutsideafter}}
  }
  Output {
   name Output1
   xpos 309
-  ypos 807
+  ypos 833
  }
 end_group

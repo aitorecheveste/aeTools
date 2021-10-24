@@ -1,7 +1,8 @@
 Group {
  name aeRefracTHOR
- tile_color 0xa0500ff
+ tile_color 0x4690a3ff
  note_font "Verdana Bold"
+ note_font_color 0xffffffff
  addUserKnob {20 aeRefracTHOR}
  addUserKnob {26 text_6_1 l "<b><font color=#ffffff>Refraction</font><b>"}
  addUserKnob {7 frontbackmix l "frontBack mix" t "This will control how much geo from the back and from the front will affect to the refraction.\n\nIf set to 1 only refract the light from the back of the geo.\nIf set to 0.5 both back and front light will have an effect.\nIf set to 1 only refract the light from the back of the geo."}
@@ -111,7 +112,7 @@ Group {
   xpos -458
   ypos 231
  }
-set Nfd7c800 [stack 0]
+set N61ba6c00 [stack 0]
  Camera {
   projection_mode {{"\[expression \[value the_cam]projection_mode(\[value the_frame])]"}}
   focal {{"\[expression \[value the_cam]focal(\[value the_frame])]"}}
@@ -204,13 +205,13 @@ set Nfd7c800 [stack 0]
   xpos -784
   ypos 203
  }
-set Nfd7fc00 [stack 0]
+set N61ba4c00 [stack 0]
  Dot {
   name Dot14
   xpos -784
   ypos 466
  }
-set Nfd7f800 [stack 0]
+set N61ba4800 [stack 0]
  ApplyMaterial {
   inputs 2
   name ApplyMaterial2
@@ -233,7 +234,7 @@ set Nfd7f800 [stack 0]
   ypos 544
   hide_input true
  }
-set Nfd7ec00 [stack 0]
+set N61b4f800 [stack 0]
 add_layer {P P.X P.Y P.Z P.red P.green P.blue P.alpha}
 add_layer {N N.red N.green N.blue N.alpha N.X N.Y N.Z}
  ScanlineRender {
@@ -257,7 +258,7 @@ add_layer {N N.red N.green N.blue N.alpha N.X N.Y N.Z}
   xpos -953
   ypos 590
  }
-set Nfd7e000 [stack 0]
+set N61b4ec00 [stack 0]
  Dot {
   name Dot15
   xpos -1347
@@ -268,14 +269,14 @@ set Nfd7e000 [stack 0]
   xpos -1347
   ypos 2332
  }
-set Nfd7d400 [stack 0]
+set N61b4e000 [stack 0]
  Dot {
   name Dot21
   xpos -1347
   ypos 2415
  }
-push $Nfd7d400
-push $Nfd7c800
+push $N61b4e000
+push $N61ba6c00
  Dot {
   name Dot17
   xpos -458
@@ -288,7 +289,7 @@ push $Nfd7c800
   xpos -623
   ypos 439
  }
-push $Nfd7f800
+push $N61ba4800
  ApplyMaterial {
   inputs 2
   name ApplyMaterial4
@@ -302,7 +303,7 @@ push $Nfd7f800
   ypos 502
   disable {{!rebuilt}}
  }
-push $Nfd7ec00
+push $N61b4f800
  ScanlineRender {
   inputs 3
   antialiasing high
@@ -324,19 +325,19 @@ push $Nfd7ec00
   xpos -623
   ypos 568
  }
-set Nfd42c00 [stack 0]
+set N61b4c400 [stack 0]
  Dot {
   name Dot7
   xpos -198
   ypos 571
  }
-set Nfd42400 [stack 0]
+set N61b03800 [stack 0]
  Dot {
   name Dot36
   xpos 277
   ypos 571
  }
-set Nfd42000 [stack 0]
+set N61b03400 [stack 0]
  Shuffle {
   in P
   out rgb
@@ -357,15 +358,15 @@ set Nfd42000 [stack 0]
   xpos 277
   ypos 1218
  }
-set Nfd41400 [stack 0]
+set N61b02800 [stack 0]
  Dot {
   name Dot25
   xpos 277
   ypos 1266
  }
-set Nfd41000 [stack 0]
-push $Nfd41400
-push $Nfd42c00
+set N61b02400 [stack 0]
+push $N61b02800
+push $N61b4c400
  Shuffle {
   in N
   out rgb
@@ -378,7 +379,7 @@ push $Nfd42c00
   xpos -589
   ypos 770
  }
-set Nfd40800 [stack 0]
+set N61b01c00 [stack 0]
  MergeExpression {
   inputs 2
   temp_name0 cosA
@@ -397,7 +398,7 @@ set Nfd40800 [stack 0]
   xpos -627
   ypos 1257
  }
-set Nfcdfc00 [stack 0]
+set N61b01400 [stack 0]
  Grade {
   white {{fresnel==0?0:power}}
   gamma {{lerp(0.01,0.25,fresnel)}}
@@ -425,7 +426,7 @@ set Nfcdfc00 [stack 0]
   xpos -593
   ypos 1916
  }
-push $Nfd41000
+push $N61b02400
  Grade {
   channels all
   white {{lerp(0,0.4,reflection)}}
@@ -438,7 +439,7 @@ push $Nfd41000
   xpos 273
   ypos 1748
  }
-push $Nfd42000
+push $N61b03400
  Dot {
   name Dot37
   xpos 1170
@@ -498,7 +499,7 @@ push $Nfd42000
   xpos -1579
   ypos 159
  }
-set Nfcdc400 [stack 0]
+set N61aa1800 [stack 0]
  Dot {
   name Dot35
   xpos 938
@@ -526,7 +527,7 @@ set Nfcdc400 [stack 0]
   ypos 1218
   disable {{"!\[exists input3]"}}
  }
-set Nfc7ec00 [stack 0]
+set N61aa0400 [stack 0]
  Tile {
   columns 5
   name Tile1
@@ -566,7 +567,7 @@ set Nfc7ec00 [stack 0]
   xpos 1387
   ypos 1475
  }
-push $Nfd7c800
+push $N61ba6c00
  Dot {
   name Dot2
   xpos 495
@@ -577,7 +578,7 @@ push $Nfd7c800
   xpos 495
   ypos 1378
  }
-push $Nfc7ec00
+push $N61aa0400
  Sphere {
   rotate {0 {parent.rotate} 0}
   uniform_scale 10000
@@ -594,7 +595,7 @@ push $Nfc7ec00
   ypos 1189
   hide_input true
  }
-push $Nfd7fc00
+push $N61ba4c00
  Dot {
   name Dot1
   xpos 742
@@ -725,7 +726,7 @@ add_layer {reflecton reflecton.red reflecton.green reflecton.blue reflecton.alph
   xpos 742
   ypos 1880
  }
-push $Nfd7e000
+push $N61b4ec00
  Dot {
   name Dot10
   xpos -843
@@ -742,7 +743,7 @@ push $Nfd7e000
   xpos -333
   ypos 692
  }
-push $Nfd42400
+push $N61b03800
  Shuffle {
   in depth
   name DF
@@ -825,14 +826,14 @@ push $Nfd42400
   xpos -198
   ypos 1808
  }
-set N6bc3000 [stack 0]
+set N61998800 [stack 0]
  Dot {
   name Dot8
   xpos -198
   ypos 1844
  }
-push $N6bc3000
-push $Nfcdfc00
+push $N61998800
+push $N61b01400
  Dot {
   name Dot5
   xpos -869
@@ -857,7 +858,7 @@ push $Nfcdfc00
   xpos -903
   ypos 1606
  }
-set N6bc1c00 [stack 0]
+set N61927000 [stack 0]
  ColorCorrect {
   gamma 0.2
   name ColorCorrect2
@@ -870,7 +871,7 @@ set N6bc1c00 [stack 0]
   xpos -903
   ypos 1679
  }
-push $N6bc1c00
+push $N61927000
  Constant {
   inputs 0
   channels rgb
@@ -938,13 +939,13 @@ push $N6bc1c00
   xpos -903
   ypos 1763
  }
-push $Nfd7e000
+push $N61b4ec00
  Dot {
   name Dot3
   xpos -919
   ypos 638
  }
-set N6b4a800 [stack 0]
+set N61893c00 [stack 0]
  Dot {
   name Dot4
   xpos -1021
@@ -955,7 +956,7 @@ set N6b4a800 [stack 0]
   xpos -1055
   ypos 702
  }
-set N6b4a000 [stack 0]
+set N61893400 [stack 0]
  Erode {
   channels alpha
   size 10
@@ -963,7 +964,7 @@ set N6b4a000 [stack 0]
   xpos -1055
   ypos 762
  }
-push $N6b4a000
+push $N61893400
  Erode {
   channels alpha
   size -10
@@ -985,7 +986,7 @@ push $N6b4a000
   xpos -1165
   ypos 814
  }
-push $Nfd40800
+push $N61b01c00
  Multiply {
   channels rgb
   value {{min(1,1+parent.frontbackmix)}}
@@ -993,7 +994,7 @@ push $Nfd40800
   xpos -824
   ypos 767
  }
-push $N6b4a800
+push $N61893c00
  Shuffle {
   in N
   out rgb
@@ -1029,13 +1030,13 @@ push $N6b4a800
   xpos -919
   ypos 1374
  }
-push $Nfcdc400
+push $N61aa1800
  Dot {
   name Dot22
   xpos -1579
   ypos 408
  }
-set N6acf000 [stack 0]
+set N61890800 [stack 0]
  Dot {
   name Dot32
   xpos -1751
@@ -1046,7 +1047,7 @@ set N6acf000 [stack 0]
   xpos -1751
   ypos 1187
  }
-push $N6acf000
+push $N61890800
  Remove {
   channels alpha
   name Remove1
@@ -1090,7 +1091,7 @@ add_layer {apChromaWeight apChromaWeight.red apChromaWeight.green apChromaWeight
   xpos -1579
   ypos 696
  }
-set N6acd400 [stack 0]
+set N6183a800 [stack 0]
  Dot {
   name Dot11
   note_font_size 41
@@ -1103,7 +1104,7 @@ set N6acd400 [stack 0]
   xpos -1671
   ypos 927
  }
-push $N6acd400
+push $N6183a800
  Remove {
   channels apChromaWeight
   name Remove3
@@ -1150,8 +1151,8 @@ push $N6acd400
   addUserKnob {7 frf}
   frf {{(frame%1)*(parent.samples+1)/parent.samples}}
  }
-set N6a93400 [stack 0]
-push $N6a93400
+set N61838c00 [stack 0]
+push $N61838c00
  Shuffle {
   in apChromaWeight
   name Shuffle2
@@ -1251,7 +1252,7 @@ add_layer {REFRACTION REFRACTION.red REFRACTION.green REFRACTION.blue REFRACTION
   xpos -1579
   ypos 2091
  }
-set N6a90400 [stack 0]
+set N617e1800 [stack 0]
  Colorspace {
   colorspace_out HSV
   name Colorspace10
@@ -1304,7 +1305,7 @@ set N6a90400 [stack 0]
   xpos -1739
   ypos 2165
  }
-push $N6a90400
+push $N617e1800
  Switch {
   inputs 2
   which {{tintabsolute}}

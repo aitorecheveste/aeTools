@@ -1,7 +1,7 @@
 Group {
  name aeBrokenEdges
  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\nif k.name() == \"broken\":\n    kv = k.value()\n    n\[\"size2\"].setVisible(kv == \"simple\")\n    n\[\"tolerance\"].setVisible(kv == \"smart\")"
- tile_color 0xa0500ff
+ tile_color 0xd1724dff
  note_font "Verdana Bold"
  note_font_color 0xffffffff
  icon aeBrokenEdges_Node.png
@@ -72,7 +72,7 @@ Group {
   xpos 441
   ypos 545
  }
-set Nb959cc00 [stack 0]
+set N5eaeb400 [stack 0]
  Input {
   inputs 0
   name matte
@@ -94,15 +94,15 @@ set Nb959cc00 [stack 0]
   xpos 958
   ypos 60
  }
-set Nb9543c00 [stack 0]
+set N5eaea800 [stack 0]
  Dot {
   name Dot3
   note_font_size 41
   xpos 796
   ypos 60
  }
-set Nb9543800 [stack 0]
-push $Nb9543800
+set N5eaea400 [stack 0]
+push $N5eaea400
  Input {
   inputs 0
   name img
@@ -123,7 +123,7 @@ push $Nb9543800
   xpos 261
   ypos 60
  }
-set Nb9542c00 [stack 0]
+set N5eae9800 [stack 0]
  Switch {
   inputs 2
   which {{"\[exists parent.input]"}}
@@ -138,7 +138,7 @@ set Nb9542c00 [stack 0]
   xpos 578
   ypos 218
  }
-set Nb9542400 [stack 0]
+set N5eae9000 [stack 0]
  Switch {
   inputs 2
   which {{"\[exists parent.input]"}}
@@ -166,14 +166,14 @@ set Nb9542400 [stack 0]
   xpos 796
   ypos 468
  }
-set Nb9541400 [stack 0]
+set N610dbc00 [stack 0]
  Dilate {
   size 10
   name Dilate1
   xpos 654
   ypos 459
  }
-push $Nb9542400
+push $N5eae9000
  Merge2 {
   inputs 2
   operation mask
@@ -215,7 +215,7 @@ push $Nb9542400
   ypos 718
   disable {{method x1 1}}
  }
-push $Nb959cc00
+push $N5eaeb400
  Dot {
   name Dot1
   note_font_size 41
@@ -235,7 +235,7 @@ push $Nb959cc00
   xpos 578
   ypos 937
  }
-push $Nb9541400
+push $N610dbc00
  MergeExpression {
   inputs 2
   expr3 A.a<B.a?1:0
@@ -251,7 +251,7 @@ push $Nb9541400
   xpos 762
   ypos 957
  }
-push $Nb9543c00
+push $N5eaea800
  Dot {
   name Dot6
   note_font_size 41
@@ -266,7 +266,7 @@ push $Nb9543c00
   xpos 762
   ypos 1246
  }
-push $Nb9542c00
+push $N5eae9800
  Dot {
   name Dot7
   note_font_size 41

@@ -1,9 +1,8 @@
 Group {
  name aeBrokenShapes
- tile_color 0xa0500ff
+ tile_color 0xd1724dff
  note_font "Verdana Bold"
  note_font_color 0xffffffff
-
  icon aeBrokenEdges_Node.png
  addUserKnob {20 aeBrokenShapes}
  addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
@@ -101,7 +100,7 @@ Group {
   xpos -1075
   ypos 1801
  }
-set N61af6800 [stack 0]
+set N61616c00 [stack 0]
  Dot {
   name Dot27
   xpos -1075
@@ -113,7 +112,7 @@ set N61af6800 [stack 0]
   xpos -149
   ypos -208
  }
-set N61af6000 [stack 0]
+set N61616400 [stack 0]
  NoOp {
   name format
   xpos -149
@@ -128,7 +127,7 @@ set N61af6000 [stack 0]
   xpos -115
   ypos -125
  }
-set N61af5800 [stack 0]
+set N61615c00 [stack 0]
  Dot {
   name Dot15
   note_font_size 41
@@ -140,7 +139,7 @@ set N61af5800 [stack 0]
   xpos 145
   ypos 2443
  }
-set N61af5000 [stack 0]
+set N61615400 [stack 0]
  Dot {
   name Dot21
   note_font_size 41
@@ -153,14 +152,14 @@ set N61af5000 [stack 0]
   xpos 397
   ypos 2951
  }
-set N61af4800 [stack 0]
-push $N61af5800
+set N61614c00 [stack 0]
+push $N61615c00
  Dot {
   name Dot22
   xpos -115
   ypos -50
  }
-set N61af4400 [stack 0]
+set N61614800 [stack 0]
  Dot {
   name Dot23
   xpos 29
@@ -187,7 +186,7 @@ set N61af4400 [stack 0]
   xpos -287
   ypos 53
  }
-push $N61af4400
+push $N61614800
  Switch {
   inputs 2
   which 1
@@ -201,7 +200,7 @@ push $N61af4400
   xpos -115
   ypos 265
  }
-set Nc1e52400 [stack 0]
+set N615ce800 [stack 0]
  Switch {
   inputs 2
   which {{keep<2?1:0}}
@@ -214,15 +213,15 @@ set Nc1e52400 [stack 0]
   xpos 39
   ypos 2450
  }
-push $N61af6800
-push $N61af6000
+push $N61616c00
+push $N61616400
  Remove {
   name Remove1
   xpos -796
   ypos 261
   hide_input true
  }
-set Nc1e51800 [stack 0]
+set N615cdc00 [stack 0]
  Expression {
   expr0 (x+0.5)/width
   expr1 (y+0.5)/height
@@ -231,7 +230,7 @@ set Nc1e51800 [stack 0]
   ypos 1797
   hide_input true
  }
-push $Nc1e52400
+push $N615ce800
  Blur {
   channels alpha
   size {{"newrandom==0?parent.trans:lerp(0,100,random(newrandom+1))\n"}}
@@ -246,13 +245,13 @@ push $Nc1e52400
   xpos -115
   ypos 953
  }
-set Nc1e50c00 [stack 0]
+set N615cd000 [stack 0]
  Dot {
   name Dot33
   xpos -115
   ypos 1303
  }
-set Nc1e50800 [stack 0]
+set N615ccc00 [stack 0]
  FilterErode {
   channels alpha
   size -150
@@ -278,7 +277,7 @@ set Nc1e50800 [stack 0]
   xpos -558
   ypos 1517
  }
-push $Nc1e51800
+push $N615cdc00
  Expression {
   expr0 (x+0.5)/width
   expr1 (y+0.5)/height
@@ -287,7 +286,7 @@ push $Nc1e51800
   ypos 1509
   hide_input true
  }
-push $Nc1e51800
+push $N615cdc00
  Noise {
   size 1
   zoffset {{seed+seed_3+3}}
@@ -300,7 +299,7 @@ push $Nc1e51800
   ypos 1270
   hide_input true
  }
-push $Nc1e51800
+push $N615cdc00
  Noise {
   size 1
   zoffset {{newrandom==0?seed+seed_4+4:random(newrandom+121)}}
@@ -320,7 +319,7 @@ push $Nc1e51800
   xpos -666
   ypos 928
  }
-push $Nc1e50c00
+push $N615cd000
  FilterErode {
   size {{parent.fill_size}}
   name FilterErode3
@@ -350,13 +349,13 @@ push $Nc1e50c00
   xpos -632
   ypos 1038
  }
-set Nc1e0d400 [stack 0]
+set N61585800 [stack 0]
  Dot {
   name Dot8
   xpos -632
   ypos 1136
  }
-push $Nc1e52400
+push $N615ce800
  Dot {
   name Dot11
   xpos -495
@@ -391,7 +390,7 @@ push $Nc1e52400
   ypos 378
   disable {{ealpha.ealpha==1?0:1 x9 1}}
  }
-push $Nc1e51800
+push $N615cdc00
  Noise {
   size 1
   zoffset {{newrandom==0?seed+seed_2:random(newrandom+4)}}
@@ -408,7 +407,7 @@ push $Nc1e51800
   xpos -843
   ypos 382
  }
-push $Nc1e51800
+push $N615cdc00
  Noise {
   size 1
   zoffset {{newrandom==0?seed+seed_2:random(newrandom+41)}}
@@ -437,7 +436,7 @@ push $Nc1e51800
   xpos -759
   ypos 414
  }
-push $Nc1e51800
+push $N615cdc00
  Expression {
   expr0 (x+0.5)/width
   expr1 (y+0.5)/height
@@ -454,7 +453,7 @@ push $Nc1e51800
   xpos -941
   ypos 410
  }
-set N61bedc00 [stack 0]
+set N61516000 [stack 0]
  Dot {
   name Dot7
   xpos -1197
@@ -465,8 +464,8 @@ set N61bedc00 [stack 0]
   xpos -1197
   ypos 1136
  }
-push $Nc1e0d400
-push $Nc1e51800
+push $N61585800
+push $N615cdc00
  Expression {
   expr0 (x+0.5)/width
   expr1 (y+0.5)/height
@@ -475,7 +474,7 @@ push $Nc1e51800
   ypos 1034
   hide_input true
  }
-push $Nc1e51800
+push $N615cdc00
  Noise {
   size 1
   gain 0.6
@@ -492,7 +491,7 @@ push $Nc1e51800
   xpos -814
   ypos 610
  }
-push $Nc1e51800
+push $N615cdc00
  Noise {
   size 1
   zoffset {{newrandom==0?seed+seed_2+2:random(newrandom+43) x40 2.11}}
@@ -505,7 +504,7 @@ push $Nc1e51800
   ypos 523
   hide_input true
  }
-set N61bec400 [stack 0]
+set N61514800 [stack 0]
  Merge2 {
   inputs 2
   operation copy
@@ -524,9 +523,9 @@ set N61bec400 [stack 0]
   xpos -737
   ypos 681
  }
-push $N61bedc00
-push $N61bec400
-push $Nc1e51800
+push $N61516000
+push $N61514800
+push $N615cdc00
  Expression {
   expr0 (x+0.5)/width
   expr1 (y+0.5)/height
@@ -600,7 +599,7 @@ push $Nc1e51800
   xpos -941
   ypos 1791
  }
-push $Nc1e51800
+push $N615cdc00
  Expression {
   expr0 (x+0.5)/width
   expr1 (y+0.5)/height
@@ -622,7 +621,7 @@ push $Nc1e51800
   xpos -907
   ypos 2005
  }
-push $Nc1e50800
+push $N615ccc00
  STMap {
   inputs 2
   channels alpha
@@ -636,7 +635,7 @@ push $Nc1e50800
   xpos -115
   ypos 2092
  }
-set N61b17400 [stack 0]
+set N6143b800 [stack 0]
  Dot {
   name Dot1
   note_font_size 41
@@ -681,7 +680,7 @@ set N61b17400 [stack 0]
   xpos -237
   ypos 2382
  }
-push $N61b17400
+push $N6143b800
  Merge2 {
   inputs 2
   operation mask
@@ -726,15 +725,15 @@ push $N61b17400
   ypos 2676
   disable {{!invertshape x10 1}}
  }
-set N61ea7c00 [stack 0]
+set N61438400 [stack 0]
  Dot {
   name Dot17
   note_font_size 41
   xpos -115
   ypos 2831
  }
-push $N61ea7c00
-push $N61af5000
+push $N61438400
+push $N61615400
  ChannelMerge {
   inputs 2
   operation multiply
@@ -754,6 +753,7 @@ push $N61af5000
   disable {{invertshape*keep>0?1:0}}
  }
  Premult {
+  channels rgba
   name Premult1
   xpos 111
   ypos 2861
@@ -765,7 +765,7 @@ push $N61af5000
   xpos 111
   ypos 2941
  }
-push $N61af4800
+push $N61614c00
  Dot {
   name Dot25
   note_font_size 41
