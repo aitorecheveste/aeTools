@@ -1,0 +1,682 @@
+Group {
+ name iSTMap
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\n\nif k.name() == \"newRef\":\n  if k.value()==1:\n    n\['refFrame'].setEnabled(True)\n  else:\n    n\['refFrame'].setEnabled(False)\n"
+ tile_color 0x72c4b7ff
+ label "\[value channels]"
+ note_font "Verdana Bold"
+ note_font_color 0xff
+ icon iSTMap_Node.png
+ addUserKnob {20 iSTMap}
+ addUserKnob {41 "Local GPU: " T VectorBlur1.gpuName}
+ addUserKnob {6 useGpu l "Use GPU if available" +STARTLINE}
+ useGpu true
+ addUserKnob {6 vectorize l "Vectorize on CPU" -STARTLINE}
+ vectorize true
+ addUserKnob {26 ""}
+ addUserKnob {26 text_6 l "<b><font color=#ffffff>Referece Frame</font><b>"}
+ addUserKnob {3 refFrame l "reference frame" +DISABLED}
+ refFrame 1001
+ addUserKnob {26 text_6_2 l "    " -STARTLINE T " "}
+ addUserKnob {22 setCurrentFrame l "set current frame" -STARTLINE T nuke.thisNode().knob('refFrame').setValue(nuke.frame())}
+ addUserKnob {26 text_6_2_1 l "    " -STARTLINE T " "}
+ addUserKnob {6 newRef l "new reference" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_6_3 l "<b><font color=#ffffff>Output</font><b>"}
+ addUserKnob {4 output M {"warp source" "warp source (inverse)" map "map inverse" "" "" "" "" "" "" ""}}
+ addUserKnob {41 channels T FinalSTMap.channels}
+ addUserKnob {41 uv l "UV channels" T FinalSTMap.uv}
+ addUserKnob {41 blur l "blur channel" T FinalSTMap.blur}
+ addUserKnob {41 blur_scale l "blur scale" T FinalSTMap.blur_scale}
+ addUserKnob {41 maskChannel l "mask channel" T FinalSTMap.maskChannel}
+ addUserKnob {41 invert_mask l invert -STARTLINE T FinalSTMap.invert_mask}
+ addUserKnob {41 premultiplied -STARTLINE T FinalSTMap.premultiplied}
+ addUserKnob {41 filter T FinalSTMap.filter}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_6_1 l "<b><font color=#ffffff>Motion Blur</font><b>"}
+ addUserKnob {41 scale l "motion amount" T VectorBlur1.scale}
+ addUserKnob {41 motion_falloff l "motion falloff" T VectorBlur1.motion_falloff}
+ addUserKnob {41 offset l "shutter offset" T VectorBlur1.offset}
+ addUserKnob {26 ""}
+ addUserKnob {26 about_1 l "" +STARTLINE T "<span style=\"color:#666\"><br/><b>iSTMap v1.0</b> - <a  style=\"color:#666;text-decoration: none;\">Aitor Echeveste</a>  © 2021</span>"}
+ addUserKnob {20 about l About}
+ addUserKnob {26 text_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_2 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_4 l "" +STARTLINE T "<font color=#ffffff>\n<font size=\"7\">iSTMap</font>\n<font size=\"6\"> v1.0</font>\n"}
+ addUserKnob {26 about_1_1 l "" +STARTLINE T "by Aitor Echeveste © 2021"}
+ addUserKnob {26 text_1_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_3 l "" +STARTLINE T "   "}
+ addUserKnob {26 website l "" +STARTLINE T "<b><a href=\"http://www.aitorecheveste.com\"><span style=\"color:#C8C8C8;\">www.aitorecheveste.com</span></a><b>"}
+}
+ Input {
+  inputs 0
+  name stmap
+  xpos -452
+  ypos 580
+  number 1
+  addUserKnob {20 User}
+  addUserKnob {3 integer}
+  integer {{"\[exists input1]"}}
+ }
+ Dot {
+  name Dot28
+  xpos -418
+  ypos 630
+  addUserKnob {20 User}
+ }
+set N51757c00 [stack 0]
+ Dot {
+  name Dot27
+  xpos -182
+  ypos 630
+ }
+ Dot {
+  name Dot6
+  xpos -182
+  ypos 1575
+ }
+set N51757400 [stack 0]
+ Expression {
+  inputs 0
+  expr0 (x+0.5)/width
+  expr1 (y+0.5)/height
+  expr3 1
+  name UVmap5
+  xpos -692
+  ypos 604
+  hide_input true
+ }
+set N51757000 [stack 0]
+push $N51757c00
+ FrameHold {
+  first_frame {{parent.refFrame}}
+  name FrameHold3
+  xpos -452
+  ypos 685
+  disable {{parent.newRef==1?0:1}}
+ }
+ Switch {
+  inputs 2
+  which 1
+  name Switch1
+  xpos -582
+  ypos 691
+  disable {{parent.stmap.integer}}
+ }
+push $N51757000
+ BlinkScript {
+  inputs 2
+  recompileCount 2
+  ProgramGroup 1
+  KernelDescription "2 \"InverseSTKernel\" iterate pixelWise a5a117a2b5ca03f616b00de8228529e430a6bd8a02bbae0fea88e74253dd6f52 3 \"src\" Read Point \"stmap\" Read Point \"dst\" Write Random 1 \"resolution\" Float 2 AAAAAAAAAAA= 1 \"resolution\" 2 1 0"
+  kernelSource "kernel InverseSTKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessPoint, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> stmap;\n  Image<eWrite, eAccessRandom> dst;\n\n  param:\n    float2 resolution;\n\n  void process() \{\n    float2 uv;\n    uv.x = stmap().x * resolution.x - 0.5f;\n    uv.y = stmap().y * resolution.y - 0.5f;\n    //always make sure that you don't write outside bounds\n    //as it will usually crash nuke.\n    if (dst.bounds.inside(uv.x,uv.y)) \{ \n      dst(uv.x,uv.y) = src(); \n    \}\n  \}\n\};"
+  useGPUIfAvailable {{parent.useGpu}}
+  vectorize {{parent.vectorize}}
+  rebuild ""
+  InverseSTKernel_resolution {{width} {height}}
+  rebuild_finalise ""
+  name BlinkScript9
+  xpos -692
+  ypos 685
+ }
+ Expression {
+  expr2 0
+  name Expression9
+  xpos -692
+  ypos 1027
+ }
+ Dot {
+  name Dot30
+  xpos -658
+  ypos 1103
+ }
+set N51756000 [stack 0]
+ Blur {
+  size 1
+  name Blur7
+  xpos -569
+  ypos 1094
+ }
+ Expression {
+  expr0 a>0?r/a:a
+  expr1 a>0?g/a:a
+  expr2 a>0?b/a:a
+  expr3 a>0?a/a:a
+  name Expression10
+  xpos -569
+  ypos 1130
+ }
+push $N51756000
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge11
+  xpos -692
+  ypos 1130
+ }
+ Dot {
+  name Dot31
+  xpos -658
+  ypos 1179
+ }
+set N51783000 [stack 0]
+ Blur {
+  size 2
+  name Blur8
+  xpos -569
+  ypos 1170
+ }
+ Expression {
+  expr0 a>0?r/a:a
+  expr1 a>0?g/a:a
+  expr2 a>0?b/a:a
+  expr3 a>0?a/a:a
+  name Expression11
+  xpos -569
+  ypos 1206
+ }
+push $N51783000
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge12
+  xpos -692
+  ypos 1206
+ }
+ Dot {
+  name Dot32
+  xpos -658
+  ypos 1256
+ }
+set N51782000 [stack 0]
+ Blur {
+  size 16
+  name Blur9
+  xpos -569
+  ypos 1247
+ }
+ Expression {
+  expr0 a>0?r/a:a
+  expr1 a>0?g/a:a
+  expr2 a>0?b/a:a
+  expr3 a>0?a/a:a
+  name Expression12
+  xpos -569
+  ypos 1283
+ }
+push $N51782000
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge24
+  xpos -692
+  ypos 1283
+ }
+ Dot {
+  name Dot33
+  xpos -658
+  ypos 1333
+ }
+set N517b7000 [stack 0]
+ Blur {
+  size 64
+  name Blur10
+  xpos -569
+  ypos 1324
+ }
+ Expression {
+  expr0 a>0?r/a:a
+  expr1 a>0?g/a:a
+  expr2 a>0?b/a:a
+  expr3 a>0?a/a:a
+  name Expression13
+  xpos -569
+  ypos 1360
+ }
+push $N517b7000
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge25
+  xpos -692
+  ypos 1360
+ }
+ Dot {
+  name Dot34
+  xpos -658
+  ypos 1404
+ }
+set N517b6000 [stack 0]
+ Blur {
+  size 256
+  name Blur11
+  xpos -569
+  ypos 1395
+ }
+ Expression {
+  expr0 a>0?r/a:a
+  expr1 a>0?g/a:a
+  expr2 a>0?b/a:a
+  expr3 a>0?a/a:a
+  name Expression14
+  xpos -569
+  ypos 1431
+ }
+push $N517b6000
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge26
+  xpos -692
+  ypos 1431
+ }
+ Blur {
+  size 2
+  name Blur12
+  xpos -692
+  ypos 1455
+ }
+set N4c139000 [stack 0]
+ STMap {
+  inputs 2
+  uv rgb
+  name STMap2
+  xpos -692
+  ypos 1566
+  disable {{!parent.newRef}}
+ }
+ Dot {
+  name Dot18
+  xpos -658
+  ypos 1656
+ }
+set N4c138800 [stack 0]
+ Dot {
+  name Dot42
+  xpos -423
+  ypos 1656
+ }
+push $N4c138800
+ Expression {
+  inputs 0
+  expr0 (x+0.5)/width
+  expr1 (y+0.5)/height
+  expr3 1
+  name UVmap1
+  xpos -594
+  ypos 1728
+  hide_input true
+ }
+ BlinkScript {
+  inputs 2
+  recompileCount 2
+  ProgramGroup 1
+  KernelDescription "2 \"InverseSTKernel\" iterate pixelWise a5a117a2b5ca03f616b00de8228529e430a6bd8a02bbae0fea88e74253dd6f52 3 \"src\" Read Point \"stmap\" Read Point \"dst\" Write Random 1 \"resolution\" Float 2 AAAAAAAAAAA= 1 \"resolution\" 2 1 0"
+  kernelSource "kernel InverseSTKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessPoint, eEdgeClamped> src;\n  Image<eRead, eAccessPoint, eEdgeClamped> stmap;\n  Image<eWrite, eAccessRandom> dst;\n\n  param:\n    float2 resolution;\n\n  void process() \{\n    float2 uv;\n    uv.x = stmap().x * resolution.x - 0.5f;\n    uv.y = stmap().y * resolution.y - 0.5f;\n    //always make sure that you don't write outside bounds\n    //as it will usually crash nuke.\n    if (dst.bounds.inside(uv.x,uv.y)) \{ \n      dst(uv.x,uv.y) = src(); \n    \}\n  \}\n\};"
+  useGPUIfAvailable {{parent.useGpu}}
+  vectorize {{parent.vectorize}}
+  rebuild ""
+  InverseSTKernel_resolution {{width} {height}}
+  rebuild_finalise ""
+  name BlinkScript1
+  xpos -692
+  ypos 1722
+ }
+ Dot {
+  name Dot11
+  xpos -658
+  ypos 1826
+ }
+set N4c171800 [stack 0]
+ Blur {
+  size 1
+  name Blur1
+  xpos -569
+  ypos 1817
+ }
+ Expression {
+  expr0 a>0?r/a:a
+  expr1 a>0?g/a:a
+  expr2 a>0?b/a:a
+  expr3 a>0?a/a:a
+  name Expression1
+  xpos -569
+  ypos 1853
+ }
+push $N4c171800
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge2
+  xpos -692
+  ypos 1853
+ }
+ Dot {
+  name Dot12
+  xpos -658
+  ypos 1902
+ }
+set N4c170800 [stack 0]
+ Blur {
+  size 2
+  name Blur2
+  xpos -569
+  ypos 1893
+ }
+ Expression {
+  expr0 a>0?r/a:a
+  expr1 a>0?g/a:a
+  expr2 a>0?b/a:a
+  expr3 a>0?a/a:a
+  name Expression2
+  xpos -569
+  ypos 1929
+ }
+push $N4c170800
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge3
+  xpos -692
+  ypos 1929
+ }
+ Dot {
+  name Dot13
+  xpos -658
+  ypos 1979
+ }
+set N4c1a7800 [stack 0]
+ Blur {
+  size 16
+  name Blur3
+  xpos -569
+  ypos 1970
+ }
+ Expression {
+  expr0 a>0?r/a:a
+  expr1 a>0?g/a:a
+  expr2 a>0?b/a:a
+  expr3 a>0?a/a:a
+  name Expression3
+  xpos -569
+  ypos 2006
+ }
+push $N4c1a7800
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge4
+  xpos -692
+  ypos 2006
+ }
+ Dot {
+  name Dot14
+  xpos -658
+  ypos 2056
+ }
+set N4c1a6800 [stack 0]
+ Blur {
+  size 64
+  name Blur4
+  xpos -569
+  ypos 2047
+ }
+ Expression {
+  expr0 a>0?r/a:a
+  expr1 a>0?g/a:a
+  expr2 a>0?b/a:a
+  expr3 a>0?a/a:a
+  name Expression4
+  xpos -569
+  ypos 2083
+ }
+push $N4c1a6800
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge5
+  xpos -692
+  ypos 2083
+ }
+ Dot {
+  name Dot15
+  xpos -658
+  ypos 2127
+ }
+set N4c1dd800 [stack 0]
+ Blur {
+  size 256
+  name Blur5
+  xpos -569
+  ypos 2118
+ }
+ Expression {
+  expr0 a>0?r/a:a
+  expr1 a>0?g/a:a
+  expr2 a>0?b/a:a
+  expr3 a>0?a/a:a
+  name Expression5
+  xpos -569
+  ypos 2154
+ }
+push $N4c1dd800
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge6
+  xpos -692
+  ypos 2154
+ }
+ Blur {
+  size 2
+  name Blur6
+  xpos -692
+  ypos 2178
+ }
+set N4c1dc800 [stack 0]
+ Switch {
+  inputs 2
+  which {{parent.output<3?1:0}}
+  name Switch12
+  xpos -457
+  ypos 2184
+ }
+push $N51757400
+ Dot {
+  name Dot43
+  xpos -182
+  ypos 1812
+ }
+set N4c1dc000 [stack 0]
+push $N4c139000
+ Dot {
+  name Dot17
+  xpos -313
+  ypos 1464
+ }
+ Switch {
+  inputs 2
+  which {{parent.output<3?1:0}}
+  name Switch13
+  xpos -347
+  ypos 1809
+ }
+ Switch {
+  inputs 2
+  which {{"parent.output>1 & parent.newRef==1?1:0"}}
+  name Switch11
+  xpos -347
+  ypos 2184
+ }
+ Dot {
+  name Dot21
+  xpos -313
+  ypos 2325
+ }
+ Dot {
+  name Dot22
+  xpos 236
+  ypos 2325
+ }
+ Dot {
+  name Dot5
+  xpos 236
+  ypos 2889
+ }
+ Expression {
+  inputs 0
+  expr0 (x+0.5)/width
+  expr1 (y+0.5)/height
+  name Expression6
+  xpos -15
+  ypos 2427
+  hide_input true
+ }
+push $N4c138800
+ Dot {
+  name Dot19
+  xpos -792
+  ypos 1656
+ }
+ Dot {
+  name Dot20
+  xpos -792
+  ypos 2252
+ }
+push $N4c1dc800
+ Switch {
+  inputs 2
+  which {{"parent.output==2 || (parent.output==1&&parent.newRef==1) ?0:1"}}
+  name Switch7
+  xpos -692
+  ypos 2249
+ }
+ Dot {
+  name Dot9
+  xpos -658
+  ypos 2386
+ }
+ Dot {
+  name Dot24
+  xpos -91
+  ypos 2386
+ }
+ Switch {
+  inputs 2
+  which {{frame==refFrame?1:0}}
+  name Switch6
+  xpos -125
+  ypos 2427
+  disable {{!newRef}}
+ }
+push $N4c1dc000
+ Dot {
+  name Dot8
+  xpos -182
+  ypos 2475
+ }
+ Switch {
+  inputs 2
+  which {{parent.output==0?parent.newRef==1?1:0:1}}
+  name Switch3
+  xpos -125
+  ypos 2472
+ }
+ Dot {
+  name Dot1
+  xpos -91
+  ypos 2562
+ }
+set N4c22c000 [stack 0]
+ Dot {
+  name Dot2
+  xpos -196
+  ypos 2562
+ }
+ TimeOffset {
+  time_offset -1
+  time ""
+  name TimeOffset2
+  xpos -230
+  ypos 2609
+ }
+ Dot {
+  name Dot3
+  xpos -196
+  ypos 2667
+ }
+push $N4c22c000
+ TimeOffset {
+  time_offset 1
+  time ""
+  name TimeOffset1
+  xpos -125
+  ypos 2609
+ }
+ Merge2 {
+  inputs 2
+  operation from
+  name Merge1
+  xpos -125
+  ypos 2664
+ }
+ Expression {
+  expr0 r*input.width/2
+  expr1 g*input.height/2
+  name vectors
+  xpos -125
+  ypos 2688
+ }
+ Dot {
+  name Dot4
+  xpos -91
+  ypos 2772
+ }
+push $N4c22c000
+ Input {
+  inputs 0
+  name src
+  xpos 104
+  ypos 580
+ }
+ STMap {
+  inputs 2
+  uv rgb
+  name FinalSTMap
+  xpos 104
+  ypos 2553
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 forward.u
+  from1 rgba.green
+  to1 forward.v
+  name Copy1
+  xpos 104
+  ypos 2757
+ }
+ VectorBlur2 {
+  useGPUIfAvailable {{parent.useGpu}}
+  uv rgb
+  blur_uv uniform
+  soft_lines true
+  name VectorBlur1
+  selected true
+  xpos 104
+  ypos 2811
+  disable {{parent.scale==0?1:0}}
+ }
+ Switch {
+  inputs 2
+  which {{parent.output>1?1:0}}
+  name Switch10
+  xpos 104
+  ypos 2886
+ }
+ Output {
+  name Output
+  xpos 104
+  ypos 2957
+ }
+end_group
