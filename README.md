@@ -4,7 +4,7 @@
 
 
 - Hello, thanks you for download my tools.
-- Last update 24 October 2021.
+- Last update 1 November 2021.
 - Added aeMotionBlur
 
 ____
@@ -21,6 +21,9 @@ ____
 ____
 
 # aeTools
+
+## iSTMap
+Change the reference frame from the STMap node itself, invert the transformation and it allows adding motion blur.
 
 ## aeBrokenEdges
 Is a very light gizmo with which you can smartly break the edges of your mattes, adapting to the luminosity of the plate.
