@@ -3,7 +3,7 @@
 
 
 
-- Hello, thanks you for download my tools.
+- Hello and thank you for downloading my tools
 - Last update 1 November 2021.
 - Added aeMotionBlur
 
