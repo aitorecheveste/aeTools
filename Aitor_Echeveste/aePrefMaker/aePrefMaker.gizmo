@@ -1,0 +1,469 @@
+Group {
+ inputs 3
+ name aePrefMaker
+ tile_color 0x9c0000ff
+ note_font "Bitstream Vera Sans Bold"
+ selected true
+ xpos -578
+ ypos 851
+ cached true
+ addUserKnob {20 aePrefMaker}
+ addUserKnob {26 uvSelectorText l "<b><font color=#ffffff>UV selector</font><b>"}
+ addUserKnob {3 quality}
+ quality 256
+ addUserKnob {26 text l "" -STARTLINE T "     "}
+ addUserKnob {22 scan_geo l "Get UV Tiles" -STARTLINE T "#Code to get and set the uv tiles.\nimport math\n\nn = nuke.thisNode()\n#check if geo is connected or correct\ndef DumpAttr(G):\n    out = \[]\n    listAtr=\['uv','N','Cf','pw','vel']\n    for group in range(10):\n        for type in range(20):\n            for i in listAtr:\n                x = G.attribContext( i ,group,type)\n                if x is not None:\n                    A=x\n                    out.append(\[ A.name, A.group, A.type, A.channel, A.recursive, A.varying])\n    return out\n                    \ndef get_uv_tiles_map(node):\n    node.forceValidate()\n    geoList = node\['geo_select'].getGeometry()\n    numPoints = 0\n    uvtiles = set()\n    for item in geoList:\n        curObject = item\n        attr = DumpAttr(item)\n        attr = \[i for i in attr if i\[0] ==\"uv\"]\n    \n        UVW=\[]\n        for _name, _group, _type, _channel, _recursive, _varying in attr:\n\n            UV = curObject.attribContext('uv',_group, 2)\n\n            if UV is None:\n                UV = curObject.attribContext('uv',_group, 3)\n        \n            if UV is not None:\n                numPoints = UV.attribute.__len__()\n                UVW += \[UV.attribute.__getitem__(i) for i in range(numPoints)] \n        for i in UVW:\n            u = int(math.floor(i.x))\n            v = int(math.floor(i.y))\n            uvtiles.add(\"\{\} \{\}\".format(u, v))\n\n    return list(uvtiles)\n\n\ndef UV_statistics(node = None):\n    out = \"\"\n    out2 = \"\"\n    node = nuke.thisNode()\n    with node:\n        scene = nuke.toNode('Scene1')\n    \n    uvtiles = get_uv_tiles_map(scene)\n    if len(uvtiles) == 0: \n        return \"No UVS found\"\n    uvtiles = \[list(map(int, i.split())) for i in uvtiles]\n    uvtiles = sorted(uvtiles, key=lambda x: x\[0]) \n\n    U_range, V_range = \[u for u, v in uvtiles], \[v for u, v in uvtiles]\n    U_range, V_range = \[min(U_range), max(U_range)], \[min(V_range), max(V_range)]\n    for u, v in uvtiles:\n       out += \"layer uv:\{\},\{\}\\n\".format(u,v)\n       out2 += \"\{\}\{\} \".format(u,v)\n    node.knob('rangeU').setValue(U_range\[0])\n    node.knob('rangeU2').setValue(U_range\[1])\n    node.knob('rangeV').setValue(V_range\[0])\n    node.knob('rangeV2').setValue(V_range\[1])\n\n    return out\n\nUV_statistics(n)\n"}
+ addUserKnob {26 ""}
+ addUserKnob {3 rangeU l U}
+ addUserKnob {3 rangeU2 l "" -STARTLINE}
+ rangeU2 9
+ addUserKnob {3 rangeV l V}
+ addUserKnob {3 rangeV2 l "" -STARTLINE}
+ rangeV2 1
+ addUserKnob {26 pRefSettingsText l "<b><font color=#ffffff>Pref settings</font><b>"}
+ addUserKnob {41 positionReference l "position reference" T data.P_channel}
+ addUserKnob {41 first_frame l "ref frame" T FrameHold2.first_frame}
+ addUserKnob {26 space l "" -STARTLINE T "     "}
+ addUserKnob {6 perviewUV l "preview uv" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 about_1 l "" +STARTLINE T "<span style=\"color:#888\"><br/><b>aePrefMaker</b> - <a  style=\"color:#777;text-decoration: none;\">Aitor Echeveste</a>  © 2022</span>"}
+ addUserKnob {20 ScanlineRender}
+ addUserKnob {41 transparency T beauty.transparency}
+ addUserKnob {41 ztest_enabled l Z-buffer -STARTLINE T beauty.ztest_enabled}
+ addUserKnob {41 filter T beauty.filter}
+ addUserKnob {41 antialiasing T beauty.antialiasing}
+ addUserKnob {41 zblend_mode l "Z-blend mode" T beauty.zblend_mode}
+ addUserKnob {41 zblend_range l "Z-blend range" T beauty.zblend_range}
+ addUserKnob {41 projection_mode l "projection mode" T beauty.projection_mode}
+ addUserKnob {41 max_tessellation l "tessellation max" T beauty.max_tessellation}
+ addUserKnob {41 overscan T beauty.overscan}
+ addUserKnob {26 ""}
+ addUserKnob {41 ambient T beauty.ambient}
+ addUserKnob {20 Multisample}
+ addUserKnob {41 samples T beauty.samples}
+ addUserKnob {41 shutter T beauty.shutter}
+ addUserKnob {41 shutteroffset l "shutter offset" T beauty.shutteroffset}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T beauty.shuttercustomoffset}
+ addUserKnob {41 temporal_jitter l "randomize time" T beauty.temporal_jitter}
+ addUserKnob {41 spatial_jitter l "sample diameter" T beauty.spatial_jitter}
+ addUserKnob {41 focal_jitter l "focus diameter" T beauty.focal_jitter}
+ addUserKnob {41 stochastic_samples l "stochastic samples" T beauty.stochastic_samples}
+ addUserKnob {41 uniform_distribution l "uniform distribution" -STARTLINE T beauty.uniform_distribution}
+ addUserKnob {41 positionReference_1 l "position reference" +HIDDEN T aePrefMaker.positionReference}
+ addUserKnob {20 Shader}
+ addUserKnob {41 motion_vectors_type l "motion vectors" T beauty.motion_vectors_type}
+ addUserKnob {41 MB_channel l "motion vector channels" T beauty.MB_channel}
+ addUserKnob {26 ""}
+ addUserKnob {41 output_shader_vectors l "output vectors" -STARTLINE T beauty.output_shader_vectors}
+ addUserKnob {41 P_channel l "surface point" T beauty.P_channel}
+ addUserKnob {41 N_channel l "surface normal" T beauty.N_channel}
+ addUserKnob {26 ""}
+ addUserKnob {41 positionReference2 l "position reference" T data.P_channel}
+ addUserKnob {41 positionReference_2 l "position reference" +HIDDEN T aePrefMaker.positionReference}
+ addUserKnob {20 Deep}
+ addUserKnob {41 drop_zero_alpha_samples l "drop zero alpha samples" T data.drop_zero_alpha_samples}
+ addUserKnob {20 About}
+ addUserKnob {26 text_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_2 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_4 l "" +STARTLINE T "<font color=#ffffff><font size=\"6\">aePrefMaker</font><font size=\"2\"> v1.0</font>\n"}
+ addUserKnob {26 about_1_1 l "" +STARTLINE T "by Aitor Echeveste © 2022"}
+ addUserKnob {26 text_1_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_3 l "" +STARTLINE T "   "}
+ addUserKnob {26 website l "" +STARTLINE T "<b><a href=\"http://www.aitorecheveste.com\"><span style=\"color:#C8C8C8;\">www.aitorecheveste.com</span></a><b>"}
+}
+ Constant {
+  inputs 0
+  color {0 0 0 1}
+  format "256 256 0 0 256 256 1 square_256"
+  name Constant3
+  xpos -837
+  ypos 297
+ }
+ UVTile2 {
+  tile_u -1
+  scale {10 2}
+  name UVTile14
+  xpos -837
+  ypos 369
+ }
+ Input {
+  inputs 0
+  name geo
+  xpos -377
+  ypos 295
+  number 1
+ }
+ Scene {
+  name Scene1
+  xpos -367
+  ypos 417
+ }
+ Dot {
+  name Dot1
+  xpos -343
+  ypos 542
+ }
+set N56776000 [stack 0]
+ ApplyMaterial {
+  inputs 2
+  selectable false
+  name ApplyMaterial12
+  xpos -837
+  ypos 539
+ }
+ TransformGeo {
+  translate {100 {TransformGeo2.translate.x} {TransformGeo2.translate.x}}
+  name TransformGeo2
+  xpos -837
+  ypos 622
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  format "8192 6144 0 0 8192 6144 1 8K_CubeMap"
+  box_width {{parent.quality}}
+  box_height {{box_width}}
+  box_fixed true
+  black_outside true
+  name Reformat4
+  xpos -947
+  ypos 701
+ }
+ Reformat {
+  type scale
+  box_width {{UVTile14.scale.0}}
+  box_height {{UVTile14.scale.1}}
+  box_fixed true
+  scale {{UVTile14.scale.0} {UVTile14.scale.1}}
+  black_outside true
+  name Reformat5
+  xpos -947
+  ypos 725
+ }
+ ScanlineRender {
+  inputs 2
+  conservative_shader_sampling false
+  projection_mode uv
+  shutteroffset centred
+  stochastic_samples 50
+  motion_vectors_type off
+  MB_channel none
+  output_shader_vectors true
+  P_channel {P.red P.green P.blue}
+  name ScanlineRender16
+  xpos -837
+  ypos 725
+ }
+ FrameHold {
+  first_frame 1001
+  name FrameHold2
+  xpos -837
+  ypos 798
+  addUserKnob {20 RSPTab l RSP}
+  addUserKnob {22 set_frame l "set to current frame" -STARTLINE T "\{nuke.thisNode()\['first_frame'].setValue(nuke.frame())\}"}
+ }
+ Shuffle {
+  in {P.red P.green P.blue P.alpha}
+  in2 rgba
+  alpha alpha2
+  name Shuffle3
+  label "\[value in]"
+  xpos -837
+  ypos 830
+ }
+set N5671bc00 [stack 0]
+ Dot {
+  name Dot9
+  xpos -1250
+  ypos 837
+ }
+ Dot {
+  name Dot8
+  xpos -1250
+  ypos 1690
+ }
+ Input {
+  inputs 0
+  name cam
+  xpos -543
+  ypos 1359
+  number 2
+ }
+ Dot {
+  name Dot5
+  xpos -509
+  ypos 1454
+ }
+set N5671ac00 [stack 0]
+push $N56776000
+ Dot {
+  name Dot2
+  xpos -343
+  ypos 1323
+ }
+set N5671a800 [stack 0]
+ Input {
+  inputs 0
+  name bg
+  xpos -703
+  ypos 1359
+ }
+ Dot {
+  name Dot6
+  xpos -669
+  ypos 1426
+ }
+set N5671a000 [stack 0]
+ Dot {
+  name Dot4
+  xpos -383
+  ypos 1426
+ }
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  projection_mode perspective
+  motion_vectors_type distance
+  MB_channel forward
+  output_shader_vectors true
+  P_channel P
+  N_channel N
+  name beauty
+  selected true
+  xpos -377
+  ypos 1451
+ }
+ Dot {
+  name Dot7
+  xpos -343
+  ypos 1625
+ }
+push $N5671ac00
+push $N5671bc00
+ Dot {
+  name Dot10
+  xpos -803
+  ypos 871
+ }
+set N56719000 [stack 0]
+ Dot {
+  name Dot11
+  xpos -1035
+  ypos 871
+ }
+set N56718c00 [stack 0]
+ Dot {
+  name Dot14
+  xpos -1133
+  ypos 871
+ }
+ Invert {
+  channels alpha
+  name Invert2
+  note_font "Bitstream Vera Sans"
+  xpos -1167
+  ypos 929
+ }
+push $N56718c00
+ Shuffle {
+  alpha white
+  name Shuffle1
+  note_font "Bitstream Vera Sans"
+  xpos -1069
+  ypos 909
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  bbox intersection
+  name Merge1
+  note_font "Bitstream Vera Sans"
+  xpos -1069
+  ypos 935
+ }
+set N566d7800 [stack 0]
+ Blur {
+  channels rgba
+  size 2
+  quality 0
+  crop false
+  name Blur2
+  note_font "Bitstream Vera Sans"
+  xpos -959
+  ypos 935
+ }
+ Unpremult {
+  name Unpremult1
+  note_font "Bitstream Vera Sans"
+  xpos -959
+  ypos 961
+ }
+ Expression {
+  expr3 a==0?0:1
+  name Expression2
+  note_font "Bitstream Vera Sans"
+  xpos -959
+  ypos 987
+ }
+ FilterErode {
+  channels alpha
+  size 0.5
+  filter gaussian
+  name FilterErode1
+  note_font "Bitstream Vera Sans"
+  xpos -959
+  ypos 1013
+ }
+ Premult {
+  name Premult2
+  note_font "Bitstream Vera Sans"
+  xpos -959
+  ypos 1051
+ }
+push $N566d7800
+ Merge2 {
+  inputs 2
+  operation under
+  name Merge3
+  note_font "Bitstream Vera Sans"
+  xpos -1069
+  ypos 1051
+ }
+ Unpremult {
+  name Unpremult3
+  note_font "Bitstream Vera Sans"
+  xpos -1069
+  ypos 1075
+ }
+ Expression {
+  expr3 a<=0.000001?0:1
+  name Expression8
+  note_font "Bitstream Vera Sans"
+  xpos -1069
+  ypos 1101
+ }
+push $N56719000
+ Merge2 {
+  inputs 2
+  operation copy
+  bbox B
+  name Merge4
+  xpos -837
+  ypos 1101
+ }
+ Reformat {
+  type "to box"
+  format "8192 6144 0 0 8192 6144 1 8K_CubeMap"
+  box_width {{Reformat4.box_width}}
+  box_height {{Reformat4.box_height}}
+  box_fixed true
+  resize none
+  center false
+  pbb true
+  name Reformat6
+  xpos -837
+  ypos 1151
+ }
+push $N5671a800
+ ApplyMaterial {
+  inputs 2
+  selectable false
+  name ApplyMaterial13
+  xpos -837
+  ypos 1320
+ }
+push $N5671a000
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  transparency {{parent.beauty.transparency}}
+  ztest_enabled {{parent.beauty.ztest_enabled}}
+  filter {{parent.beauty.filter}}
+  antialiasing {{parent.beauty.antialiasing}}
+  zblend_mode {{parent.beauty.zblend_mode}}
+  zblend_range {{parent.beauty.zblend_range}}
+  projection_mode {{parent.beauty.projection_mode x20 4}}
+  max_tessellation {{parent.beauty.max_tessellation}}
+  overscan {{parent.beauty.overscan}}
+  ambient {{parent.beauty.ambient}}
+  samples {{parent.beauty.samples}}
+  shutter {{parent.beauty.shutter}}
+  shutteroffset {{parent.beauty.shutteroffset}}
+  shuttercustomoffset {{parent.beauty.shuttercustomoffset}}
+  temporal_jitter {{parent.beauty.temporal_jitter}}
+  spatial_jitter {{parent.beauty.spatial_jitter}}
+  focal_jitter {{parent.beauty.focal_jitter}}
+  stochastic_samples {{parent.beauty.stochastic_samples}}
+  uniform_distribution {{parent.beauty.uniform_distribution}}
+  motion_vectors_type distance
+  MB_channel forward
+  P_channel Pref
+  name data
+  xpos -837
+  ypos 1451
+ }
+ Dot {
+  name Dot3
+  xpos -803
+  ypos 1512
+ }
+set N56863c00 [stack 0]
+ Dot {
+  name Dot13
+  xpos -890
+  ypos 1512
+ }
+push $N56863c00
+ Dot {
+  name Dot12
+  xpos -890
+  ypos 1512
+ }
+ ShuffleCopy {
+  inputs 2
+  in2 none
+  red red
+  green green
+  blue blue
+  out {{{data.P_channel}}}
+  name CopyPref
+  label "\[value out]"
+  xpos -924
+  ypos 1548
+ }
+push $N56863c00
+ Copy {
+  inputs 2
+  channels {{{parent.data.P_channel}}}
+  name Copy
+  xpos -837
+  ypos 1543
+ }
+ Remove {
+  channels rgba
+  name Remove1
+  xpos -837
+  ypos 1585
+ }
+ Copy {
+  inputs 2
+  channels all
+  bbox B
+  name CopyBeauty
+  xpos -837
+  ypos 1613
+ }
+ Switch {
+  inputs 2
+  which {{parent.perviewUV}}
+  name previewPref
+  xpos -837
+  ypos 1687
+ }
+ Output {
+  name Output1
+  xpos -837
+  ypos 1781
+ }
+end_group
