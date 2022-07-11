@@ -1,0 +1,2033 @@
+set cut_paste_input [stack 0]
+version 12.2 v3
+push $cut_paste_input
+Group {
+ name aeUVChart
+ help "Version of Depth Bubble with an inner radius setting.  Leaving this at 0 will give the same result as before.  Values up to the radius value will allow an inner radius to be set.\n\nThere's also a dropdown list for fallof method - linear, smoothstep or cubic.\n\nv3 update - You can now scale the bubble in x, y and z world space.\n\n - Steve Newbold 2011 \n\nRotation and Stackable functuionality  added, Visualize in 3D\nif this is first in the stack, opperation should be set to IN\n\n- Daniel Velikov 2016"
+ onCreate "thisGRP = nuke.thisGroup()\nif thisGRP\['displayN'].getValue() :\n    import os\n    import re\n\n    fontpath = re.split( '/|\"\"' , nuke.EXE_PATH )\n    fontpath.pop()\n    fontpath += \['plugins','fonts']\n    \n    if os.path.isfile( '/'.join( fontpath + \['UtopiaBold.pfa'] ) ) :\n        thisGRP\['font'].setValue( '/'.join( fontpath + \['UtopiaBold.pfa'] ) )\n    elif os.path.isfile( '/'.join( fontpath + \['CourierBold.pfa'] ) ) :\n        thisGRP\['font'].setValue( '/'.join( fontpath + \['CourierBold.pfa'] ) )\n    elif os.path.isfile( '/'.join( fontpath + \['Courier10PitchBold.pfb'] ) ) :\n        thisGRP\['font'].setValue( '/'.join( fontpath + \['Courier10PitchBold.pfb'] ) )\n    else :\n        thisGRP\['font'].setValue( '/'.join( fontpath + \['BitstreamCharterBold.pfb'] ) )\n"
+ knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\nu = str(int(n\[\"rangeU\"].value()))\nu2 = str(int(n\[\"rangeU2\"].value()))\nv = str(int(n\[\"rangeV\"].value()))\nv2 = str(int(n\[\"rangeV2\"].value()))\nnewUVRange = \"\"\n\ndef uvRange():\n    newUVRange = \"U:\[\"+u+\", \"+u2+\"]   V:\[\"+v+\", \"+v2+\"]\"\n    n\[\"uvRange\"].setValue(newUVRange)\n    \nif k.name() in \[\"rangeU\"]:\n    uvRange()\nif k.name() in \[\"rangeU2\"]:\n    uvRange()\nif k.name() in \[\"rangeV\"]:\n    uvRange()\nif k.name() in \[\"rangeV2\"]:\n    uvRange()"
+ tile_color 0x9c0000ff
+ note_font "Bitstream Vera Sans Bold"
+ selected true
+ xpos -240
+ ypos -55
+ addUserKnob {20 aeUVChart}
+ addUserKnob {26 text_6 l "<b><font color=#ffffff>UV selector</font><b>"}
+ addUserKnob {4 preview l output M {"chart & geo" chart geo "" "" ""}}
+ addUserKnob {26 text_7 l "" -STARTLINE T "     "}
+ addUserKnob {22 scan_geo l "Get UV Tiles" -STARTLINE T "#Code to get and set the uv tiles.\nimport math\n\nn = nuke.thisNode()\nuvSelected = n\['select'].value()\n#check if geo is connected or correct\nif n.input(0)== None:\n    nuke.message(\"Connect a geo on the first input\")\nelse:\n    def DumpAttr(G):\n        out = \[]\n        listAtr=\['uv','N','Cf','pw','vel']\n        for group in range(10):\n            for type in range(20):\n                for i in listAtr:\n                    x = G.attribContext( i ,group,type)\n                    if x is not None:\n                        A=x\n                        out.append(\[ A.name, A.group, A.type, A.channel, A.recursive, A.varying])\n        return out\n                        \n    def get_uv_tiles_map(node):\n        node.forceValidate()\n        geoList = node\['geo_select'].getGeometry()\n        numPoints = 0\n        uvtiles = set()\n        for item in geoList:\n            curObject = item\n            attr = DumpAttr(item)\n            attr = \[i for i in attr if i\[0] ==\"uv\"]\n    \n            UVW=\[]\n            for _name, _group, _type, _channel, _recursive, _varying in attr:\n    \n                UV = curObject.attribContext('uv',_group, 2)\n    \n                if UV is None:\n                    UV = curObject.attribContext('uv',_group, 3)\n            \n                if UV is not None:\n                    numPoints = UV.attribute.__len__()\n                    UVW += \[UV.attribute.__getitem__(i) for i in range(numPoints)] \n            for i in UVW:\n                u = int(math.floor(i.x))\n                v = int(math.floor(i.y))\n                uvtiles.add(\"\{\} \{\}\".format(u, v))\n\n        return list(uvtiles)\n    \n\n    def UV_statistics(node = None):\n        out = \"\"\n        out2 = \"\"\n        node = nuke.thisNode()\n        with node:\n            scene = nuke.toNode('Scene1')\n        \n        uvtiles = get_uv_tiles_map(scene)\n        if len(uvtiles) == 0: \n            return \"No UVS found\"\n        uvtiles = \[list(map(int, i.split())) for i in uvtiles]\n        uvtiles = sorted(uvtiles, key=lambda x: x\[0]) \n    \n        U_range, V_range = \[u for u, v in uvtiles], \[v for u, v in uvtiles]\n        U_range, V_range = \[min(U_range), max(U_range)], \[min(V_range), max(V_range)]       \n        node.knob('uvRange').setValue(\"U:\{\}   V:\{\}\\n\".format(U_range,V_range))    \n    \n        for u, v in uvtiles:\n           out += \"layer uv:\{\},\{\}\\n\".format(u,v)\n           out2 += \"\{\}\{\} \".format(u,v)\n        node.knob('uvToExport').setValue(out2)\n        node.knob('rangeU').setValue(U_range\[0])\n        node.knob('rangeU2').setValue(U_range\[1])\n        node.knob('rangeV').setValue(V_range\[0])\n        node.knob('rangeV2').setValue(V_range\[1])\n \n        return out\n    \n    UV_statistics(n)\n"}
+ addUserKnob {26 ""}
+ addUserKnob {3 texQuality l quality t "     "}
+ texQuality 256
+ addUserKnob {26 text l "" -STARTLINE T "     "}
+ addUserKnob {6 displayGeo l "Display geo" -STARTLINE}
+ displayGeo true
+ addUserKnob {6 displayN l "Display numbers" -STARTLINE}
+ addUserKnob {6 displayColor l "Display color" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {3 rangeU l U}
+ addUserKnob {3 rangeU2 l "" -STARTLINE}
+ rangeU2 9
+ addUserKnob {3 rangeV l V}
+ addUserKnob {3 rangeV2 l "" -STARTLINE}
+ rangeV2 1
+ addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+ addUserKnob {26 text_6_1 l "<b><font color=#ffffff>Position matte</font><b>"}
+ addUserKnob {41 cen l "center " T Add.cen}
+ addUserKnob {7 radius R 0 10}
+ radius 1
+ addUserKnob {41 font +INVISIBLE T store.font}
+ addUserKnob {26 text_5_2 l "" +STARTLINE T "                  "}
+ addUserKnob {26 text_5 l "" +STARTLINE T "                  "}
+ addUserKnob {26 about_1_2 l "" -STARTLINE T "<a  style=\"color:#888;text-decoration: none;\">Use <i>Ctrl+Alt+Pick</i> to get the positon matte</a> "}
+ addUserKnob {6 displayP l "Display postion" -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 about_1 l "" +STARTLINE T "<span style=\"color:#888\"><br/><b>aeUVChart</b> - <a  style=\"color:#777;text-decoration: none;\">Aitor Echeveste</a>  © 2022</span>"}
+ addUserKnob {20 export l Export}
+ addUserKnob {26 text_6_2 l "<b><font color=#ffffff>Export uv</font><b>"}
+ addUserKnob {1 uvRange l "uv range"}
+ uvRange "U:\[0, 9]   V:\[0, 1]\n"
+ addUserKnob {22 exportRange1 l "export range" -STARTLINE T "#Code for export all the uv range in only one scanline render.\nimport copy\n\nn = nuke.thisNode()\nuvSelected = n\['select'].value()\n#Variables.\ngeo = n.input(0)\ncam = n.input(1)\ntexQuality = n\['texQuality'].value()\nuvRange = n\['uvRange'].value() \nuvRangeNum = \"\"\nfor m in uvRange:\n    if m.isdigit():\n        uvRangeNum = uvRangeNum + m\n\nuSize = int(uvRangeNum\[1])+1\nvSize = int(uvRangeNum\[3])+1\nuvSize = \[]\nuvSize = \[uSize, vSize]\n#Create the nodes outside of the group.    \nwith nuke.root():\n    #Create a checkboard\n    checkBoard = nuke.createNode(\"CheckerBoard2\", inpanel=False)\n    xPos = checkBoard.xpos()\n    yPos = checkBoard.ypos()\n    checkBoard.setInput(0, None)\n    #Create first uvTile\n    tile1 = nuke.createNode('UVTile2',  inpanel=False)\n    tile1\['scale'].setValue(uvSize)\n    tile1\['xpos'].setValue(xPos)\n    tile1\['ypos'].setValue(yPos+100)\n    #Create first apply material.\n    mat = nuke.createNode(\"ApplyMaterial\", inpanel=False)\n    mat\['xpos'].setValue(xPos)\n    mat\['ypos'].setValue(yPos+250)\n    #Creat first scanline render.\n    sc = nuke.createNode(\"ScanlineRender\", inpanel=False)\n    sc\['xpos'].setValue(xPos)\n    sc\['ypos'].setValue(yPos+350)\n    sc\['projection_mode'].setValue(\"uv\")\n    sc.setInput(0, mat)\n    #Create first reformat.\n    reformat = nuke.createNode(\"Reformat\", inpanel=False)\n    reformat\['xpos'].setValue(xPos-100)\n    reformat\['ypos'].setValue(yPos+325)\n    reformat\['type'].setValue(\"to box\")\n    reformat\['box_fixed'].setValue(True)\n    reformat\['box_width'].setValue(texQuality)\n    reformat\['box_height'].setExpression(reformat\['name'].value()+'.box_width')\n    reformat.setInput(0, None)\n    #Create second reformat.\n    reformat2 = nuke.createNode(\"Reformat\", inpanel=False)\n    reformat2\['type'].setValue(2)\n    reformat2\['scale'].setValue(uvSize)\n    reformat2\['xpos'].setValue(xPos-100)\n    reformat2\['ypos'].setValue(yPos+350)\n    reformat2\['pbb'].setValue(False)\n    sc.setInput(0, reformat2)\n    #Create third reformat.\n    reformat3 = nuke.nodes.Reformat()\n    reformat3\['scale'].setValue(uvSize)\n    reformat3\['xpos'].setValue(xPos)\n    reformat3\['ypos'].setValue(yPos+400)\n    reformat3\['type'].setValue(\"to box\")\n    reformat3\['box_fixed'].setValue(True)\n    reformat3\['box_width'].setExpression(reformat\['name'].value()+'.box_width')\n    reformat3\['box_height'].setExpression(reformat\['name'].value()+'.box_height')\n    reformat3\['resize'].setValue('none')\n    reformat3\['center'].setValue(False)\n    reformat3\['pbb'].setValue(True)\n    reformat3.setInput(0, sc)\n    #Create first dot.\n    dot1 = nuke.nodes.Dot()\n    dot1\['xpos'].setValue(xPos-150)\n    dot1\['ypos'].setValue(yPos+254)\n    mat.setInput(0, dot1)  \n    #Create second reformat.\n    dot2 = nuke.nodes.Dot()\n    dot2\['xpos'].setValue(xPos-150)\n    dot2\['ypos'].setValue(yPos+554)\n    dot2.setInput(0, dot1)\n    #Create first apply material.\n    mat2 = nuke.createNode(\"ApplyMaterial\", inpanel=False)\n    mat2\['xpos'].setValue(xPos)\n    mat2\['ypos'].setValue(yPos+550)\n    mat2.setInput(0, dot2)\n    mat2.setInput(1, reformat3)\n    #Create second scanline render.\n    sc2 = nuke.createNode(\"ScanlineRender\", inpanel=False)\n    sc2\['xpos'].setValue(xPos)\n    sc2\['ypos'].setValue(yPos+650)\n    #Copy all values to the new geo from the original one.\n    newReadGeo = nuke.createNode(\"ReadGeo2\", inpanel=False)\n    newReadGeo\['xpos'].setValue(xPos-184)\n    newReadGeo\['ypos'].setValue(yPos+50)\n    newReadGeo.setInput(0, None)\n    if n.input(0) != None:\n        newReadGeo.readKnobs(geo.writeKnobs())\n    dot1.setInput(0, newReadGeo)\n    \n    #Copy all values new camera if exist, if not create a default one.     \n    if n.input(1) == None:\n        newCam = nuke.createNode(\"Camera2\", inpanel=False)\n        newCam.setInput(0, None)\n    else:\n        copy.copy(cam)\n        newCam = nuke.selectedNode()\n        newCam.setInput(0, None)\n    sc2.setInput(2, newCam)\n#Fix camera position. \nscxPos = nuke.toNode(sc2\['name'].value()).xpos()\nscyPos = nuke.toNode(sc2\['name'].value()).ypos()\nnewCam\['xpos'].setValue(scxPos-100)\nnewCam\['ypos'].setValue(scyPos-10)"}
+ addUserKnob {26 ""}
+ addUserKnob {1 uvToExport l "uv split list"}
+ uvToExport "01 00 20 30 40 50 60 70 80 90 "
+ addUserKnob {22 exportList l "export list" -STARTLINE T "#Code to export all the range of uv split in diferent scanline renders.\nimport copy\n\nn = nuke.thisNode()\nuvExportList = n.knob('uvToExport').value()\nuvExportList = uvExportList.split()\n\n#variables   \ngeo = n.input(0)\ncam = n.input(1)\ntexQuality = n\['texQuality'].value()\n#Create the nodes outside of the group.\nnuke.root().begin()\nwith nuke.root():  \n    #Reference position.\n    dotRef = nuke.createNode(\"Dot\", inpanel=False)\n    yPos = dotRef.ypos()\n    xPos = dotRef.xpos()\n    translate = 0        \n    #Create a readGeo and copy original values.\n    newReadGeo = nuke.createNode(\"ReadGeo2\", inpanel=False)\n    newReadGeo\['xpos'].setValue(xPos-34)\n    newReadGeo\['ypos'].setValue(yPos-150)\n    newReadGeo.setInput(0, None)\n    if n.input(0) != None:\n        newReadGeo.readKnobs(geo.writeKnobs())\n    #Create a checkboard.\n    checkBoard = nuke.createNode(\"CheckerBoard2\", inpanel=False)\n    checkBoard\['xpos'].setValue(xPos+70)\n    checkBoard\['ypos'].setValue(yPos-300)\n    checkBoard.setInput(0, None)\n    #Create first reformat.        \n    reformat = nuke.createNode(\"Reformat\", inpanel=False)\n    reformat\['xpos'].setValue(xPos-34+50)\n    reformat\['ypos'].setValue(yPos+150)\n    reformat\['type'].setValue(\"to box\")\n    reformat\['box_fixed'].setValue(True)\n    reformat\['box_width'].setValue(texQuality)\n    reformat\['box_height'].setExpression(reformat\['name'].value()+'.box_width')\n    reformat\['label'].setValue(str(int(texQuality))+'x'+str(int(texQuality)))\n    reformat.setInput(0, None)\n    #Reconection variables, for next steps.  \n    recon1 = newReadGeo\n    recon2 = checkBoard\n    recon3 = reformat\n    recon4 = None      \n    tileReconlist = \[]\n    #Loop for all the uvs.  \n    for i in uvExportList:\n        #Create first dot.\n        dot1 = nuke.createNode(\"Dot\", inpanel=False)\n        dot1\['xpos'].setValue(xPos+translate)\n        dot1\['ypos'].setValue(yPos)\n        dot1.setInput(0, recon1)\n        #Create second dot.\n        dot2 = nuke.createNode(\"Dot\", inpanel=False)\n        dot2\['xpos'].setValue(xPos+translate+104)\n        dot2\['ypos'].setValue(yPos-150)\n        dot2.setInput(0, recon2)\n        #Create third dot.\n        dot3 = nuke.createNode(\"Dot\", inpanel=False)\n        dot3\['xpos'].setValue(xPos+50+translate)\n        dot3\['ypos'].setValue(yPos+200)\n        dot3.setInput(0, recon3)\n        #Create first uv tile.\n        tile1 = nuke.createNode('UVTile2',  inpanel=False)\n        tile1\['label'].setValue(\"UV TileA_\"+str(i))\n        tile1\['xpos'].setValue(xPos+70+translate)\n        tile1\['ypos'].setValue(yPos-100)\n        tile1\['tile_u'].setValue(i\[:1])\n        tile1\['tile_v'].setValue(i\[1:])\n        tile1.setInput(0, dot2)\n        #Create first apply material.\n        mat = nuke.createNode(\"ApplyMaterial\", inpanel=False)\n        mat\['xpos'].setValue(xPos+70+translate)\n        mat\['ypos'].setValue(yPos+52)\n        mat.setInput(0, dot1)     \n        #Create first scanline render.\n        sc = nuke.createNode(\"ScanlineRender\", inpanel=False)\n        sc\['xpos'].setValue(xPos+70+translate)\n        sc\['ypos'].setValue(yPos+250)\n        sc\['projection_mode'].setValue(\"uv\")\n        sc.setInput(0, dot3)  \n        #Create second uv tile.\n        tile2 = nuke.createNode(\"UVTile2\", inpanel=False)\n        tileReconlist.append(tile2\['name'].value())\n        tile2\['label'].setValue(\"UV TileB_\"+str(i))\n        tile2\['xpos'].setValue(xPos+70+translate)\n        tile2\['ypos'].setValue(yPos+350)\n        tile2\['tile_u'].setValue(i\[:1])\n        tile2\['tile_v'].setValue(i\[1:])\n        #Unselect all node graph nodes.\n        nukescripts.clear_selection_recursive()\n        #Set values to all reconection variables.\n        translate=translate+300\n        recon1 = dot1\n        recon2 = dot2\n        recon3 = dot3\n    #Select and get pos of the new nodes.\n    uvTile = nuke.toNode(str(tileReconlist\[0]))\n    uvTileName = uvTile\['name'].value()\n    nuke.selectedNodes(uvTileName)\n    uvxPos = uvTile.xpos()\n    uvyPos = uvTile.ypos()\n    uvTile\['selected'].setValue(True)\n    space = 0\n    #Prepare list for new loop.\n    uvExportList.pop(0)\n    tileReconlist.pop(0)\n    #Loop to conect all new merge materials to uv tiles.\n    for i in uvExportList:\n        lastMergeCon = nuke.toNode(str(tileReconlist\[uvExportList.index(i)]))\n        mergeMat = nuke.createNode('MergeMat',  inpanel=False)\n        mergeMat\['label'].setValue(\"UV tile\"+str(i))\n        mergeMat\['xpos'].setValue(uvxPos)\n        mergeMat\['ypos'].setValue(uvyPos+100+space)\n        mergeMat.setInput(0, uvTile)\n        mergeMat.setInput(1, lastMergeCon)\n        space=space+50\n        uvTile = mergeMat\n    #Select last merge material node to continue.\nmergeMat\['selected'].setValue(True)\n#Create new apply material.\nmat2 = nuke.createNode(\"ApplyMaterial\", inpanel=False)\nmat2\['xpos'].setValue(uvxPos)\nmat2\['ypos'].setValue(uvyPos+200+space)\n#Create last dot amd reconect.   \ndot4=nuke.createNode('Dot',  inpanel=False)\ndot4\['xpos'].setValue(xPos)\ndot4\['ypos'].setValue(uvyPos+202+space)\ndot4.setInput(0, newReadGeo)\nmat2.setInput(0, dot4)   \nmat2\['selected'].setValue(True)\n#Create second scanline render.\nsc2 = nuke.createNode(\"ScanlineRender\", inpanel=False)\nsc2\['xpos'].setValue(uvxPos)\nsc2\['ypos'].setValue(uvyPos+400+space)\nsc2.setInput(0, None)\nsc2.setInput(1, mat2)\n#Copy all values new camera if exist, if not create a default one.  \nif n.input(1) == None:\n    newCam = nuke.createNode(\"Camera2\", inpanel=False)\nelse:\n    copy.copy(cam)\n    newCam = nuke.selectedNode()\nnewCam\['xpos'].setValue(sc2\['xpos'].value()-100)\nnewCam\['ypos'].setValue(sc2\['ypos'].value()-10)\nnewCam.setInput(0, None)\nsc2.setInput(2, newCam)\n#Fix camera and geo position.  \nnewReadGeo\['ypos'].setValue(newReadGeo\['ypos'].value()-150)   \nnewReadGeo\['xpos'].setValue(newReadGeo\['xpos'].value()-100)\nfor i in newReadGeo.dependent():\n    i\['xpos'].setValue(i\['xpos'].value()-100)\n#Remove reference dot.  \nnuke.delete(dotRef)\nnuke.root().end()\n"}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_5_1_1 l "" +STARTLINE T "            "}
+ addUserKnob {26 about_1_2_1 l "" -STARTLINE T "<a  style=\"color:#888;text-decoration: none;\">Use <i>Ctrl+Alt+Pick</i> to select the uv space you want to export or</a> "}
+ addUserKnob {6 boolean l "Display uv positon" -STARTLINE}
+ addUserKnob {26 about_1_2_1_1 l "" +STARTLINE T "<font size=\"1\">                      </font>"}
+ addUserKnob {41 select l "select uv" T Add2.cen}
+ addUserKnob {22 exportUV l "export uv" -STARTLINE T "import copy\n#Code for export the selected uv with the color picker.\nn = nuke.thisNode()\nuvSelected = n\['select'].value()\n#variables   \ngeo = n.input(0)\ncam = n.input(1)\nuSize = int(uvSelected\[0])\nvSize = int(uvSelected\[1])\nuvSize = \[]\nuvSize = \[uSize, vSize]\ntexQuality = n\['texQuality'].value()\n#create the nodes outside of the group \nwith nuke.root():\n    #Checkboard\n    checkBoard = nuke.createNode(\"CheckerBoard2\", inpanel=False)\n    xPos = checkBoard.xpos()\n    yPos = checkBoard.ypos()\n    checkBoard.setInput(0, None)\n    #first uvTile\n    tile1 = nuke.createNode('UVTile2',  inpanel=False)\n    tile1\['tile_u'].setValue(uSize)\n    tile1\['tile_v'].setValue(vSize)\n    tile1\['xpos'].setValue(xPos)\n    tile1\['ypos'].setValue(yPos+100)\n    #First apply material.\n    mat = nuke.createNode(\"ApplyMaterial\", inpanel=False)\n    mat\['xpos'].setValue(xPos)\n    mat\['ypos'].setValue(yPos+250)\n    #First scanline render.\n    sc = nuke.createNode(\"ScanlineRender\", inpanel=False)\n    sc\['xpos'].setValue(xPos)\n    sc\['ypos'].setValue(yPos+350)\n    sc\['projection_mode'].setValue(\"uv\")\n    sc.setInput(0, mat)\n    #First reformat.\n    reformat = nuke.nodes.Reformat()\n    reformat\['xpos'].setValue(xPos-100)\n    reformat\['ypos'].setValue(yPos+340)\n    reformat\['type'].setValue(\"to box\")\n    reformat\['box_fixed'].setValue(True)\n    reformat\['box_width'].setValue(texQuality)\n    reformat\['box_height'].setExpression(reformat\['name'].value()+'.box_width')\n    reformat\['label'].setValue(str(int(texQuality))+'x'+str(int(texQuality)))\n    reformat.setInput(0, None)\n    #Reconnect scanline render.   \n    sc.setInput(0, reformat)\n    #Second uvTile.\n    tile2 = nuke.createNode('UVTile2',  inpanel=False)\n    tile2\['tile_u'].setValue(uSize)\n    tile2\['tile_v'].setValue(vSize)\n    tile2\['xpos'].setValue(xPos)\n    tile2\['ypos'].setValue(yPos+420)\n    #First dot.\n    dot1 = nuke.nodes.Dot()\n    dot1\['xpos'].setValue(xPos-150)\n    dot1\['ypos'].setValue(yPos+254)\n    mat.setInput(0, dot1)  \n    #Second dot.\n    dot2 = nuke.nodes.Dot()\n    dot2\['xpos'].setValue(xPos-150)\n    dot2\['ypos'].setValue(yPos+554)\n    dot2.setInput(0, dot1)\n    #Second apply material.\n    mat2 = nuke.createNode(\"ApplyMaterial\", inpanel=False)\n    mat2\['xpos'].setValue(xPos)\n    mat2\['ypos'].setValue(yPos+550)\n    mat2.setInput(0, dot2)\n    mat2.setInput(1, tile2)\n    #Second scanlinerender.\n    sc2 = nuke.createNode(\"ScanlineRender\", inpanel=False)\n    sc2\['xpos'].setValue(xPos)\n    sc2\['ypos'].setValue(yPos+650)\n    #Copy all values to the new geo from the original one. \n    newReadGeo = nuke.createNode(\"ReadGeo2\", inpanel=False)\n    newReadGeo\['xpos'].setValue(xPos-184)\n    newReadGeo\['ypos'].setValue(yPos+50)\n    newReadGeo.setInput(0, None)\n    if n.input(0) != None:\n        newReadGeo.readKnobs(geo.writeKnobs())\n    dot1.setInput(0, newReadGeo)\n    #Copy all values new camera if exist, if not create a default one.     \n    if n.input(1) == None:\n        newCam = nuke.createNode(\"Camera2\", inpanel=False)\n        newCam.setInput(0, None)\n    else:\n        copy.copy(cam)\n        newCam = nuke.selectedNode()\n        newCam.setInput(0, None)\n    sc2.setInput(2, newCam)\n#Fix camera position. \nscxPos = nuke.toNode(sc2\['name'].value()).xpos()\nscyPos = nuke.toNode(sc2\['name'].value()).ypos()\nnewCam\['xpos'].setValue(scxPos-100)\nnewCam\['ypos'].setValue(scyPos-10)"}
+ addUserKnob {20 about l About}
+ addUserKnob {26 text_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_2 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_4 l "" +STARTLINE T "<font color=#ffffff><font size=\"6\">aeUVChart</font><font size=\"4\"> v1.0</font>\n"}
+ addUserKnob {26 about_1_1 l "" +STARTLINE T "by Aitor Echeveste  © 2022"}
+ addUserKnob {26 text_1_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_3 l "" +STARTLINE T "   "}
+ addUserKnob {26 website l "" +STARTLINE T "<b><a href=\"http://www.aitorecheveste.com\"><span style=\"color:#C8C8C8;\">www.aitorecheveste.com</span></a><b>"}
+}
+ Input {
+  inputs 0
+  name cam
+  xpos -311
+  ypos -623
+  number 1
+  addUserKnob {20 User}
+  addUserKnob {6 exInput +STARTLINE}
+  exInput {{"\[exists input1]"}}
+ }
+ Dot {
+  name Dot13
+  xpos -277
+  ypos -461
+ }
+set N2aae8800 [stack 0]
+ CheckerBoard2 {
+  inputs 0
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  boxsize 1.04
+  centerlinewidth 0
+  name CheckerBoard1
+  xpos -951
+  ypos -1677
+ }
+ CheckerBoard2 {
+  inputs 0
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  boxsize 1
+  centerlinewidth 0
+  name CheckerBoard3
+  xpos -952
+  ypos -1759
+ }
+ CheckerBoard2 {
+  inputs 0
+  format "512 512 0 0 512 512 1 square_512"
+  boxsize 512
+  color0 {0.41759 0.287811 0.0618483834 1}
+  color1 {0.503046 0.631391 0.723448 0}
+  color2 {0.517336 0.267583 0.91947 1}
+  color3 {0.010409 0.2329350412 0.461671 0}
+  centerlinewidth 0
+  name CheckerBoard6
+  xpos -786
+  ypos -2264
+ }
+ CheckerBoard2 {
+  inputs 0
+  format "512 512 0 0 512 512 1 square_512"
+  boxsize 512
+  color0 {0.01759 1.187811 0.3061848 1}
+  color1 {0.803046 0.131391 1.323448 0}
+  color2 {0.8030459881 0.7313910127 0.02344799973 0}
+  color3 {0.96759 0.087811 0.706185 1}
+  linecolor 0
+  centerlinewidth 0
+  name CheckerBoard7
+  xpos -692
+  ypos -2265
+ }
+ CheckerBoard2 {
+  inputs 0
+  format "512 512 0 0 512 512 1 square_512"
+  boxsize 512
+  color0 {0.110718 0.135031 0.564425 0}
+  color1 {0.994856 0.238256 0.08916817605 1}
+  color2 {0.3236886561 0.050497 0.685351 1}
+  color3 {0.317336 0.667583 0.91947 1}
+  centerlinewidth 0
+  name CheckerBoard5
+  xpos -881
+  ypos -2264
+ }
+ CheckerBoard2 {
+  inputs 0
+  format "512 512 0 0 512 512 1 square_512"
+  boxsize 512
+  color0 {0.07890084386 0.07117526978 0.2582490742 1}
+  color1 {0.5948559046 0.5382558703 0.08916817605 1}
+  color2 {0.223689 0.150497 0.685351 1}
+  color3 {0.3173356056 0.4675834775 0.4194702208 1}
+  centerlinewidth 0
+  name CheckerBoard4
+  xpos -978
+  ypos -2262
+ }
+ CheckerBoard2 {
+  inputs 0
+  format "512 512 0 0 512 512 1 square_512"
+  boxsize 512
+  color0 {0.11759 0.487811 0.061848 1}
+  color1 {0.3030456007 0.1313905567 0.12344791 0}
+  color2 {0.3173356056 0.4675834775 0.4194702208 1}
+  color3 {0.4104087353 0.2329350412 0.06167113781 0}
+  linecolor 0
+  centerlinewidth 0
+  name CheckerBoard2
+  xpos -1086
+  ypos -2256
+ }
+ ContactSheet {
+  inputs 5
+  width {{"inputs > 0 ? input.width * columns : 100"}}
+  height {{"inputs > 0 ? input.height/input.pixel_aspect * rows : 100"}}
+  rows {{"inputs > 0 ? ceil(inputs / columns) : 1"}}
+  columns 5
+  name ContactSheet1
+  xpos -1086
+  ypos -2154
+ }
+set N77e92400 [stack 0]
+ Dot {
+  name Dot15
+  xpos -1148
+  ypos -2150
+ }
+ Transform {
+  translate {0 512}
+  scale {-1 1}
+  center {1280 256}
+  shutteroffset centred
+  name Transform2
+  xpos -1182
+  ypos -2128
+ }
+push $N77e92400
+ Merge2 {
+  inputs 2
+  name Merge6
+  xpos -1086
+  ypos -2128
+ }
+ Expression {
+  expr3 1
+  name Expression2
+  xpos -1086
+  ypos -2102
+ }
+ Tile {
+  rows 2.5
+  filter Lanczos4
+  name Tile1
+  xpos -1086
+  ypos -2020
+ }
+ Reformat {
+  type "to box"
+  box_width 2560
+  box_height 1024
+  box_fixed true
+  resize none
+  center false
+  filter impulse
+  name Reformat17
+  xpos -1086
+  ypos -1994
+ }
+ Reformat {
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  resize distort
+  filter impulse
+  name Reformat4
+  xpos -1086
+  ypos -1968
+ }
+ Expression {
+  expr3 1
+  name Expression1
+  xpos -1086
+  ypos -1891
+ }
+set N77893800 [stack 0]
+ Merge2 {
+  inputs 2
+  name Merge5
+  xpos -1086
+  ypos -1736
+  disable {{parent.displayColor}}
+ }
+ Merge2 {
+  inputs 2
+  operation soft-light
+  mix 0.75
+  name Merge13
+  xpos -1086
+  ypos -1654
+  disable {{!parent.displayColor x1025 1}}
+ }
+ UVTile2 {
+  scale {10 10}
+  name UVTile2
+  xpos -1086
+  ypos -1360
+ }
+ Input {
+  inputs 0
+  name geo
+  xpos -1476
+  ypos -2159
+  addUserKnob {20 User}
+  addUserKnob {6 inp +STARTLINE}
+  inp {{"\[exists input]"}}
+ }
+ Scene {
+  name Scene1
+  xpos -1466
+  ypos -2060
+ }
+ Dot {
+  name Dot1
+  xpos -1442
+  ypos -1276
+ }
+set N77892000 [stack 0]
+ ApplyMaterial {
+  inputs 2
+  name ApplyMaterial1
+  xpos -1086
+  ypos -1280
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  format "8192 6144 0 0 8192 6144 1 8K_CubeMap"
+  box_width {{parent.texQuality}}
+  box_height {{box_width}}
+  box_fixed true
+  black_outside true
+  name Reformat8
+  xpos -1182
+  ypos -1131
+ }
+ Reformat {
+  type scale
+  box_width {{UVTile2.scale.0}}
+  box_height {{UVTile2.scale.1}}
+  box_fixed true
+  scale {{UVTile2.scale.0} {UVTile2.scale.1}}
+  black_outside true
+  name Reformat6
+  xpos -1182
+  ypos -1107
+ }
+add_layer {P P.red P.green P.blue P.alpha P.x pw.g pw.b P.y P.z P.X P.Y P.Z P.R P.G P.B P.B pw.alpha pw.r N.red N.green N.blue P.other}
+ ScanlineRender {
+  inputs 2
+  conservative_shader_sampling false
+  projection_mode uv
+  shutteroffset centred
+  motion_vectors_type off
+  MB_channel none
+  output_shader_vectors true
+  P_channel P
+  name ScanlineRender1
+  xpos -1086
+  ypos -1107
+ }
+ Reformat {
+  type "to box"
+  format "8192 6144 0 0 8192 6144 1 8K_CubeMap"
+  box_width {{Reformat8.box_width}}
+  box_height {{Reformat8.box_height}}
+  box_fixed true
+  resize none
+  center false
+  pbb true
+  name Reformat7
+  xpos -1086
+  ypos -959
+ }
+push $N77892000
+ Dot {
+  name Dot3
+  xpos -1442
+  ypos -761
+ }
+set N734db800 [stack 0]
+ ApplyMaterial {
+  inputs 2
+  name ApplyMaterial2
+  xpos -1086
+  ypos -765
+ }
+push 0
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  filter Keys
+  zblend_mode smooth
+  shutter 0
+  shutteroffset centred
+  spatial_jitter 0
+  motion_vectors_type distance
+  MB_channel none
+  output_shader_vectors true
+  P_channel P
+  name ScanlineRender2
+  xpos -1086
+  ypos -464
+ }
+ Dot {
+  name Dot16
+  xpos -1052
+  ypos -357
+ }
+set N734dac00 [stack 0]
+ Shuffle {
+  in {P.red P.green P.blue P.alpha}
+  in2 rgba
+  alpha alpha2
+  name Shuffle_Input_Channels2
+  xpos -1086
+  ypos -117
+  disable {{!displayP}}
+  addUserKnob {20 User}
+  addUserKnob {18 center l "" +STARTLINE}
+  center {0 0 0}
+  addUserKnob {6 center_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+ Dot {
+  name Dot19
+  xpos -1052
+  ypos 35
+ }
+set N734da400 [stack 0]
+push $N734dac00
+ Reformat {
+  format {{{parent.baseFormat.format}}}
+  center false
+  name Reformat10
+  xpos -848
+  ypos -367
+ }
+ Reformat {
+  type scale
+  scale {{parent.quality.scale}}
+  center false
+  pbb true
+  name quality4
+  xpos -848
+  ypos -329
+ }
+ Reformat {
+  type scale
+  box_width 824
+  scale {{parent.UVTile5.scale.0/10}}
+  pbb true
+  name Reformat12
+  xpos -848
+  ypos -303
+ }
+ Shuffle {
+  in P
+  in2 rgba
+  alpha alpha2
+  name Shuffle_Input_Channels
+  xpos -848
+  ypos -277
+  addUserKnob {20 User}
+  addUserKnob {18 center l "" +STARTLINE}
+  center {0 0 0}
+  addUserKnob {6 center_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ }
+set N734d8800 [stack 0]
+ Dot {
+  name Dot14
+  xpos -738
+  ypos -273
+ }
+set N734d8400 [stack 0]
+ Shuffle {
+  name Shuffle3
+  label "\[value in]"
+  xpos -579
+  ypos -280
+ }
+ Dot {
+  name Dot24
+  xpos -545
+  ypos -28
+ }
+push $N734d8400
+ Dot {
+  name Dot8
+  xpos -738
+  ypos -81
+ }
+push $N734d8800
+ Add {
+  channels rgb
+  value {{-cen.r} {-cen.g} {-cen.b} {curve}}
+  value_panelDropped true
+  name Add
+  label "invert Translation"
+  xpos -848
+  ypos -251
+  addUserKnob {20 User}
+  addUserKnob {18 cen}
+  cen {0.1511284411 12.18724632 0.8002120256}
+  addUserKnob {6 cen_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 center_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 m}
+  m 1
+ }
+ ColorMatrix {
+  matrix {
+      {{axis.world_matrix.0} {axis.world_matrix.4} {axis.world_matrix.8}}
+      {{axis.world_matrix.1} {axis.world_matrix.5} {axis.world_matrix.9}}
+      {{axis.world_matrix.2} {axis.world_matrix.6} {axis.world_matrix.10}}
+    }
+  invert true
+  name ColorMatrix
+  label "Inverse camera matrix"
+  xpos -848
+  ypos -213
+ }
+ Add {
+  channels rgb
+  value {{axis.world_matrix.3} {axis.world_matrix.7} {axis.world_matrix.11} 0}
+  name Add1
+  xpos -848
+  ypos -175
+ }
+ Expression {
+  temp_name0 l
+  temp_expr0 sqrt(r*r+g*g+b*b)
+  channel0 alpha
+  expr0 l
+  channel1 none
+  channel2 none
+  channel3 none
+  name LENGTH
+  tile_color 0xffff
+  xpos -848
+  ypos -149
+  addUserKnob {20 User}
+  addUserKnob {7 m}
+  m 1
+ }
+ Grade {
+  channels alpha
+  blackpoint {{parent.radius==0?.01:parent.radius}}
+  whitepoint 0
+  gamma 2
+  white_clamp true
+  name Grade1
+  xpos -848
+  ypos -123
+ }
+ Merge2 {
+  inputs 2
+  operation mask
+  name Merge7
+  xpos -848
+  ypos -85
+ }
+add_layer {aeUVChart_P aeUVChart_P.red aeUVChart_P.green aeUVChart_P.blue aeUVChart_P.alpha}
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 aeUVChart_P.red
+  from1 rgba.green
+  to1 aeUVChart_P.green
+  from2 rgba.blue
+  to2 aeUVChart_P.blue
+  from3 rgba.alpha
+  to3 aeUVChart_P.alpha
+  name Copy3
+  xpos -848
+  ypos -50
+ }
+ Group {
+  inputs 2
+  name Copy_Format
+  tile_color 0xa177a1ff
+  xpos -848
+  ypos 31
+  addUserKnob {20 User l Controls}
+  addUserKnob {3 w l "Incoming format   w"}
+  w {{width}}
+  addUserKnob {3 h -STARTLINE}
+  h {{height}}
+  addUserKnob {7 pa l pix.aspect -STARTLINE}
+  pa {{pixel_aspect}}
+  addUserKnob {26 ""}
+  addUserKnob {41 resize l "resize type" T Reformat.resize}
+  addUserKnob {41 center -STARTLINE T Reformat.center}
+  addUserKnob {41 flip -STARTLINE T Reformat.flip}
+  addUserKnob {41 flop -STARTLINE T Reformat.flop}
+  addUserKnob {41 turn -STARTLINE T Reformat.turn}
+  addUserKnob {41 filter T Reformat.filter}
+  addUserKnob {41 clamp -STARTLINE T Reformat.clamp}
+  addUserKnob {41 black_outside l "black outside" -STARTLINE T Reformat.black_outside}
+  addUserKnob {41 pbb l "preserve bounding box" -STARTLINE T Reformat.pbb}
+  addUserKnob {26 ""}
+  addUserKnob {26 a l "" +STARTLINE T "Just simple copy format values from A  to B\n\nDaniel V."}
+ }
+  Input {
+   inputs 0
+   name B
+   xpos 489
+   ypos 68
+  }
+  Reformat {
+   type "to box"
+   box_width {{A.width}}
+   box_height {{A.height}}
+   box_fixed true
+   box_pixel_aspect {{A.pixel_aspect}}
+   center false
+   filter impulse
+   pbb true
+   name Reformat
+   xpos 489
+   ypos 123
+  }
+  Output {
+   name Output1
+   xpos 489
+   ypos 208
+  }
+  Input {
+   inputs 0
+   name A
+   xpos 360
+   ypos 70
+   number 1
+  }
+ end_group
+set N4fab9600 [stack 0]
+ Grade {
+  channels alpha
+  white 2
+  black_clamp false
+  name Grade2
+  xpos -848
+  ypos 57
+  disable {{!displayP}}
+ }
+push $N734da400
+ Constant {
+  inputs 0
+  channels rgb
+  color {1 0 0 1}
+  format {{{parent.baseFormat.format}}}
+  name Constant1
+  xpos -1232
+  ypos 5
+  postage_stamp false
+ }
+ Group {
+  inputs 2
+  name Copy_Format2
+  tile_color 0xa177a1ff
+  xpos -1232
+  ypos 31
+  addUserKnob {20 User l Controls}
+  addUserKnob {3 w l "Incoming format   w"}
+  w {{width}}
+  addUserKnob {3 h -STARTLINE}
+  h {{height}}
+  addUserKnob {7 pa l pix.aspect -STARTLINE}
+  pa {{pixel_aspect}}
+  addUserKnob {26 ""}
+  addUserKnob {41 resize l "resize type" T Reformat.resize}
+  addUserKnob {41 center -STARTLINE T Reformat.center}
+  addUserKnob {41 flip -STARTLINE T Reformat.flip}
+  addUserKnob {41 flop -STARTLINE T Reformat.flop}
+  addUserKnob {41 turn -STARTLINE T Reformat.turn}
+  addUserKnob {41 filter T Reformat.filter}
+  addUserKnob {41 clamp -STARTLINE T Reformat.clamp}
+  addUserKnob {41 black_outside l "black outside" -STARTLINE T Reformat.black_outside}
+  addUserKnob {41 pbb l "preserve bounding box" -STARTLINE T Reformat.pbb}
+  addUserKnob {26 ""}
+  addUserKnob {26 a l "" +STARTLINE T "Just simple copy format values from A  to B\n\nDaniel V."}
+ }
+  Input {
+   inputs 0
+   name B
+   xpos 489
+   ypos 68
+  }
+  Reformat {
+   type "to box"
+   box_width {{A.width}}
+   box_height {{A.height}}
+   box_fixed true
+   box_pixel_aspect {{A.pixel_aspect}}
+   center false
+   filter impulse
+   name Reformat
+   xpos 489
+   ypos 123
+  }
+  Output {
+   name Output1
+   xpos 489
+   ypos 208
+  }
+  Input {
+   inputs 0
+   name A
+   xpos 360
+   ypos 70
+   number 1
+  }
+ end_group
+ Dot {
+  name Dot28
+  xpos -1198
+  ypos 67
+ }
+push $N734da400
+ Keymix {
+  inputs 3
+  channels rgb
+  bbox B
+  name Keymix2
+  xpos -1086
+  ypos 63
+ }
+ Dot {
+  name Dot30
+  xpos -1052
+  ypos 199
+ }
+set N78091800 [stack 0]
+ Dot {
+  name Dot31
+  xpos -845
+  ypos 199
+ }
+set N78091400 [stack 0]
+ Group {
+  name BBoxToFormat2
+  onCreate "n = nuke.thisNode()\ninputFormat = n.knob(\"inputFormat\")\ninputBBox = n.knob(\"inputBBox\")\ncrop = nuke.toNode(\"Crop6\")\ncropb = crop.knob('box')\noutputBBox = n.knob('outputBBox')\noutputBBoxCenter = n.knob(\"outputBBoxCenter\")\n\ninputFormat.setFlag(0x0000000000008000)\ninputBBox.setFlag(0x0000000000008000)\ncropb.setFlag(0x0000000000008000)\noutputBBox.setFlag(0x0000000000008000)\noutputBBoxCenter.setFlag(0x0000000000008000)\n\nn = nuke.thisNode()\nn.knob(\"overscan\").setRange(0,400)\nn.knob(\"overscanPercent\").setRange(1,4)"
+  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\nif k.name() == \"overscanType\":\n    if n.knob(\"overscanType\").getValue() == 1:\n        n.knob(\"overscanPercent\").setVisible(True)\n        n.knob(\"overscan\").setVisible(False)\n    else:\n        n.knob(\"overscanPercent\").setVisible(False)\n        n.knob(\"overscan\").setVisible(True)"
+  tile_color 0xa57aaaff
+  note_font "Verdana Bold"
+  note_font_color 0xffffffff
+  xpos -778
+  ypos 195
+  addUserKnob {20 CropBBox}
+  addUserKnob {4 type l Type +INVISIBLE M {"To Format" "To BBox"}}
+  addUserKnob {41 intersect T Crop6.intersect}
+  addUserKnob {6 blackOutside l "Black Outside" -STARTLINE}
+  addUserKnob {4 overscanType l "Overscan Type:" M {Pixels Percentage}}
+  overscanType Percentage
+  addUserKnob {14 overscan l Overscan +HIDDEN R 0 400}
+  addUserKnob {14 overscanPercent l "Overscan Percent" R 1 4}
+  overscanPercent 1
+  addUserKnob {20 inputBbox l "BBox Data" n 1}
+  addUserKnob {15 inputFormat l "Input Format"}
+  inputFormat {0 0 {input.width} {input.height}}
+  addUserKnob {15 inputBBox l "Input BBox"}
+  inputBBox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  addUserKnob {12 outputBBoxCenter l OutputBBoxCenter}
+  outputBBoxCenter {{OutputBBox1.outputBBoxCenter.w} {OutputBBox1.outputBBoxCenter.h}}
+  addUserKnob {15 outputBBox l "Output BBox"}
+  outputBBox {{OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox}}
+  addUserKnob {20 endGroup n -1}
+  addUserKnob {20 info_1 l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "crop to inputformat\n\ndisplays values of input bbox" T CropBBox}
+  addUserKnob {26 ver l Version: T v02}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 261
+   ypos 394
+  }
+  Dot {
+   name Dot2
+   note_font_size 41
+   xpos 295
+   ypos 462
+  }
+set N78090c00 [stack 0]
+  Dot {
+   name Dot1
+   note_font_size 41
+   xpos -160
+   ypos 462
+  }
+set N78090800 [stack 0]
+push $N78090c00
+  Crop {
+   box {{curve} {curve} {input.width} {input.height}}
+   crop {{parent.blackOutside}}
+   name Crop6
+   xpos 261
+   ypos 510
+   addUserKnob {20 User}
+   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  }
+set N78090400 [stack 0]
+  Remove {
+   operation keep
+   channels none
+   name Remove1
+   xpos 120
+   ypos 504
+  }
+set N7803fc00 [stack 0]
+  Transform {
+   scale {{parent.overscanPercent} {parent.overscanPercent}}
+   center {{input.bbox.r/2} {input.bbox.t/2}}
+   shutteroffset centred
+   name Transform1
+   xpos 120
+   ypos 555
+  }
+push $N7803fc00
+  AdjBBox {
+   numpixels {{parent.overscan} {parent.overscan}}
+   name AdjBBox1
+   xpos -5
+   ypos 510
+  }
+  Switch {
+   inputs 2
+   which {{overscanType}}
+   name Switch2
+   label "\[value which]"
+   xpos -5
+   ypos 549
+  }
+  Merge2 {
+   inputs 2
+   bbox intersection
+   Achannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   Bchannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   name Merge1
+   xpos -5
+   ypos 647
+   disable {{!parent.Crop6.intersect}}
+  }
+push $N78090800
+  CopyBBox {
+   inputs 2
+   name CopyBBox1
+   xpos -194
+   ypos 653
+  }
+  BlackOutside {
+   name BlackOutside1
+   xpos -194
+   ypos 692
+   disable {{!parent.blackOutside}}
+  }
+  Dot {
+   name Dot4
+   note_font_size 41
+   xpos -160
+   ypos 769
+  }
+push $N78090400
+  Switch {
+   inputs 2
+   which {{"overscanType == 0 ? overscan.w != 0 || overscan.h != 0 : overscanPercent.w != 1 || overscanPercent.h != 1 ? 1 : 0"}}
+   name Switch1
+   label "\[value which]"
+   xpos 261
+   ypos 759
+  }
+set N78084100 [stack 0]
+  Output {
+   name Output1
+   xpos 261
+   ypos 921
+  }
+push $N78084100
+  NoOp {
+   name OutputBBox1
+   xpos 377
+   ypos 820
+   addUserKnob {20 User}
+   addUserKnob {15 OutputBBox l "Output BBox"}
+   OutputBBox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+   addUserKnob {14 outputBBoxCenter l "Output BBox Center" R 0 100}
+   outputBBoxCenter {{OutputBBox.x+(OutputBBox.r-OutputBBox.x)/2} {OutputBBox.y+(OutputBBox.t-OutputBBox.y)/2}}
+  }
+ end_group
+set N78084f00 [stack 0]
+ Text {
+  output rgb
+  opacity 0.15
+  message "NO INPUTS DETECTED"
+  font "\[value store.font]"
+  size {{box.r/20}}
+  kerning 0.4
+  xjustify center
+  yjustify center
+  Transform 1
+  box {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  name noInputs
+  xpos -778
+  ypos 318
+  disable {{disable_error x1 1 x1001 1 x1083 1}}
+ }
+push $N78091400
+ Merge2 {
+  inputs 2
+  name Merge14
+  xpos -879
+  ypos 318
+ }
+push $N78084f00
+ Text {
+  output rgb
+  opacity 0.15
+  message "NO GEO INPUT"
+  font "\[value store.font]"
+  size {{box.r/20}}
+  kerning 0.5
+  xjustify center
+  yjustify center
+  Transform 1
+  box {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  name noGeo
+  xpos -695
+  ypos 270
+  disable {{disable_error x1 1 x1001 1 x1083 1}}
+ }
+push $N78084f00
+ Text {
+  output rgb
+  opacity 0.15
+  message "NO CAMERA INPUT"
+  font "\[value store.font]"
+  size {{box.r/20}}
+  kerning 0.5
+  xjustify center
+  yjustify center
+  Transform 1
+  box {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  name noCam
+  xpos -696
+  ypos 214
+  disable {{disable_error x1 1 x1001 1 x1083 1}}
+ }
+push $N78091400
+ Merge2 {
+  inputs 2
+  name Merge11
+  xpos -879
+  ypos 221
+  disable {{parent.cam.exInput}}
+ }
+ Merge2 {
+  inputs 2
+  name Merge12
+  xpos -879
+  ypos 250
+  disable {{parent.geo.inp}}
+ }
+ Switch {
+  inputs 2
+  which {{cam.exInput+geo.inp==0?1:0}}
+  name Switch2
+  xpos -989
+  ypos 318
+ }
+push $N78091800
+ Switch {
+  inputs 2
+  which {{parent.displayN}}
+  name DispN1
+  xpos -1086
+  ypos 318
+ }
+ Group {
+  name BBoxToFormat
+  onCreate "n = nuke.thisNode()\ninputFormat = n.knob(\"inputFormat\")\ninputBBox = n.knob(\"inputBBox\")\ncrop = nuke.toNode(\"Crop6\")\ncropb = crop.knob('box')\noutputBBox = n.knob('outputBBox')\noutputBBoxCenter = n.knob(\"outputBBoxCenter\")\n\ninputFormat.setFlag(0x0000000000008000)\ninputBBox.setFlag(0x0000000000008000)\ncropb.setFlag(0x0000000000008000)\noutputBBox.setFlag(0x0000000000008000)\noutputBBoxCenter.setFlag(0x0000000000008000)\n\nn = nuke.thisNode()\nn.knob(\"overscan\").setRange(0,400)\nn.knob(\"overscanPercent\").setRange(1,4)"
+  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\nif k.name() == \"overscanType\":\n    if n.knob(\"overscanType\").getValue() == 1:\n        n.knob(\"overscanPercent\").setVisible(True)\n        n.knob(\"overscan\").setVisible(False)\n    else:\n        n.knob(\"overscanPercent\").setVisible(False)\n        n.knob(\"overscan\").setVisible(True)"
+  tile_color 0xa57aaaff
+  note_font "Verdana Bold"
+  note_font_color 0xffffffff
+  xpos -1086
+  ypos 1149
+  addUserKnob {20 CropBBox}
+  addUserKnob {4 type l Type +INVISIBLE M {"To Format" "To BBox"}}
+  addUserKnob {41 intersect T Crop6.intersect}
+  addUserKnob {6 blackOutside l "Black Outside" -STARTLINE}
+  addUserKnob {4 overscanType l "Overscan Type:" M {Pixels Percentage}}
+  overscanType Percentage
+  addUserKnob {14 overscan l Overscan +HIDDEN R 0 400}
+  addUserKnob {14 overscanPercent l "Overscan Percent" R 1 4}
+  overscanPercent 1
+  addUserKnob {20 inputBbox l "BBox Data" n 1}
+  addUserKnob {15 inputFormat l "Input Format"}
+  inputFormat {0 0 {input.width} {input.height}}
+  addUserKnob {15 inputBBox l "Input BBox"}
+  inputBBox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  addUserKnob {12 outputBBoxCenter l OutputBBoxCenter}
+  outputBBoxCenter {{OutputBBox1.outputBBoxCenter.w} {OutputBBox1.outputBBoxCenter.h}}
+  addUserKnob {15 outputBBox l "Output BBox"}
+  outputBBox {{OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox}}
+  addUserKnob {20 endGroup n -1}
+  addUserKnob {20 info_1 l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "crop to inputformat\n\ndisplays values of input bbox" T CropBBox}
+  addUserKnob {26 ver l Version: T v02}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 261
+   ypos 394
+  }
+  Dot {
+   name Dot2
+   note_font_size 41
+   xpos 295
+   ypos 462
+  }
+set N7837ac00 [stack 0]
+  Dot {
+   name Dot1
+   note_font_size 41
+   xpos -160
+   ypos 462
+  }
+set N7837a800 [stack 0]
+push $N7837ac00
+  Crop {
+   box {{curve} {curve} {input.width} {input.height}}
+   crop {{parent.blackOutside}}
+   name Crop6
+   xpos 261
+   ypos 510
+   addUserKnob {20 User}
+   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  }
+set N7837a400 [stack 0]
+  Remove {
+   operation keep
+   channels none
+   name Remove1
+   xpos 120
+   ypos 504
+  }
+set N7837a000 [stack 0]
+  Transform {
+   scale {{parent.overscanPercent} {parent.overscanPercent}}
+   center {{input.bbox.r/2} {input.bbox.t/2}}
+   shutteroffset centred
+   name Transform1
+   xpos 120
+   ypos 555
+  }
+push $N7837a000
+  AdjBBox {
+   numpixels {{parent.overscan} {parent.overscan}}
+   name AdjBBox1
+   xpos -5
+   ypos 510
+  }
+  Switch {
+   inputs 2
+   which {{overscanType}}
+   name Switch2
+   label "\[value which]"
+   xpos -5
+   ypos 549
+  }
+  Merge2 {
+   inputs 2
+   bbox intersection
+   Achannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   Bchannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   name Merge1
+   xpos -5
+   ypos 647
+   disable {{!parent.Crop6.intersect}}
+  }
+push $N7837a800
+  CopyBBox {
+   inputs 2
+   name CopyBBox1
+   xpos -194
+   ypos 653
+  }
+  BlackOutside {
+   name BlackOutside1
+   xpos -194
+   ypos 692
+   disable {{!parent.blackOutside}}
+  }
+  Dot {
+   name Dot4
+   note_font_size 41
+   xpos -160
+   ypos 769
+  }
+push $N7837a400
+  Switch {
+   inputs 2
+   which {{"overscanType == 0 ? overscan.w != 0 || overscan.h != 0 : overscanPercent.w != 1 || overscanPercent.h != 1 ? 1 : 0"}}
+   name Switch1
+   label "\[value which]"
+   xpos 261
+   ypos 759
+  }
+set N7832f200 [stack 0]
+  Output {
+   name Output1
+   xpos 261
+   ypos 921
+  }
+push $N7832f200
+  NoOp {
+   name OutputBBox1
+   xpos 377
+   ypos 820
+   addUserKnob {20 User}
+   addUserKnob {15 OutputBBox l "Output BBox"}
+   OutputBBox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+   addUserKnob {14 outputBBoxCenter l "Output BBox Center" R 0 100}
+   outputBBoxCenter {{OutputBBox.x+(OutputBBox.r-OutputBBox.x)/2} {OutputBBox.y+(OutputBBox.t-OutputBBox.y)/2}}
+  }
+ end_group
+ Reformat {
+  format {{{parent.baseFormat.format}}}
+  center false
+  name Reformat1
+  xpos -1086
+  ypos 1175
+ }
+ Reformat {
+  type scale
+  scale {{parent.quality.scale}}
+  center false
+  name quality3
+  xpos -1086
+  ypos 1213
+ }
+ Reformat {
+  type scale
+  box_width 824
+  scale {{parent.UVTile5.scale.0/10}}
+  name Reformat3
+  xpos -1086
+  ypos 1237
+ }
+ BlackOutside {
+  name BlackOutside1
+  xpos -1086
+  ypos 1265
+ }
+ NoOp {
+  name height
+  xpos -1086
+  ypos 1291
+  addUserKnob {20 User}
+  addUserKnob {12 position_2d}
+  position_2d {{input.bbox.r} {input.bbox.t}}
+ }
+set N78305c00 [stack 0]
+ Reformat {
+  type "to box"
+  box_width {{position_2d}}
+  box_height {{position_2d.y}}
+  box_fixed true
+  resize none
+  center false
+  pbb true
+  name Reformat13
+  xpos -1086
+  ypos 1317
+  addUserKnob {20 User}
+  addUserKnob {12 position_2d}
+  position_2d {{parent.height.position_2d} {parent.height.position_2d}}
+ }
+ Dot {
+  name Dot7
+  xpos -1052
+  ypos 1437
+ }
+ Reformat {
+  inputs 0
+  type "to box"
+  format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+  box_width {{UVTile7.S}}
+  box_height {{UVTile7.S}}
+  box_fixed true
+  resize none
+  filter impulse
+  black_outside true
+  name Reformat11
+  xpos -2383
+  ypos 102
+  hide_input true
+ }
+ Expression {
+  expr0 "int( ( (x - UVTile7.U) / width ) * UVTile7.S )"
+  expr1 "int(( (y - UVTile7.V) / height ) * UVTile7.S )"
+  expr3 1
+  name BG
+  xpos -2383
+  ypos 128
+ }
+ Reformat {
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  center false
+  filter impulse
+  name Reformat14
+  xpos -2383
+  ypos 154
+ }
+ Reformat {
+  type scale
+  scale {{parent.quality.scale}}
+  center false
+  filter impulse
+  pbb true
+  name quality5
+  xpos -2383
+  ypos 192
+ }
+ Dot {
+  name Dot23
+  xpos -2349
+  ypos 259
+ }
+set N782c6c00 [stack 0]
+push $N77893800
+ CheckerBoard2 {
+  inputs 0
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  boxsize 102.4
+  color0 {0.05 0.05 0.05 1}
+  color1 {0.1 0.1 0.1 1}
+  color2 {0.05 0.05 0.05 1}
+  color3 {0.1 0.1 0.1 1}
+  linecolor 0
+  centerlinewidth 0
+  name CheckerBoard8
+  xpos -1287
+  ypos -2006
+ }
+ Switch {
+  inputs 2
+  which {{parent.displayColor}}
+  name dispColor
+  xpos -1287
+  ypos -1891
+ }
+ Dot {
+  name Dot6
+  xpos -2233
+  ypos -1887
+ }
+ Constant {
+  inputs 0
+  channels rgb
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  name baseScale
+  xpos -2157
+  ypos -131
+  postage_stamp false
+ }
+set N782c6000 [stack 0]
+ Merge2 {
+  inputs 2
+  bbox B
+  also_merge {P.red P.green P.blue P.alpha}
+  mix 0.25
+  name Merge2
+  xpos -2267
+  ypos -131
+ }
+ Dot {
+  name Dot29
+  xpos -2233
+  ypos -64
+ }
+set N782c5800 [stack 0]
+ Text {
+  output rgb
+  opacity 0.1
+  message " 90      91      92      93      94      95      96      97      98      99\n 80      81      82      83      84      85      86      87      88      89\n 70      71      72      73      74      75      76      77      78      79\n 60      61      62      63      64      65      66      67      68      69\n 50      51      52      53      54      55      56      57      58      59\n 40      41      42      43      44      45      46      47      48      49\n 30      31      32      33      34      35      36      37      38      39\n 20      21      22      23      24      25      26      27      28      29\n 10      11      12      13      14      15      16      17      18      19\n 00      01      02      03      04      05      06      07      08      09"
+  font "\[value store.font]"
+  size 40
+  kerning 0.034
+  leading 1.55
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 1024 999}
+  translate {-3 10}
+  name numbers01
+  xpos -2159
+  ypos -68
+  disable {{disable_error x1 1 x1001 1 x1083 1}}
+ }
+ Text {
+  output rgb
+  opacity 0.05
+  message " uv      uv      uv      uv      uv      uv      uv      uv      uv      uv\n uv      uv      uv      uv      uv      uv      uv      uv      uv      uv\n uv      uv      uv      uv      uv      uv      uv      uv      uv      uv\n uv      uv      uv      uv      uv      uv      uv      uv      uv      uv\n uv      uv      uv      uv      uv      uv      uv      uv      uv      uv\n uv      uv      uv      uv      uv      uv      uv      uv      uv      uv\n uv      uv      uv      uv      uv      uv      uv      uv      uv      uv\n uv      uv      uv      uv      uv      uv      uv      uv      uv      uv\n uv      uv      uv      uv      uv      uv      uv      uv      uv      uv\n uv      uv      uv      uv      uv      uv      uv      uv      uv      uv"
+  font "\[value store.font]"
+  size 15
+  kerning 0.57
+  leading 5.8
+  xjustify center
+  yjustify center
+  Transform 1
+  box {0 0 1024 1024}
+  translate {-4.5 -24}
+  name uvs
+  xpos -2159
+  ypos -42
+  disable {{disable_error x1 1 x1001 1 x1083 1}}
+ }
+push $N782c5800
+ Switch {
+  inputs 2
+  which {{parent.displayN}}
+  name DispN
+  xpos -2267
+  ypos -42
+ }
+ Reformat {
+  format {{{parent.baseFormat.format}}}
+  center false
+  filter impulse
+  name baseFormat1
+  xpos -2267
+  ypos 109
+ }
+ Reformat {
+  type scale
+  scale {{parent.quality.scale}}
+  center false
+  filter impulse
+  pbb true
+  name quality1
+  xpos -2267
+  ypos 147
+ }
+ Merge2 {
+  inputs 2
+  name Merge8
+  xpos -2267
+  ypos 255
+  disable {{!parent.boolean}}
+ }
+ Dot {
+  name Dot4
+  xpos -2233
+  ypos 387
+ }
+ Reformat {
+  inputs 0
+  type scale
+  box_width {{UVTile5.scale.0}}
+  box_height {{UVTile5.scale.1}}
+  box_fixed true
+  scale {{UVTile5.scale.0} {UVTile5.scale.1}}
+  black_outside true
+  name Reformat15
+  xpos -2123
+  ypos 95
+  hide_input true
+ }
+ Reformat {
+  format "1024 1024 0 0 1024 1024 1 square_1K"
+  pbb true
+  name baseFormat
+  xpos -2123
+  ypos 121
+ }
+ Reformat {
+  type scale
+  scale {{convertQuality/2}}
+  center false
+  name quality
+  xpos -2123
+  ypos 159
+  addUserKnob {20 User}
+  addUserKnob {7 convertQuality}
+  convertQuality {{5*texQuality/256}}
+ }
+ Reformat {
+  type scale
+  scale {{parent.UVTile5.scale.0/10} {parent.UVTile5.scale.1/10}}
+  name Reformat2
+  xpos -2123
+  ypos 354
+ }
+set N78279000 [stack 0]
+ Merge2 {
+  inputs 2
+  bbox A
+  also_merge {P.red P.green P.blue P.alpha}
+  name Merge3
+  xpos -2123
+  ypos 383
+ }
+ Multiply {
+  channels rgba
+  value 0.1
+  name Multiply3
+  xpos -2123
+  ypos 407
+  disable {{!parent.boolean}}
+ }
+ Dot {
+  name Dot20
+  xpos -2089
+  ypos 464
+ }
+set N78227c00 [stack 0]
+ Dot {
+  name Dot12
+  xpos -1940
+  ypos 464
+ }
+set N78227800 [stack 0]
+ Dot {
+  name Dot18
+  xpos -1939
+  ypos 991
+ }
+push $N2aae8800
+ Dot {
+  name Dot5
+  xpos -277
+  ypos 104
+ }
+push $N4fab9600
+ Shuffle {
+  in alpha
+  name Shuffle1
+  label "\[value in]"
+  xpos -568
+  ypos 27
+ }
+ Project3D2 {
+  inputs 2
+  name Project3D1
+  xpos -568
+  ypos 101
+ }
+ UVTile2 {
+  scale {{parent.UVTile5.scale} {parent.UVTile5.scale}}
+  name UVTile3
+  xpos -568
+  ypos 127
+ }
+push $N734db800
+ Dot {
+  name Dot10
+  xpos -1442
+  ypos 167
+ }
+ ApplyMaterial {
+  inputs 2
+  name ApplyMaterial5
+  xpos -568
+  ypos 164
+ }
+push $N78279000
+ ScanlineRender {
+  inputs 2
+  conservative_shader_sampling false
+  projection_mode uv
+  shutteroffset centred
+  motion_vectors_type distance
+  output_shader_vectors true
+  name ScanlineRender6
+  xpos -568
+  ypos 354
+ }
+ Dot {
+  name Dot9
+  xpos -534
+  ypos 681
+ }
+ Dot {
+  name Dot25
+  xpos -1653
+  ypos 681
+ }
+set N78225000 [stack 0]
+ Shuffle {
+  in aeUVChart_P
+  name Shuffle5
+  label "\[value in]"
+  xpos -1687
+  ypos 716
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove2
+  xpos -1687
+  ypos 754
+ }
+ Multiply {
+  channels rgba
+  value 0
+  name Multiply1
+  xpos -1687
+  ypos 792
+  disable {{parent.displayGeo}}
+ }
+ Dot {
+  name Dot26
+  xpos -1653
+  ypos 851
+ }
+push $N782c6c00
+ Dot {
+  name Dot2
+  xpos -2349
+  ypos 734
+ }
+push $N78225000
+ Constant {
+  inputs 0
+  color {1 0 0 1}
+  format {{{baseFormat.format}}}
+  name Constant2
+  xpos -2203
+  ypos 613
+  postage_stamp false
+ }
+ Reformat {
+  format {{{parent.baseFormat.format}}}
+  pbb true
+  name Reformat9
+  xpos -2203
+  ypos 639
+ }
+ Reformat {
+  type scale
+  scale {{parent.quality.scale}}
+  center false
+  pbb true
+  name quality2
+  xpos -2203
+  ypos 677
+ }
+ Wireframe {
+  inputs 0
+  operation "see through"
+  line_color 0.58
+  name Wireframe2
+  xpos -1880
+  ypos -1370
+ }
+ UVTile2 {
+  scale {{rangeU2+1} {rangeV2+1}}
+  name UVTile5
+  xpos -1880
+  ypos -1344
+ }
+ Shuffle {
+  red black
+  green black
+  blue black
+  alpha black
+  name Shuffle2
+  label "\[value in]"
+  xpos -1880
+  ypos -1318
+  disable {{parent.displayGeo}}
+ }
+push $N77892000
+ ApplyMaterial {
+  inputs 2
+  name ApplyMaterial3
+  xpos -1880
+  ypos -1280
+ }
+push $N78227800
+ ScanlineRender {
+  inputs 2
+  conservative_shader_sampling false
+  projection_mode uv
+  shutteroffset centred
+  motion_vectors_type off
+  MB_channel none
+  output_shader_vectors true
+  P_channel {P.red P.green P.blue}
+  name ScanlineRender4
+  xpos -1881
+  ypos 460
+ }
+ Dot {
+  name Dot22
+  xpos -1847
+  ypos 524
+ }
+set N781dcc00 [stack 0]
+push $N78227c00
+ Colorspace {
+  colorspace_out HSV
+  name Colorspace2
+  xpos -2123
+  ypos 518
+ }
+ Dot {
+  name Dot21
+  xpos -2089
+  ypos 562
+ }
+push $N781dcc00
+ Colorspace {
+  colorspace_out HSV
+  name Colorspace1
+  xpos -2035
+  ypos 520
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 rgba.red
+  from1 rgba.green
+  to1 rgba.green
+  bbox B
+  name Copy1
+  xpos -2035
+  ypos 546
+ }
+ Colorspace {
+  colorspace_in HSV
+  name Colorspace3
+  xpos -2035
+  ypos 596
+ }
+ Dissolve {
+  inputs 2
+  channels rgba
+  which 0.75
+  name Dissolve1
+  xpos -1881
+  ypos 596
+ }
+ Merge2 {
+  inputs 2+1
+  bbox B
+  name Merge1
+  xpos -1881
+  ypos 677
+  disable {{!displayGeo x1023 1}}
+ }
+ Copy {
+  inputs 2
+  from0 rgba.red
+  to0 P.red
+  from1 rgba.green
+  to1 P.green
+  name Copy2
+  xpos -1881
+  ypos 718
+ }
+ Merge2 {
+  inputs 2
+  name Merge9
+  xpos -1881
+  ypos 848
+  disable {{!displayP x1 1}}
+ }
+ Multiply {
+  channels rgba
+  value 10
+  name Multiply4
+  xpos -1880
+  ypos 873
+  disable {{!parent.boolean}}
+ }
+ Group {
+  inputs 2
+  name Copy_Format1
+  tile_color 0xa177a1ff
+  xpos -1880
+  ypos 987
+  addUserKnob {20 User l Controls}
+  addUserKnob {3 w l "Incoming format   w"}
+  w {{width}}
+  addUserKnob {3 h -STARTLINE}
+  h {{height}}
+  addUserKnob {7 pa l pix.aspect -STARTLINE}
+  pa {{pixel_aspect}}
+  addUserKnob {26 ""}
+  addUserKnob {41 resize l "resize type" T Reformat.resize}
+  addUserKnob {41 center -STARTLINE T Reformat.center}
+  addUserKnob {41 flip -STARTLINE T Reformat.flip}
+  addUserKnob {41 flop -STARTLINE T Reformat.flop}
+  addUserKnob {41 turn -STARTLINE T Reformat.turn}
+  addUserKnob {41 filter T Reformat.filter}
+  addUserKnob {41 clamp -STARTLINE T Reformat.clamp}
+  addUserKnob {41 black_outside l "black outside" -STARTLINE T Reformat.black_outside}
+  addUserKnob {41 pbb l "preserve bounding box" -STARTLINE T Reformat.pbb}
+  addUserKnob {26 ""}
+  addUserKnob {26 a l "" +STARTLINE T "Just simple copy format values from A  to B\n\nDaniel V."}
+ }
+  Input {
+   inputs 0
+   name B
+   xpos 489
+   ypos 68
+  }
+  Reformat {
+   type "to box"
+   box_width {{A.width}}
+   box_height {{A.height}}
+   box_fixed true
+   box_pixel_aspect {{A.pixel_aspect}}
+   center false
+   filter impulse
+   name Reformat
+   xpos 489
+   ypos 123
+  }
+  Output {
+   name Output1
+   xpos 489
+   ypos 208
+  }
+  Input {
+   inputs 0
+   name A
+   xpos 360
+   ypos 70
+   number 1
+  }
+ end_group
+ Transform {
+  translate {{"rangeU<0?0:\n(baseFormat.format.width/10*quality.scale)*-(rangeU)"} {"rangeV<0?0:\n(baseFormat.format.height/10*quality.scale)*-(rangeV)"}}
+  center {1510.5 302}
+  filter impulse
+  black_outside false
+  shutteroffset centred
+  name Transform1
+  xpos -1880
+  ypos 1013
+ }
+ Reformat {
+  type "to box"
+  box_width {{"(baseFormat.format.width*quality.scale)+Transform1.translate.x-((baseFormat.format.width/10*quality.scale)*(9-rangeU2)) <1? 1:\n\n(baseFormat.format.width*quality.scale)+Transform1.translate.x-((baseFormat.format.width/10*quality.scale)*(9-rangeU2))"}}
+  box_height {{"(baseFormat.format.height*quality.scale)+Transform1.translate.y-((baseFormat.format.height/10*quality.scale)*(9-rangeV2)) <1?1:\n\n(baseFormat.format.height*quality.scale)+Transform1.translate.y-((baseFormat.format.height/10*quality.scale)*(9-rangeV2))"}}
+  resize none
+  center false
+  filter impulse
+  name Reformat19
+  xpos -1880
+  ypos 1037
+ }
+ Reformat {
+  type "to box"
+  box_width {{Transform1.width}}
+  box_height 204
+  center false
+  filter impulse
+  black_outside true
+  name Reformat16
+  xpos -1880
+  ypos 1065
+ }
+ Group {
+  name BBoxToFormat1
+  onCreate "n = nuke.thisNode()\ninputFormat = n.knob(\"inputFormat\")\ninputBBox = n.knob(\"inputBBox\")\ncrop = nuke.toNode(\"Crop6\")\ncropb = crop.knob('box')\noutputBBox = n.knob('outputBBox')\noutputBBoxCenter = n.knob(\"outputBBoxCenter\")\n\ninputFormat.setFlag(0x0000000000008000)\ninputBBox.setFlag(0x0000000000008000)\ncropb.setFlag(0x0000000000008000)\noutputBBox.setFlag(0x0000000000008000)\noutputBBoxCenter.setFlag(0x0000000000008000)\n\nn = nuke.thisNode()\nn.knob(\"overscan\").setRange(0,400)\nn.knob(\"overscanPercent\").setRange(1,4)"
+  knobChanged "n = nuke.thisNode()\nk = nuke.thisKnob()\nif k.name() == \"overscanType\":\n    if n.knob(\"overscanType\").getValue() == 1:\n        n.knob(\"overscanPercent\").setVisible(True)\n        n.knob(\"overscan\").setVisible(False)\n    else:\n        n.knob(\"overscanPercent\").setVisible(False)\n        n.knob(\"overscan\").setVisible(True)"
+  tile_color 0xa57aaaff
+  note_font "Verdana Bold"
+  note_font_color 0xffffffff
+  xpos -1880
+  ypos 1091
+  addUserKnob {20 CropBBox}
+  addUserKnob {4 type l Type +INVISIBLE M {"To Format" "To BBox"}}
+  addUserKnob {41 intersect T Crop6.intersect}
+  addUserKnob {6 blackOutside l "Black Outside" -STARTLINE}
+  addUserKnob {4 overscanType l "Overscan Type:" M {Pixels Percentage}}
+  overscanType Percentage
+  addUserKnob {14 overscan l Overscan +HIDDEN R 0 400}
+  addUserKnob {14 overscanPercent l "Overscan Percent" R 1 4}
+  overscanPercent 1
+  addUserKnob {20 inputBbox l "BBox Data" n 1}
+  inputBbox 0
+  addUserKnob {15 inputFormat l "Input Format"}
+  inputFormat {0 0 {input.width} {input.height}}
+  addUserKnob {15 inputBBox l "Input BBox"}
+  inputBBox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+  addUserKnob {12 outputBBoxCenter l OutputBBoxCenter}
+  outputBBoxCenter {{OutputBBox1.outputBBoxCenter.w} {OutputBBox1.outputBBoxCenter.h}}
+  addUserKnob {15 outputBBox l "Output BBox"}
+  outputBBox {{OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox} {OutputBBox1.OutputBBox}}
+  addUserKnob {20 endGroup n -1}
+  addUserKnob {20 info_1 l Info}
+  addUserKnob {26 creator l Creator: T "<b><big>Tony Lyons"}
+  addUserKnob {26 desc l Description: t "crop to inputformat\n\ndisplays values of input bbox" T CropBBox}
+  addUserKnob {26 ver l Version: T v02}
+ }
+  Input {
+   inputs 0
+   name Input
+   xpos 261
+   ypos 394
+  }
+  Dot {
+   name Dot2
+   note_font_size 41
+   xpos 295
+   ypos 462
+  }
+set N78116c00 [stack 0]
+  Dot {
+   name Dot1
+   note_font_size 41
+   xpos -160
+   ypos 462
+  }
+set N78116800 [stack 0]
+push $N78116c00
+  Crop {
+   box {{curve} {curve} {input.width} {input.height}}
+   crop {{parent.blackOutside}}
+   name Crop6
+   xpos 261
+   ypos 510
+   addUserKnob {20 User}
+   addUserKnob {22 cropToBbox l "Crop to Bounding Box" -STARTLINE T codeBBox()}
+  }
+set N78116400 [stack 0]
+  Remove {
+   operation keep
+   channels none
+   name Remove1
+   xpos 120
+   ypos 504
+  }
+set N78116000 [stack 0]
+  Transform {
+   scale {{parent.overscanPercent} {parent.overscanPercent}}
+   center {{input.bbox.r/2} {input.bbox.t/2}}
+   shutteroffset centred
+   name Transform1
+   xpos 120
+   ypos 555
+  }
+push $N78116000
+  AdjBBox {
+   numpixels {{parent.overscan} {parent.overscan}}
+   name AdjBBox1
+   xpos -5
+   ypos 510
+  }
+  Switch {
+   inputs 2
+   which {{overscanType}}
+   name Switch2
+   label "\[value which]"
+   xpos -5
+   ypos 549
+  }
+  Merge2 {
+   inputs 2
+   bbox intersection
+   Achannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   Bchannels {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   output {-rgba.red -rgba.green -rgba.blue rgba.alpha}
+   name Merge1
+   xpos -5
+   ypos 647
+   disable {{!parent.Crop6.intersect}}
+  }
+push $N78116800
+  CopyBBox {
+   inputs 2
+   name CopyBBox1
+   xpos -194
+   ypos 653
+  }
+  BlackOutside {
+   name BlackOutside1
+   xpos -194
+   ypos 692
+   disable {{!parent.blackOutside}}
+  }
+  Dot {
+   name Dot4
+   note_font_size 41
+   xpos -160
+   ypos 769
+  }
+push $N78116400
+  Switch {
+   inputs 2
+   which {{"overscanType == 0 ? overscan.w != 0 || overscan.h != 0 : overscanPercent.w != 1 || overscanPercent.h != 1 ? 1 : 0"}}
+   name Switch1
+   label "\[value which]"
+   xpos 261
+   ypos 759
+  }
+set N781d8800 [stack 0]
+  Output {
+   name Output1
+   xpos 261
+   ypos 921
+  }
+push $N781d8800
+  NoOp {
+   name OutputBBox1
+   xpos 377
+   ypos 820
+   addUserKnob {20 User}
+   addUserKnob {15 OutputBBox l "Output BBox"}
+   OutputBBox {{input.bbox.x} {input.bbox.y} {input.bbox.r} {input.bbox.t}}
+   addUserKnob {14 outputBBoxCenter l "Output BBox Center" R 0 100}
+   outputBBoxCenter {{OutputBBox.x+(OutputBBox.r-OutputBBox.x)/2} {OutputBBox.y+(OutputBBox.t-OutputBBox.y)/2}}
+  }
+ end_group
+set N781d9600 [stack 0]
+ Dot {
+  name Dot11
+  xpos -1743
+  ypos 1095
+ }
+ Grid {
+  premult rgba
+  cliptype none
+  number {{"rangeU <0?rangeU2+1 :\nrangeU2+1-rangeU "} {"rangeV <0? parent.rangeV2+1:\nparent.rangeV2+1-rangeV "}}
+  size 2
+  name Grid1
+  xpos -1777
+  ypos 1132
+ }
+push $N781d9600
+ Merge2 {
+  inputs 2
+  name Merge10
+  xpos -1880
+  ypos 1132
+ }
+ Dot {
+  name Dot27
+  xpos -1846
+  ypos 1192
+ }
+set N780bec00 [stack 0]
+push $N78305c00
+push $N780bec00
+ Dot {
+  name Dot17
+  xpos -1516
+  ypos 1192
+ }
+ Transform {
+  translate {0 {parent.height.position_2d.y}}
+  center {1112 1080}
+  shutteroffset centred
+  name Transform4
+  xpos -1550
+  ypos 1265
+ }
+ Merge2 {
+  inputs 2
+  name Merge4
+  xpos -1550
+  ypos 1291
+ }
+ Reformat {
+  type "to box"
+  box_width {{"(baseFormat.format.width/10*quality.scale)*floor(UVTile5.scale.0)\n"}}
+  box_height {{Transform4.translate.y+Transform4.height}}
+  box_fixed true
+  center false
+  name Reformat5
+  xpos -1550
+  ypos 1317
+  addUserKnob {20 User}
+  addUserKnob {7 dif}
+  dif {{Reformat16.bbox.t-Merge1.bbox.t}}
+ }
+ Switch {
+  inputs 3
+  which {{preview}}
+  name Switch1
+  xpos -1880
+  ypos 1434
+ }
+set N780b7200 [stack 0]
+ Output {
+  name Output1
+  xpos -1880
+  ypos 1634
+ }
+push $N780b7200
+ Shuffle {
+  in P
+  name Shuffle4
+  label "\[value in]"
+  xpos -2035
+  ypos 1427
+ }
+set N780bd000 [stack 0]
+ NoOp {
+  name UVTile7
+  onCreate "nuke.thisNode()\['S'].setFlag(0x08)"
+  xpos -2145
+  ypos 1433
+  addUserKnob {20 User}
+  addUserKnob {7 S l scale R 1 20}
+  S 10
+  addUserKnob {3 U}
+  addUserKnob {3 V}
+ }
+ Axis2 {
+  inputs 0
+  display off
+  xform_order TRS
+  skew {1 0 0}
+  name axis
+  xpos -942
+  ypos -261
+ }
+push $N780bd000
+ Remove {
+  operation keep
+  channels {rgba.red rgba.green -rgba.blue -rgba.alpha}
+  name Remove1
+  xpos -2035
+  ypos 1465
+ }
+ Add {
+  channels rgb
+  value {{-cen.r} {-cen.g} {-cen.b} {curve}}
+  value_panelDropped true
+  name Add2
+  label "invert Translation"
+  xpos -2035
+  ypos 1503
+  addUserKnob {20 User}
+  addUserKnob {18 cen}
+  cen {1 1 1}
+  addUserKnob {6 cen_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {6 center_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+  addUserKnob {7 m}
+  m 1
+  addUserKnob {0 Eyedropper +INVISIBLE}
+ }
+push $N782c6000
+ NoOp {
+  name store
+  xpos -2157
+  ypos -105
+  hide_input true
+  addUserKnob {20 User}
+  addUserKnob {22 fn T "def getLevel() :\n\t### level define ###\n\tif len(nuke.thisNode().fullName().split('.')) == 1 :\n\t\t  ggLevel = nuke.root()\n\telse :\n\t\t  nodePath = nuke.thisNode().fullName().split('.')\n\t\t  nodePath.pop()\n\t\t  ggLevel = nuke.toNode('.'.join(nodePath))\n\treturn ggLevel" +STARTLINE}
+  addUserKnob {3 scanRes}
+  scanRes 64
+  addUserKnob {2 font}
+  font /asset/common/software/thirdparty/nuke/12.2v10-build2/arch/linux-any/x86_64/plugins/fonts/UtopiaBold.pfa
+ }
+end_group
