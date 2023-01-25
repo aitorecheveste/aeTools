@@ -11,7 +11,7 @@ Group {
  addUserKnob {26 ""}
  addUserKnob {4 motionblur l "motion blur" M {footage custom}}
  addUserKnob {7 power l amount R 0 10}
- power 2
+ power 0.5
  addUserKnob {7 rotation +DISABLED R -180 180}
  addUserKnob {26 ""}
  addUserKnob {41 motion_falloff l "motion falloff" T VectorBlur1.motion_falloff}
