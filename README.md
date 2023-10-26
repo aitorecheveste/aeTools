@@ -22,6 +22,15 @@ ____
 
 # aeTools
 
+## aeDirtCG
+Quickly add more complexity to your CG environments. By Aitor Echeveste.
+
+## aePrefMaker
+Use aePrefMaker yo create a pref pass with your geo and camera directly in nuke.
+
+## aeUVChart
+Use aeUVChart to manage your uvs and export it, especially when you have all of them in different coordinates.
+
 ## iSTMap
 Change the reference frame from the STMap node itself, invert the transformation and it allows adding motion blur.
 
