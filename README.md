@@ -1,11 +1,9 @@
 # Update Log:
 
 
-
-
 - Hello and thank you for downloading my tools
-- Last update 1 November 2021.
-- Added aeMotionBlur
+- Last update 26 October 2023.
+
 
 ____
 
