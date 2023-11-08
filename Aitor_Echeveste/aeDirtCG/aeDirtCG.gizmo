@@ -6,8 +6,8 @@ Group {
  note_font "Verdana Bold"
  note_font_color 0xffffffff
  selected true
- xpos -69
- ypos 361
+ xpos 4
+ ypos 481
  addUserKnob {20 aeDirt}
  addUserKnob {26 inputTitle l "<b><font color=#ffffff>Input data</font><b>"}
  addUserKnob {4 inputData l input t "Use img input for normal 2D workflow and deep input for a full deep workflow.\nFor deep workflow, you must to conect your camera. " M {img deep "" "" "" "" "" "" "" "" ""}}
@@ -50,7 +50,7 @@ Group {
  addUserKnob {41 fringe -STARTLINE T Merge5.fringe}
  addUserKnob {41 mix T Merge5.mix}
  addUserKnob {26 ""}
- addUserKnob {26 about_1 l "" +STARTLINE T "<span style=\"color:#666\"><br/><b>aeDirtCG v1.1</b> - <a  style=\"color:#666;text-decoration: none;\">Aitor Echeveste</a>  © 2023</span>"}
+ addUserKnob {26 about_1 l "" +STARTLINE T "<span style=\"color:#666\"><br/><b>aeDirtCG v1.2</b> - <a  style=\"color:#666;text-decoration: none;\">Aitor Echeveste</a>  © 2023</span>"}
  addUserKnob {20 extra l Extra}
  addUserKnob {26 text_6 l "" +STARTLINE T " "}
  addUserKnob {41 output_1 l output t "Use 'Result' to directly apply color corrections to your CG work, 'Noise' outputs to visualize your noise patterns and to apply any change, and 'Precomp' to render the noise pattern and accelerate the process." -STARTLINE T menu.output}
@@ -164,7 +164,7 @@ Group {
  addUserKnob {20 About}
  addUserKnob {26 text_1_1 l "" +STARTLINE T "   "}
  addUserKnob {26 text_2_1 l "" +STARTLINE T "   "}
- addUserKnob {26 text_4 l "" +STARTLINE T "<font color=#ffffff><font size=\"7\">aeDirtCG</font><font size=\"4\"> v1.1</font>\n"}
+ addUserKnob {26 text_4 l "" +STARTLINE T "<font color=#ffffff><font size=\"7\">aeDirtCG</font><font size=\"4\"> v1.2</font>\n"}
  addUserKnob {26 about_1_1 l "" +STARTLINE T "by Aitor Echeveste © 2023"}
  addUserKnob {26 text_1_1_1 l "" +STARTLINE T "   "}
  addUserKnob {26 ""}
@@ -185,7 +185,7 @@ Group {
   xpos -218
   ypos -1190
  }
-set N57caa600 [stack 0]
+set Nc8971400 [stack 0]
  Dot {
   name Dot41
   xpos -327
@@ -196,13 +196,13 @@ set N57caa600 [stack 0]
   xpos -361
   ypos -1058
  }
-set N6d82e000 [stack 0]
+set Nc8972e00 [stack 0]
  Dot {
   name Dot42
   xpos -327
   ypos -975
  }
-push $N57caa600
+push $Nc8971400
  Switch {
   inputs 2
   which {{inputData}}
@@ -215,13 +215,13 @@ push $N57caa600
   xpos -218
   ypos -485
  }
-set N57c93400 [stack 0]
+set Nc8973c00 [stack 0]
  Dot {
   name Dot11
   xpos -218
   ypos -222
  }
-set N57c42400 [stack 0]
+set Nc8974000 [stack 0]
  Dot {
   name Dot12
   xpos -67
@@ -232,37 +232,37 @@ set N57c42400 [stack 0]
   xpos -67
   ypos 3618
  }
-set N57bc7000 [stack 0]
+set Nc8974800 [stack 0]
  Dot {
   name Dot8
   xpos -67
   ypos 4641
  }
-set N57ba0600 [stack 0]
+set Nc8974c00 [stack 0]
  Dot {
   name Dot14
   xpos -67
   ypos 4822
  }
-set N6df21000 [stack 0]
+set Nc8975000 [stack 0]
  Dot {
   name Dot2
   xpos -67
   ypos 6252
  }
-push $N57c42400
+push $Nc8974000
  Dot {
   name Dot27
   xpos -1402
   ypos -222
  }
-set N57b66a00 [stack 0]
+set Nc8975800 [stack 0]
  Dot {
   name Dot28
   xpos -1402
   ypos 1898
  }
-set N57b2ae00 [stack 0]
+set Nc8975c00 [stack 0]
  Dot {
   name Dot36
   xpos -1492
@@ -280,15 +280,15 @@ set N57b2ae00 [stack 0]
   xpos -737
   ypos 182
  }
-set N57b0fe00 [stack 0]
+set Nc8976800 [stack 0]
  Dot {
   name Dot24
   xpos -737
   ypos 1423
  }
-set N57acc400 [stack 0]
-push $N57b0fe00
-push $N6d82e000
+set Nc8976c00 [stack 0]
+push $Nc8976800
+push $Nc8972e00
  Dot {
   name Dot37
   xpos -1077
@@ -324,7 +324,7 @@ push $N6d82e000
   xpos -1111
   ypos 204
  }
-push $N57c42400
+push $Nc8974000
  Unpremult {
   name Unpremult1
   xpos -252
@@ -336,7 +336,7 @@ push $N57c42400
   xpos -218
   ypos 314
  }
-set N27bec400 [stack 0]
+set Nc897c800 [stack 0]
  Shuffle {
   in P
   in2 rgba
@@ -357,7 +357,7 @@ set N27bec400 [stack 0]
   xpos -1077
   ypos 1067
  }
-set N81791000 [stack 0]
+set Nc897f600 [stack 0]
  Dot {
   name Dot9
   xpos -1198
@@ -493,7 +493,7 @@ set N81791000 [stack 0]
   xpos -1198
   ypos 2039
  }
-set N6d928800 [stack 0]
+set Nc8991e00 [stack 0]
  Merge2 {
   inputs 2
   operation mask
@@ -502,14 +502,14 @@ set N6d928800 [stack 0]
   xpos -1526
   ypos 2035
  }
-push $N57b2ae00
-push $N57acc400
+push $Nc8975c00
+push $Nc8976c00
  Dot {
   name Dot23
   xpos -737
   ypos 1453
  }
-push $N81791000
+push $Nc897f600
  BlinkScript {
   recompileCount 60
   ProgramGroup 1
@@ -578,7 +578,6 @@ push $N81791000
   "noise4DKernel_noise scale a" {{parent.menu.noiseScaleA.w}}
   rebuild_finalise ""
   name BlinkScriptPMatte
-  selected true
   xpos -1111
   ypos 1308
   addUserKnob {20 User}
@@ -636,7 +635,7 @@ push $N81791000
   xpos -1077
   ypos 1965
  }
-set N47d0ca00 [stack 0]
+set Nc8984600 [stack 0]
  Merge2 {
   inputs 2
   operation mask
@@ -658,9 +657,9 @@ set N47d0ca00 [stack 0]
   xpos -1746
   ypos -280
  }
-set N6db85600 [stack 0]
-push $N57b66a00
-push $N6db85600
+set Nc8993000 [stack 0]
+push $Nc8975800
+push $Nc8993000
  Dot {
   name Dot26
   xpos -1541
@@ -725,7 +724,7 @@ add_layer {noiseExtra noiseExtra.red noiseExtra.green noiseExtra.blue noiseExtra
   xpos -2875
   ypos 2328
  }
-set N62b10800 [stack 0]
+set Nc8994e00 [stack 0]
  Shuffle {
   in noiseExtra
   name Shuffle1
@@ -733,7 +732,7 @@ set N62b10800 [stack 0]
   xpos -1349
   ypos 2318
  }
-push $N6d928800
+push $Nc8991e00
  Switch {
   inputs 2
   which {{parent.inputNoise}}
@@ -746,25 +745,25 @@ push $N6d928800
   xpos -1198
   ypos 3017
  }
-set N20eb5800 [stack 0]
+set Nc89b6000 [stack 0]
  Dot {
   name Dot32
   xpos -1198
   ypos 3717
  }
-set N20ea0600 [stack 0]
+set Nc89b6400 [stack 0]
  Dot {
   name Dot4
   xpos -1198
   ypos 3798
  }
-set N20e81a00 [stack 0]
+set Nc89b6800 [stack 0]
  Dot {
   name Dot6
   xpos -1198
   ypos 4559
  }
-set N20e55e00 [stack 0]
+set Nc89b6c00 [stack 0]
  Expression {
   expr0 a
   expr1 0
@@ -779,13 +778,13 @@ set N20e55e00 [stack 0]
   xpos -1198
   ypos 4686
  }
-push $N62b10800
+push $Nc8994e00
  Dot {
   name Dot22
   xpos -2875
   ypos 2443
  }
-push $N47d0ca00
+push $Nc8984600
  Switch {
   inputs 2
   which {{parent.inputNoise}}
@@ -798,19 +797,19 @@ push $N47d0ca00
   xpos -1077
   ypos 2919
  }
-set N979a0600 [stack 0]
+set Nc89b8600 [stack 0]
  Dot {
   name Dot5
   xpos -1077
   ypos 3657
  }
-set N2789d800 [stack 0]
+set Nc89b8a00 [stack 0]
  Dot {
   name Dot7
   xpos -1077
   ypos 4460
  }
-set N27f78600 [stack 0]
+set Nc89b8e00 [stack 0]
  Expression {
   expr0 0
   expr1 0
@@ -827,20 +826,20 @@ set N27f78600 [stack 0]
   xpos -1110
   ypos 4682
  }
-push $N20e55e00
+push $Nc89b6c00
  Dot {
   name Dot33
   xpos -829
   ypos 4558
  }
-set N6dee7c00 [stack 0]
+set Nc89b9a00 [stack 0]
  Expression {
   expr3 a
   name noiseMask4
   xpos -863
   ypos 4594
  }
-push $N6dee7c00
+push $Nc89b9a00
  Expression {
   expr0 0
   expr1 0
@@ -858,7 +857,7 @@ push $N6dee7c00
   xpos -764
   ypos 4594
  }
-set N62a84400 [stack 0]
+set Nc89bae00 [stack 0]
  Expression {
   expr0 b
   expr1 0
@@ -873,20 +872,20 @@ set N62a84400 [stack 0]
   xpos -730
   ypos 4679
  }
-push $N27f78600
+push $Nc89b8e00
  Dot {
   name Dot34
   xpos -762
   ypos 4461
  }
-set N628b9800 [stack 0]
+set Nc89bc200 [stack 0]
  Expression {
   expr3 a
   name noiseMask5
   xpos -796
   ypos 4498
  }
-push $N628b9800
+push $Nc89bc200
  Expression {
   expr0 0
   expr1 0
@@ -904,7 +903,7 @@ push $N628b9800
   xpos -660
   ypos 4498
  }
-set N6d8b0400 [stack 0]
+set Nc89bce00 [stack 0]
  Merge2 {
   inputs 2
   operation screen
@@ -912,20 +911,20 @@ set N6d8b0400 [stack 0]
   xpos -660
   ypos 4675
  }
-push $N20ea0600
+push $Nc89b6400
  Expression {
   expr3 a
   name noiseMask2
   xpos -868
   ypos 3713
  }
-push $N2789d800
+push $Nc89b8a00
  Dot {
   name Dot31
   xpos -896
   ypos 3657
  }
-set Na0cf1400 [stack 0]
+set Nc89a6800 [stack 0]
  Expression {
   expr0 0
   expr2 0
@@ -943,7 +942,7 @@ set Na0cf1400 [stack 0]
   xpos -753
   ypos 3713
  }
-set Na0ece400 [stack 0]
+set Nc89a7000 [stack 0]
  Expression {
   expr0 0
   expr1 0
@@ -958,14 +957,14 @@ set Na0ece400 [stack 0]
   xpos -719
   ypos 3906
  }
-push $Na0cf1400
+push $Nc89a6800
  Expression {
   expr3 a
   name noiseMask3
   xpos -930
   ypos 3844
  }
-push $N20e81a00
+push $Nc89b6800
  Expression {
   expr0 0
   expr2 0
@@ -983,7 +982,7 @@ push $N20e81a00
   xpos -670
   ypos 3844
  }
-set N6df43400 [stack 0]
+set Nc89a8c00 [stack 0]
  Merge2 {
   inputs 2
   operation screen
@@ -991,20 +990,20 @@ set N6df43400 [stack 0]
   xpos -670
   ypos 3902
  }
-push $N20eb5800
+push $Nc89b6000
  Dot {
   name Dot29
   xpos -862
   ypos 3017
  }
-set N6de89000 [stack 0]
+set Nc89a9c00 [stack 0]
  Expression {
   expr3 a
   name noiseMask
   xpos -896
   ypos 3052
  }
-push $N6de89000
+push $Nc89a9c00
  Expression {
   expr1 0
   expr2 0
@@ -1013,7 +1012,7 @@ push $N6de89000
   xpos -760
   ypos 3013
  }
-set N6dd3ba00 [stack 0]
+set Nc89aac00 [stack 0]
  Merge2 {
   inputs 2
   operation mask
@@ -1037,20 +1036,20 @@ set N6dd3ba00 [stack 0]
   xpos -726
   ypos 3136
  }
-push $N979a0600
+push $Nc89b8600
  Dot {
   name Dot30
   xpos -772
   ypos 2919
  }
-set N6288f400 [stack 0]
+set Nc89adc00 [stack 0]
  Expression {
   expr3 a
   name noiseMask1
   xpos -806
   ypos 2955
  }
-push $N6288f400
+push $Nc89adc00
  Expression {
   expr1 0
   expr2 0
@@ -1068,7 +1067,7 @@ push $N6288f400
   xpos -670
   ypos 2955
  }
-set N47c36a00 [stack 0]
+set Nc89ae800 [stack 0]
  Merge2 {
   inputs 2
   operation screen
@@ -1083,10 +1082,10 @@ set N47c36a00 [stack 0]
   ypos 4818
   number 2
  }
-push $N57ba0600
-push $N62a84400
-push $N6d8b0400
-push $N57bc7000
+push $Nc8974c00
+push $Nc89bae00
+push $Nc89bce00
+push $Nc8974800
  FilterErode {
   size 2
   name FilterErode1
@@ -1106,8 +1105,8 @@ push $N57bc7000
   xpos -412
   ypos 3672
  }
-set N278e0c00 [stack 0]
-push $N6df43400
+set Nc89be400 [stack 0]
+push $Nc89a8c00
  Merge2 {
   inputs 2
   operation stencil
@@ -1116,8 +1115,8 @@ push $N6df43400
   xpos -412
   ypos 3844
  }
-push $N278e0c00
-push $Na0ece400
+push $Nc89be400
+push $Nc89a7000
  Merge2 {
   inputs 2
   operation stencil
@@ -1126,7 +1125,7 @@ push $Na0ece400
   xpos -412
   ypos 3713
  }
-push $N6dd3ba00
+push $Nc89aac00
  Blur {
   channels rgba
   size 5
@@ -1135,8 +1134,8 @@ push $N6dd3ba00
   xpos -432
   ypos 3013
  }
-push $N47c36a00
-push $N27bec400
+push $Nc89ae800
+push $Nc897c800
  Grade {
   inputs 1+1
   white {0.754167 0.7866666317 0.739166677 0.6100000143}
@@ -1236,7 +1235,7 @@ push $N27bec400
   ypos 4672
   disable {{!parent.premultiplied}}
  }
-push $N6df21000
+push $Nc8975000
  Merge2 {
   inputs 2+1
   operation copy
@@ -1264,8 +1263,8 @@ push $N6df21000
   xpos -212
   ypos 6452
  }
-set N810a9c00 [stack 0]
-push $N57caa600
+set Nc89dca00 [stack 0]
+push $Nc8971400
  Dot {
   name Dot39
   xpos 790
@@ -1290,7 +1289,7 @@ push $N57caa600
   xpos -54
   ypos 6559
  }
-push $N810a9c00
+push $Nc89dca00
  Switch {
   inputs 2
   which {{inputData}}
@@ -1371,14 +1370,13 @@ push $N810a9c00
   addUserKnob {22 hydra_refresh l refresh T "from nuke_weta_base.node.hydra_tab import on_refresh; on_refresh()" +STARTLINE}
   addUserKnob {26 hydra_metadata -STARTLINE +HIDDEN +INVISIBLE T "\{\}"}
  }
-push $N57c93400
+push $Nc8973c00
  NoOp {
   name menu
   xpos -150
   ypos -495
   addUserKnob {20 User}
   addUserKnob {4 output M {result "luminance noise" "contrast noise" "saturation noise" "alpha mask noise" precomp "" "" "" ""}}
-  output "luminance noise"
   addUserKnob {26 ""}
   addUserKnob {3 units}
   units {{parent.units==0?0.01:parent.units==1?1:100}}
