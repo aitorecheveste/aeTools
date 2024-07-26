@@ -6,8 +6,8 @@ Group {
  note_font "Verdana Bold"
  note_font_color 0xffffffff
  selected true
- xpos 4
- ypos 481
+ xpos 328
+ ypos -104
  addUserKnob {20 aeDirt}
  addUserKnob {26 inputTitle l "<b><font color=#ffffff>Input data</font><b>"}
  addUserKnob {4 inputData l input t "Use img input for normal 2D workflow and deep input for a full deep workflow.\nFor deep workflow, you must to conect your camera. " M {img deep "" "" "" "" "" "" "" "" ""}}
@@ -185,7 +185,7 @@ Group {
   xpos -218
   ypos -1190
  }
-set Nc8971400 [stack 0]
+set N7fba2800 [stack 0]
  Dot {
   name Dot41
   xpos -327
@@ -196,32 +196,32 @@ set Nc8971400 [stack 0]
   xpos -361
   ypos -1058
  }
-set Nc8972e00 [stack 0]
+set N5ef85000 [stack 0]
  Dot {
   name Dot42
   xpos -327
   ypos -975
  }
-push $Nc8971400
+push $N7fba2800
  Switch {
   inputs 2
   which {{inputData}}
   name SwitchDeep
   xpos -252
-  ypos -979
+  ypos -978
  }
  Dot {
   name connectInput
   xpos -218
   ypos -485
  }
-set Nc8973c00 [stack 0]
+set N5effb000 [stack 0]
  Dot {
   name Dot11
   xpos -218
   ypos -222
  }
-set Nc8974000 [stack 0]
+set N198b4c00 [stack 0]
  Dot {
   name Dot12
   xpos -67
@@ -232,37 +232,37 @@ set Nc8974000 [stack 0]
   xpos -67
   ypos 3618
  }
-set Nc8974800 [stack 0]
+set N5ec23c00 [stack 0]
  Dot {
   name Dot8
   xpos -67
   ypos 4641
  }
-set Nc8974c00 [stack 0]
+set N198ad600 [stack 0]
  Dot {
   name Dot14
   xpos -67
   ypos 4822
  }
-set Nc8975000 [stack 0]
+set N5ef4ca00 [stack 0]
  Dot {
   name Dot2
   xpos -67
   ypos 6252
  }
-push $Nc8974000
+push $N198b4c00
  Dot {
   name Dot27
   xpos -1402
   ypos -222
  }
-set Nc8975800 [stack 0]
+set N5ecede00 [stack 0]
  Dot {
   name Dot28
   xpos -1402
   ypos 1898
  }
-set Nc8975c00 [stack 0]
+set N5ecee200 [stack 0]
  Dot {
   name Dot36
   xpos -1492
@@ -280,15 +280,15 @@ set Nc8975c00 [stack 0]
   xpos -737
   ypos 182
  }
-set Nc8976800 [stack 0]
+set N198f5200 [stack 0]
  Dot {
   name Dot24
   xpos -737
   ypos 1423
  }
-set Nc8976c00 [stack 0]
-push $Nc8976800
-push $Nc8972e00
+set N198f5600 [stack 0]
+push $N198f5200
+push $N5ef85000
  Dot {
   name Dot37
   xpos -1077
@@ -324,7 +324,7 @@ push $Nc8972e00
   xpos -1111
   ypos 204
  }
-push $Nc8974000
+push $N198b4c00
  Unpremult {
   name Unpremult1
   xpos -252
@@ -336,7 +336,7 @@ push $Nc8974000
   xpos -218
   ypos 314
  }
-set Nc897c800 [stack 0]
+set N1983e200 [stack 0]
  Shuffle {
   in P
   in2 rgba
@@ -357,22 +357,20 @@ set Nc897c800 [stack 0]
   xpos -1077
   ypos 1067
  }
-set Nc897f600 [stack 0]
+set N5ecefe00 [stack 0]
  Dot {
   name Dot9
   xpos -1198
   ypos 1068
  }
  BlinkScript {
-  recompileCount 49
+  recompileCount 50
   ProgramGroup 1
   KernelDescription "2 \"noise4DKernel\" iterate pixelWise a05d21619d7aff6c29dc58c43f1db443ae69e67492bb5e8bb2a3812029973d9b 2 \"p\" Read Point \"dst\" Write Point 38 \"picked\" Float 3 AAAAAAAAAAAAAAAAAAAAAA== \"pickedB\" Float 3 AAAAAAAAAAAAAAAAAAAAAA== \"m_r\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== \"m_g\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== \"m_b\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== \"m_a\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== \"noise octaves r\" Float 1 AAAAPw== \"noise octaves g\" Float 1 AACAPw== \"noise octaves b\" Float 1 AAAAQA== \"noise octaves a\" Float 1 AAAAQA== \"noise persistence r\" Float 1 AACAPg== \"noise persistence g\" Float 1 AAAAPw== \"noise persistence b\" Float 1 AABAPw== \"noise persistence a\" Float 1 AABAPw== \"lacunarity r\" Float 1 AADAPw== \"lacunarity g\" Float 1 AAAAQA== \"lacunarity b\" Float 1 AAAgQA== \"lacunarity a\" Float 1 AAAgQA== \"noise_offset_r\" Float 1 AAAAAA== \"noise_offset_g\" Float 1 AAAAAA== \"noise_offset_b\" Float 1 AAAAAA== \"noise_offset_a\" Float 1 AAAAAA== \"noise_add_r\" Float 1 AAAAAA== \"noise_add_g\" Float 1 AAAAAA== \"noise_add_b\" Float 1 AAAAAA== \"noise_add_a\" Float 1 AAAAAA== \"noise_gain_r\" Float 1 AAAAAA== \"noise_gain_g\" Float 1 AAAAAA== \"noise_gain_b\" Float 1 AAAAAA== \"noise_gain_a\" Float 1 AAAAAA== \"noise_gamma_r\" Float 1 AAAAAA== \"noise_gamma_g\" Float 1 AAAAAA== \"noise_gamma_b\" Float 1 AAAAAA== \"noise_gamma_a\" Float 1 AAAAAA== \"noise scale r\" Float 1 AABIQg== \"noise scale g\" Float 1 PQpwQg== \"noise scale b\" Float 1 HwWMQg== \"noise scale a\" Float 1 HwWMQg== 38 \"picked\" 3 1 \"pickedB\" 3 1 \"m_r\" 16 1 \"m_g\" 16 1 \"m_b\" 16 1 \"m_a\" 16 1 \"noise_octaves_r\" 1 1 \"noise_octaves_g\" 1 1 \"noise_octaves_b\" 1 1 \"noise_octaves_a\" 1 1 \"noise_persistence_r\" 1 1 \"noise_persistence_g\" 1 1 \"noise_persistence_b\" 1 1 \"noise_persistence_a\" 1 1 \"noise_lacunarity_r\" 1 1 \"noise_lacunarity_g\" 1 1 \"noise_lacunarity_b\" 1 1 \"noise_lacunarity_a\" 1 1 \"noise_offset_r\" 1 1 \"noise_offset_g\" 1 1 \"noise_offset_b\" 1 1 \"noise_offset_a\" 1 1 \"noise_add_r\" 1 1 \"noise_add_g\" 1 1 \"noise_add_b\" 1 1 \"noise_add_a\" 1 1 \"noise_gain_r\" 1 1 \"noise_gain_g\" 1 1 \"noise_gain_b\" 1 1 \"noise_gain_a\" 1 1 \"noise_gamma_r\" 1 1 \"noise_gamma_g\" 1 1 \"noise_gamma_b\" 1 1 \"noise_gamma_a\" 1 1 \"noise_scale_r\" 1 1 \"noise_scale_g\" 1 1 \"noise_scale_b\" 1 1 \"noise_scale_a\" 1 1 0"
   kernelSource "// ----------------------------------------------------------------\n// aeDirtCG v1.0 by Aitor Echeveste 2023\n// ----------------------------------------------------------------\n// Noise algorithm adapted by Aitor Echeveste from Noise4D function by Mads Hagbarth and Adrian Pueyo\n// Noise4D function Ported by Mads Hagbarth Lund 2014\n// Based on https://github.com/Draradech/csworldgen/blob/master/simplexnoise.cpp\n\n\n\n\nint fastfloor( const float x ) \{ return x > 0 ? (int) x : (int) x - 1; \}\ninline float raw_noise_4d( const float x, const float y, const float z, const float w ) \n\{\nint simplex\[64]\[4] = \{\n    \{0,1,2,3\},\{0,1,3,2\},\{0,0,0,0\},\{0,2,3,1\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{1,2,3,0\},\n    \{0,2,1,3\},\{0,0,0,0\},\{0,3,1,2\},\{0,3,2,1\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{1,3,2,0\},\n    \{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\n    \{1,2,0,3\},\{0,0,0,0\},\{1,3,0,2\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{2,3,0,1\},\{2,3,1,0\},\n    \{1,0,2,3\},\{1,0,3,2\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{2,0,3,1\},\{0,0,0,0\},\{2,1,3,0\},\n    \{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\n    \{2,0,1,3\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{3,0,1,2\},\{3,0,2,1\},\{0,0,0,0\},\{3,1,2,0\},\n    \{2,1,0,3\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{3,1,0,2\},\{0,0,0,0\},\{3,2,0,1\},\{3,2,1,0\}\n\};\n    int perm\[512] = \{\n        151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,\n        8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,\n        35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,\n        134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,\n        55,46,245,40,244,102,143,54,65,25,63,161,1,216,80,73,209,76,132,187,208, 89,\n        18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,\n        250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,\n        189,28,42,223,183,170,213,119,248,152,2,44,154,163,70,221,153,101,155,167,43,\n        172,9,129,22,39,253,19,98,108,110,79,113,224,232,178,185,112,104,218,246,97,\n        228,251,34,242,193,238,210,144,12,191,179,162,241,81,51,145,235,249,14,239,\n        107,49,192,214,31,181,199,106,157,184,84,204,176,115,121,50,45,127,4,150,254,\n        138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180,\n\n        151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,\n        8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,\n        35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,\n        134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,\n        55,46,245,40,244,102,143,54,65,25,63,161,1,216,80,73,209,76,132,187,208, 89,\n        18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,\n        250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,\n        189,28,42,223,183,170,213,119,248,152,2,44,154,163,70,221,153,101,155,167,43,\n        172,9,129,22,39,253,19,98,108,110,79,113,224,232,178,185,112,104,218,246,97,\n        228,251,34,242,193,238,210,144,12,191,179,162,241,81,51,145,235,249,14,239,\n        107,49,192,214,31,181,199,106,157,184,84,204,176,115,121,50,45,127,4,150,254,\n        138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180\n    \};\n  int grad4\[32]\[4]= \{\n    \{0,1,1,1\},  \{0,1,1,-1\},  \{0,1,-1,1\},  \{0,1,-1,-1\},\n    \{0,-1,1,1\}, \{0,-1,1,-1\}, \{0,-1,-1,1\}, \{0,-1,-1,-1\},\n    \{1,0,1,1\},  \{1,0,1,-1\},  \{1,0,-1,1\},  \{1,0,-1,-1\},\n    \{-1,0,1,1\}, \{-1,0,1,-1\}, \{-1,0,-1,1\}, \{-1,0,-1,-1\},\n    \{1,1,0,1\},  \{1,1,0,-1\},  \{1,-1,0,1\},  \{1,-1,0,-1\},\n    \{-1,1,0,1\}, \{-1,1,0,-1\}, \{-1,-1,0,1\}, \{-1,-1,0,-1\},\n    \{1,1,1,0\},  \{1,1,-1,0\},  \{1,-1,1,0\},  \{1,-1,-1,0\},\n    \{-1,1,1,0\}, \{-1,1,-1,0\}, \{-1,-1,1,0\}, \{-1,\n\n-1,-1,0\}\n  \};\n    float F4 = (sqrt(5.0f)-1.0)/4.0;\n    float G4 = (5.0-sqrt(5.0f))/20.0;\n    float n0, n1, n2, n3, n4;\n    float s = (x + y + z + w) * F4;\n    int i = fastfloor(x + s);\n    int j = fastfloor(y + s);\n    int k = fastfloor(z + s);\n    int l = fastfloor(w + s);\n    float t = (i + j + k + l) * G4;\n    float X0 = i - t;\n    float Y0 = j - t;\n    float Z0 = k - t;\n    float W0 = l - t;\n\n    float x0 = x - X0;\n    float y0 = y - Y0;\n    float z0 = z - Z0;\n    float w0 = w - W0;\n    int c1 = (x0 > y0) ? 32 : 0;\n    int c2 = (x0 > z0) ? 16 : 0;\n    int c3 = (y0 > z0) ? 8 : 0;\n    int c4 = (x0 > w0) ? 4 : 0;\n    int c5 = (y0 > w0) ? 2 : 0;\n    int c6 = (z0 > w0) ? 1 : 0;\n    int c = c1 + c2 + c3 + c4 + c5 + c6;\n\n    int i1, j1, k1, l1;\n    int i2, j2, k2, l2;\n    int i3, j3, k3, l3;\n    i1 = simplex\[c]\[0]>=3 ? 1 : 0;\n    j1 = simplex\[c]\[1]>=3 ? 1 : 0;\n    k1 = simplex\[c]\[2]>=3 ? 1 : 0;\n    l1 = simplex\[c]\[3]>=3 ? 1 : 0;\n    i2 = simplex\[c]\[0]>=2 ? 1 : 0;\n    j2 = simplex\[c]\[1]>=2 ? 1 : 0;\n    k2 = simplex\[c]\[2]>=2 ? 1 : 0;\n    l2 = simplex\[c]\[3]>=2 ? 1 : 0;\n    i3 = simplex\[c]\[0]>=1 ? 1 : 0;\n    j3 = simplex\[c]\[1]>=1 ? 1 : 0;\n    k3 = simplex\[c]\[2]>=1 ? 1 : 0;\n    l3 = simplex\[c]\[3]>=1 ? 1 : 0;\n    float x1 = x0 - i1 + G4;\n    float y1 = y0 - j1 + G4;\n    float z1 = z0 - k1 + G4;\n    float w1 = w0 - l1 + G4;\n    float x2 = x0 - i2 + 2.0*G4;\n    float y2 = y0 - j2 + 2.0*G4;\n    float z2 = z0 - k2 + 2.0*G4;\n    float w2 = w0 - l2 + 2.0*G4;\n    float x3 = x0 - i3 + 3.0*G4;\n    float y3 = y0 - j3 + 3.0*G4;\n    float z3 = z0 - k3 + 3.0*G4;\n    float w3 = w0 - l3 + 3.0*G4;\n    float x4 = x0 - 1.0 + 4.0*G4;\n    float y4 = y0 - 1.0 + 4.0*G4;\n    float z4 = z0 - 1.0 + 4.0*G4;\n    float w4 = w0 - 1.0 + 4.0*G4;\n    int ii = i & 255;\n    int jj = j & 255;\n    int kk = k & 255;\n    int ll = l & 255;\n    int gi0 = perm\[ii+perm\[jj+perm\[kk+perm\[ll]]]] % 32;\n    int gi1 = perm\[ii+i1+perm\[jj+j1+perm\[kk+k1+perm\[ll+l1]]]] % 32;\n    int gi2 = perm\[ii+i2+perm\[jj+j2+perm\[kk+k2+perm\[ll+l2]]]] % 32;\n    int gi3 = perm\[ii+i3+perm\[jj+j3+perm\[kk+k3+perm\[ll+l3]]]] % 32;\n    int gi4 = perm\[ii+1+perm\[jj+1+perm\[kk+1+perm\[ll+1]]]] % 32;\n    float t0 = 0.6 - x0*x0 - y0*y0 - z0*z0 - w0*w0;\n    if(t0<0) n0 = 0.0;\n    else \{\n        t0 *= t0;\n        n0 = t0 * t0 * dot(float4(grad4\[gi0]\[0],grad4\[gi0]\[2],grad4\[gi0]\[3],grad4\[gi0]\[3]), float4(x0, y0, z0, w0));\n    \}\n    float t1 = 0.6 - x1*x1 - y1*y1 - z1*z1 - w1*w1;\n    if(t1<0) n1 = 0.0;\n    else \{\n        t1 *= t1;\n        n1 = t1 * t1 * dot(float4(grad4\[gi1]\[0],grad4\[gi1]\[2],grad4\[gi1]\[3],grad4\[gi1]\[3]), float4(x1, y1, z1, w1));\n    \}\n    float t2 = 0.6 - x2*x2 - y2*y2 - z2*z2 - w2*w2;\n    if(t2<0) n2 = 0.0;\n    else \{\n        t2 *= t2;\n        n2 = t2 * t2 * dot(float4(grad4\[gi2]\[0],grad4\[gi2]\[2],grad4\[gi2]\[3],grad4\[gi2]\[3]), float4(x2, y2, z2, w2));\n    \}\n    float t3 = 0.6 - x3*x3 - y3*y3 - z3*z3 - w3*w3;\n    if(t3<0) n3 = 0.0;\n    else \{\n        t3 *= t3;\n        n3 = t3 * t3 * dot(float4(grad4\[gi3]\[0],grad4\[gi3]\[2],grad4\[gi3]\[3],grad4\[gi3]\[3]), float4(x3, y3, z3, w3));\n    \}\n    float t4 = 0.6 - x4*x4 - y4*y4 - z4*z4 - w4*w4;\n    if(t4<0) n4 = 0.0;\n    else \{\n        t4 *= t4;\n        n4 = t4 * t4 * dot(float4(grad4\[gi4]\[0],grad4\[gi4]\[2],grad4\[gi4]\[3],grad4\[gi4]\[3]), float4(x4, y4, z4, w4));\n    \}\n    return 27.0 * (n0 + n1 + n2 + n3 + n4);\n\}\ninline float octave_noise_4d( const float octaves, const float persistence, const float scale, const float x, const float y, const float z, const float w, const float lacunarity=2 ) \n\{\n    float total = 0;\n    float frequency = scale;\n    float amplitude = 1;\n    float maxAmplitude = 0;\n    for( int i=0; i < octaves; i++ ) \{\n        total += (float)raw_noise_4d( x * frequency, y * frequency, z * frequency, w * frequency ) * amplitude;\n\n        frequency *= lacunarity;\n        maxAmplitude += amplitude;\n        amplitude *= persistence;\n    \}\n    \n\nreturn float(total / maxAmplitude);\n\}\n\n\n\nkernel noise4DKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessPoint, eEdgeClamped> p;\n  Image<eWrite> dst;\n\n  param:\n    float3 picked; //Center, or white for ramps\n    float3 pickedB; //Black for ramps\n    float4x4 m_r; //Camera or axis matrix.\n    float4x4 m_g; //Camera or axis matrix.\n    float4x4 m_b; //Camera or axis matrix.\n    float4x4 m_a; //Camera or axis matrix.\n\n\n    // Noise parameters\n    float noise_octaves_r;\n    float noise_octaves_g;\n    float noise_octaves_b;\n    float noise_octaves_a;\n    float noise_persistence_r;\n    float noise_persistence_g;\n    float noise_persistence_b;\n    float noise_persistence_a;\n    float noise_lacunarity_r;\n    float noise_lacunarity_g;\n    float noise_lacunarity_b;\n    float noise_lacunarity_a;\n    float noise_offset_r;\n    float noise_offset_g;\n    float noise_offset_b;\n    float noise_offset_a;\n    float noise_add_r;\n    float noise_add_g;\n    float noise_add_b;\n    float noise_add_a;\n    float noise_gain_r;\n    float noise_gain_g;\n    float noise_gain_b;\n    float noise_gain_a;\n    float noise_gamma_r;\n    float noise_gamma_g;\n    float noise_gamma_b;\n    float noise_gamma_a;\n    float noise_scale_r;\n    float noise_scale_g;\n    float noise_scale_b;\n    float noise_scale_a;\n\n\n\n\n\n  void define() \{\n    defineParam(noise_octaves_r, \"noise octaves r\", 0.5f);\n    defineParam(noise_octaves_g, \"noise octaves g\", 1.0f);\n    defineParam(noise_octaves_b, \"noise octaves b\", 2.0f);\n    defineParam(noise_octaves_a, \"noise octaves a\", 2.0f);\n    defineParam(noise_persistence_r, \"noise persistence r\",  0.25f);\n    defineParam(noise_persistence_g, \"noise persistence g\",  0.5f);\n    defineParam(noise_persistence_b, \"noise persistence b\",  0.75f);\n    defineParam(noise_persistence_a, \"noise persistence a\",  0.75f);\n    defineParam(noise_lacunarity_r, \"lacunarity r\",  1.5f);\n    defineParam(noise_lacunarity_g, \"lacunarity g\",  2.0f);\n    defineParam(noise_lacunarity_b, \"lacunarity b\",  2.5f);\n    defineParam(noise_lacunarity_a, \"lacunarity a\",  2.5f);\n    defineParam(noise_scale_r, \"noise scale r\", 50.f);\n    defineParam(noise_scale_g, \"noise scale g\", 60.01f);\n    defineParam(noise_scale_b, \"noise scale b\", 70.01f);\n    defineParam(noise_scale_a, \"noise scale a\", 70.01f);\n\n  \}\n\n\n  inline float rad(float deg)\{ \n    return deg*PI/180;\n  \}\n\n  inline float smoothstep(float edge0, float edge1, float x)\{\n    x = clamp((x - edge0)/(edge1 - edge0), 0.0f, 1.0f);\n    return x*x*x*(x*(x*6-15)+10);\n  \}\n\n  inline float cl(float val)\{\n  return clamp(val,0.0f,1.0f); \n  \}\n\n\n  void process() \{\n    //1. P WORLD\n    // Center the coordinates\n    float3 color_r = float3(p(0)-picked.x,p(1)-picked.y,p(2)-picked.z);\n    float3 color_g = float3(p(0)-picked.x,p(1)-picked.y,p(2)-picked.z);\n    float3 color_b = float3(p(0)-picked.x,p(1)-picked.y,p(2)-picked.z);   \n    float3 color_a = float3(p(0)-picked.x,p(1)-picked.y,p(2)-picked.z); \n    int black = 0;\n    \n    // Matrix!\n    float4x4 mr = m_r;\n    mr = mr.invert();\n    for(int c = 0; c<dst.kComps; c++)\{\n      color_r\[c] = mr\[c]\[0]*color_r\[0] + mr\[c]\[1]*color_r\[1] + mr\[c]\[2]*color_r\[2] + mr\[c]\[3]*1.0f;\n    \}\n\n    \n    float4x4 mg = m_g;\n    mg = mg.invert();\n    for(int c = 0; c<dst.kComps; c++)\{\n      color_g\[c] = mg\[c]\[0]*color_g\[0] + mg\[c]\[1]*color_g\[1] + mg\[c]\[2]*color_g\[2] + mg\[c]\[3]*1.0f;\n    \}\n\n\n    float4x4 mb = m_b;\n    mg = mg.invert();\n    for(int c = 0; c<dst.kComps; c++)\{\n      color_b\[c] = mb\[c]\[0]*color_b\[0] + mb\[c]\[1]*color_b\[1] + mb\[c]\[2]*color_b\[2] + mb\[c]\[3]*1.0f;\n    \}\n\n\n    float4x4 ma = m_a;\n    mg = mg.invert();\n    for(int c = 0; c<dst.kComps; c++)\{\n      color_a\[c] = ma\[c]\[0]*color_a\[0] + ma\[c]\[1]*color_a\[1] + ma\[c]\[2]*color_a\[2] + ma\[c]\[3]*1.0f;\n    \}\n\n\n    float dist;\n\n\n    \n\nfloat noise_r = (float)octave_noise_4d(float(noise_octaves_r),noise_persistence_r,noise_scale_r==0?10000.0f:1/noise_scale_r,color_r\[0],color_r\[1],color_r\[2],noise_offset_r,noise_lacunarity_r);\n    float noise_g = (float)octave_noise_4d(float(noise_octaves_g),noise_persistence_g,noise_scale_g==0?10000.0f:1/noise_scale_g,color_g\[0],color_g\[1],color_g\[2],noise_offset_g,noise_lacunarity_g);\n    float noise_b = (float)octave_noise_4d(float(noise_octaves_b),noise_persistence_b,noise_scale_b==0?10000.0f:1/noise_scale_b,color_b\[0],color_b\[1],color_b\[2],noise_offset_b,noise_lacunarity_b);\n    float noise_a = (float)octave_noise_4d(float(noise_octaves_a),noise_persistence_a,noise_scale_a==0?10000.0f:1/noise_scale_a,color_a\[0],color_a\[1],color_a\[2],noise_offset_a,noise_lacunarity_a);\n\n    noise_r = cl(pow(max((noise_r+noise_add_r)*noise_gain_r,0.0f),noise_gamma_r==0?1:1/noise_gamma_r));\n    noise_g = cl(pow(max((noise_g+noise_add_g)*noise_gain_g,0.0f),noise_gamma_g==0?1:1/noise_gamma_g));\n    noise_b = cl(pow(max((noise_b+noise_add_b)*noise_gain_b,0.0f),noise_gamma_b==0?1:1/noise_gamma_b));\n    noise_a = cl(pow(max((noise_a+noise_add_a)*noise_gain_a,0.0f),noise_gamma_a==0?1:1/noise_gamma_a));\n\n\n\n    float4 result = float4(noise_r, noise_g, noise_b, noise_a);\n\n    dst() = result;\n\n  \}\n\};"
   useGPUIfAvailable false
   vectorize false
   rebuild ""
-  noise4DKernel_picked {{(parent.shape==3&&parent.mirrored)?picker-(black_point-picker):(parent.shape==5&&parent.mirrored)?picker-radius:picker} {(parent.shape==3&&parent.mirrored)?picker-(black_point-picker):(parent.shape==5&&parent.mirrored)?picker-radius:picker} {(parent.shape==3&&parent.mirrored)?picker-(black_point-picker):(parent.shape==5&&parent.mirrored)?picker-radius:picker}}
-  noise4DKernel_pickedB {{parent.shape==5?parent.axis==0?picker+radius+0.0001:picker:black_point} {parent.shape==5?parent.axis==1?picker+radius+0.0001:picker:black_point} {parent.shape==5?parent.axis==2?picker+radius+0.0001:picker+0.00001:black_point}}
   noise4DKernel_m_r {
       {{parent.Axis_r.world_matrix} {parent.Axis_r.world_matrix} {parent.Axis_r.world_matrix} {parent.Axis_r.world_matrix}}
       {{parent.Axis_r.world_matrix} {parent.Axis_r.world_matrix} {parent.Axis_r.world_matrix} {parent.Axis_r.world_matrix}}
@@ -431,6 +429,7 @@ set Nc897f600 [stack 0]
   "noise4DKernel_noise scale a" {{parent.menu.noiseScaleA.h}}
   rebuild_finalise ""
   name BlinkScriptPMatte1
+  selected true
   xpos -1232
   ypos 1307
   addUserKnob {20 User}
@@ -493,7 +492,7 @@ set Nc897f600 [stack 0]
   xpos -1198
   ypos 2039
  }
-set Nc8991e00 [stack 0]
+set N5efe9200 [stack 0]
  Merge2 {
   inputs 2
   operation mask
@@ -502,24 +501,22 @@ set Nc8991e00 [stack 0]
   xpos -1526
   ypos 2035
  }
-push $Nc8975c00
-push $Nc8976c00
+push $N5ecee200
+push $N198f5600
  Dot {
   name Dot23
   xpos -737
   ypos 1453
  }
-push $Nc897f600
+push $N5ecefe00
  BlinkScript {
-  recompileCount 60
+  recompileCount 61
   ProgramGroup 1
   KernelDescription "2 \"noise4DKernel\" iterate pixelWise a05d21619d7aff6c29dc58c43f1db443ae69e67492bb5e8bb2a3812029973d9b 2 \"p\" Read Point \"dst\" Write Point 38 \"picked\" Float 3 AAAAAAAAAAAAAAAAAAAAAA== \"pickedB\" Float 3 AAAAAAAAAAAAAAAAAAAAAA== \"m_r\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== \"m_g\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== \"m_b\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== \"m_a\" Float 16 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA== \"noise octaves r\" Float 1 AAAAPw== \"noise octaves g\" Float 1 AACAPw== \"noise octaves b\" Float 1 AAAAQA== \"noise octaves a\" Float 1 AAAAQA== \"noise persistence r\" Float 1 AACAPg== \"noise persistence g\" Float 1 AAAAPw== \"noise persistence b\" Float 1 AABAPw== \"noise persistence a\" Float 1 AABAPw== \"lacunarity r\" Float 1 AADAPw== \"lacunarity g\" Float 1 AAAAQA== \"lacunarity b\" Float 1 AAAgQA== \"lacunarity a\" Float 1 AAAgQA== \"noise_offset_r\" Float 1 AAAAAA== \"noise_offset_g\" Float 1 AAAAAA== \"noise_offset_b\" Float 1 AAAAAA== \"noise_offset_a\" Float 1 AAAAAA== \"noise_add_r\" Float 1 AAAAAA== \"noise_add_g\" Float 1 AAAAAA== \"noise_add_b\" Float 1 AAAAAA== \"noise_add_a\" Float 1 AAAAAA== \"noise_gain_r\" Float 1 AAAAAA== \"noise_gain_g\" Float 1 AAAAAA== \"noise_gain_b\" Float 1 AAAAAA== \"noise_gain_a\" Float 1 AAAAAA== \"noise_gamma_r\" Float 1 AAAAAA== \"noise_gamma_g\" Float 1 AAAAAA== \"noise_gamma_b\" Float 1 AAAAAA== \"noise_gamma_a\" Float 1 AAAAAA== \"noise scale r\" Float 1 AABIQg== \"noise scale g\" Float 1 PQpwQg== \"noise scale b\" Float 1 HwWMQg== \"noise scale a\" Float 1 HwWMQg== 38 \"picked\" 3 1 \"pickedB\" 3 1 \"m_r\" 16 1 \"m_g\" 16 1 \"m_b\" 16 1 \"m_a\" 16 1 \"noise_octaves_r\" 1 1 \"noise_octaves_g\" 1 1 \"noise_octaves_b\" 1 1 \"noise_octaves_a\" 1 1 \"noise_persistence_r\" 1 1 \"noise_persistence_g\" 1 1 \"noise_persistence_b\" 1 1 \"noise_persistence_a\" 1 1 \"noise_lacunarity_r\" 1 1 \"noise_lacunarity_g\" 1 1 \"noise_lacunarity_b\" 1 1 \"noise_lacunarity_a\" 1 1 \"noise_offset_r\" 1 1 \"noise_offset_g\" 1 1 \"noise_offset_b\" 1 1 \"noise_offset_a\" 1 1 \"noise_add_r\" 1 1 \"noise_add_g\" 1 1 \"noise_add_b\" 1 1 \"noise_add_a\" 1 1 \"noise_gain_r\" 1 1 \"noise_gain_g\" 1 1 \"noise_gain_b\" 1 1 \"noise_gain_a\" 1 1 \"noise_gamma_r\" 1 1 \"noise_gamma_g\" 1 1 \"noise_gamma_b\" 1 1 \"noise_gamma_a\" 1 1 \"noise_scale_r\" 1 1 \"noise_scale_g\" 1 1 \"noise_scale_b\" 1 1 \"noise_scale_a\" 1 1 0"
   kernelSource "// ----------------------------------------------------------------\n// aeDirtCG v1.0 by Aitor Echeveste 2023\n// ----------------------------------------------------------------\n// Noise algorithm adapted by Aitor Echeveste from Noise4D function by Mads Hagbarth and Adrian Pueyo\n// Noise4D function Ported by Mads Hagbarth Lund 2014\n// Based on https://github.com/Draradech/csworldgen/blob/master/simplexnoise.cpp\n\n\n\n\nint fastfloor( const float x ) \{ return x > 0 ? (int) x : (int) x - 1; \}\ninline float raw_noise_4d( const float x, const float y, const float z, const float w ) \n\{\nint simplex\[64]\[4] = \{\n    \{0,1,2,3\},\{0,1,3,2\},\{0,0,0,0\},\{0,2,3,1\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{1,2,3,0\},\n    \{0,2,1,3\},\{0,0,0,0\},\{0,3,1,2\},\{0,3,2,1\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{1,3,2,0\},\n    \{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\n    \{1,2,0,3\},\{0,0,0,0\},\{1,3,0,2\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{2,3,0,1\},\{2,3,1,0\},\n    \{1,0,2,3\},\{1,0,3,2\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{2,0,3,1\},\{0,0,0,0\},\{2,1,3,0\},\n    \{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\n    \{2,0,1,3\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{3,0,1,2\},\{3,0,2,1\},\{0,0,0,0\},\{3,1,2,0\},\n    \{2,1,0,3\},\{0,0,0,0\},\{0,0,0,0\},\{0,0,0,0\},\{3,1,0,2\},\{0,0,0,0\},\{3,2,0,1\},\{3,2,1,0\}\n\};\n    int perm\[512] = \{\n        151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,\n        8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,\n        35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,\n        134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,\n        55,46,245,40,244,102,143,54,65,25,63,161,1,216,80,73,209,76,132,187,208, 89,\n        18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,\n        250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,\n        189,28,42,223,183,170,213,119,248,152,2,44,154,163,70,221,153,101,155,167,43,\n        172,9,129,22,39,253,19,98,108,110,79,113,224,232,178,185,112,104,218,246,97,\n        228,251,34,242,193,238,210,144,12,191,179,162,241,81,51,145,235,249,14,239,\n        107,49,192,214,31,181,199,106,157,184,84,204,176,115,121,50,45,127,4,150,254,\n        138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180,\n\n        151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,\n        8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,\n        35,11,32,57,177,33,88,237,149,56,87,174,20,125,136,171,168,68,175,74,165,71,\n        134,139,48,27,166,77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,\n        55,46,245,40,244,102,143,54,65,25,63,161,1,216,80,73,209,76,132,187,208, 89,\n        18,169,200,196,135,130,116,188,159,86,164,100,109,198,173,186,3,64,52,217,226,\n        250,124,123,5,202,38,147,118,126,255,82,85,212,207,206,59,227,47,16,58,17,182,\n        189,28,42,223,183,170,213,119,248,152,2,44,154,163,70,221,153,101,155,167,43,\n        172,9,129,22,39,253,19,98,108,110,79,113,224,232,178,185,112,104,218,246,97,\n        228,251,34,242,193,238,210,144,12,191,179,162,241,81,51,145,235,249,14,239,\n        107,49,192,214,31,181,199,106,157,184,84,204,176,115,121,50,45,127,4,150,254,\n        138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180\n    \};\n  int grad4\[32]\[4]= \{\n    \{0,1,1,1\},  \{0,1,1,-1\},  \{0,1,-1,1\},  \{0,1,-1,-1\},\n    \{0,-1,1,1\}, \{0,-1,1,-1\}, \{0,-1,-1,1\}, \{0,-1,-1,-1\},\n    \{1,0,1,1\},  \{1,0,1,-1\},  \{1,0,-1,1\},  \{1,0,-1,-1\},\n    \{-1,0,1,1\}, \{-1,0,1,-1\}, \{-1,0,-1,1\}, \{-1,0,-1,-1\},\n    \{1,1,0,1\},  \{1,1,0,-1\},  \{1,-1,0,1\},  \{1,-1,0,-1\},\n    \{-1,1,0,1\}, \{-1,1,0,-1\}, \{-1,-1,0,1\}, \{-1,-1,0,-1\},\n    \{1,1,1,0\},  \{1,1,-1,0\},  \{1,-1,1,0\},  \{1,-1,-1,0\},\n    \{-1,1,1,0\}, \{-1,1,-1,0\}, \{-1,-1,1,0\}, \{-1,\n\n-1,-1,0\}\n  \};\n    float F4 = (sqrt(5.0f)-1.0)/4.0;\n    float G4 = (5.0-sqrt(5.0f))/20.0;\n    float n0, n1, n2, n3, n4;\n    float s = (x + y + z + w) * F4;\n    int i = fastfloor(x + s);\n    int j = fastfloor(y + s);\n    int k = fastfloor(z + s);\n    int l = fastfloor(w + s);\n    float t = (i + j + k + l) * G4;\n    float X0 = i - t;\n    float Y0 = j - t;\n    float Z0 = k - t;\n    float W0 = l - t;\n\n    float x0 = x - X0;\n    float y0 = y - Y0;\n    float z0 = z - Z0;\n    float w0 = w - W0;\n    int c1 = (x0 > y0) ? 32 : 0;\n    int c2 = (x0 > z0) ? 16 : 0;\n    int c3 = (y0 > z0) ? 8 : 0;\n    int c4 = (x0 > w0) ? 4 : 0;\n    int c5 = (y0 > w0) ? 2 : 0;\n    int c6 = (z0 > w0) ? 1 : 0;\n    int c = c1 + c2 + c3 + c4 + c5 + c6;\n\n    int i1, j1, k1, l1;\n    int i2, j2, k2, l2;\n    int i3, j3, k3, l3;\n    i1 = simplex\[c]\[0]>=3 ? 1 : 0;\n    j1 = simplex\[c]\[1]>=3 ? 1 : 0;\n    k1 = simplex\[c]\[2]>=3 ? 1 : 0;\n    l1 = simplex\[c]\[3]>=3 ? 1 : 0;\n    i2 = simplex\[c]\[0]>=2 ? 1 : 0;\n    j2 = simplex\[c]\[1]>=2 ? 1 : 0;\n    k2 = simplex\[c]\[2]>=2 ? 1 : 0;\n    l2 = simplex\[c]\[3]>=2 ? 1 : 0;\n    i3 = simplex\[c]\[0]>=1 ? 1 : 0;\n    j3 = simplex\[c]\[1]>=1 ? 1 : 0;\n    k3 = simplex\[c]\[2]>=1 ? 1 : 0;\n    l3 = simplex\[c]\[3]>=1 ? 1 : 0;\n    float x1 = x0 - i1 + G4;\n    float y1 = y0 - j1 + G4;\n    float z1 = z0 - k1 + G4;\n    float w1 = w0 - l1 + G4;\n    float x2 = x0 - i2 + 2.0*G4;\n    float y2 = y0 - j2 + 2.0*G4;\n    float z2 = z0 - k2 + 2.0*G4;\n    float w2 = w0 - l2 + 2.0*G4;\n    float x3 = x0 - i3 + 3.0*G4;\n    float y3 = y0 - j3 + 3.0*G4;\n    float z3 = z0 - k3 + 3.0*G4;\n    float w3 = w0 - l3 + 3.0*G4;\n    float x4 = x0 - 1.0 + 4.0*G4;\n    float y4 = y0 - 1.0 + 4.0*G4;\n    float z4 = z0 - 1.0 + 4.0*G4;\n    float w4 = w0 - 1.0 + 4.0*G4;\n    int ii = i & 255;\n    int jj = j & 255;\n    int kk = k & 255;\n    int ll = l & 255;\n    int gi0 = perm\[ii+perm\[jj+perm\[kk+perm\[ll]]]] % 32;\n    int gi1 = perm\[ii+i1+perm\[jj+j1+perm\[kk+k1+perm\[ll+l1]]]] % 32;\n    int gi2 = perm\[ii+i2+perm\[jj+j2+perm\[kk+k2+perm\[ll+l2]]]] % 32;\n    int gi3 = perm\[ii+i3+perm\[jj+j3+perm\[kk+k3+perm\[ll+l3]]]] % 32;\n    int gi4 = perm\[ii+1+perm\[jj+1+perm\[kk+1+perm\[ll+1]]]] % 32;\n    float t0 = 0.6 - x0*x0 - y0*y0 - z0*z0 - w0*w0;\n    if(t0<0) n0 = 0.0;\n    else \{\n        t0 *= t0;\n        n0 = t0 * t0 * dot(float4(grad4\[gi0]\[0],grad4\[gi0]\[2],grad4\[gi0]\[3],grad4\[gi0]\[3]), float4(x0, y0, z0, w0));\n    \}\n    float t1 = 0.6 - x1*x1 - y1*y1 - z1*z1 - w1*w1;\n    if(t1<0) n1 = 0.0;\n    else \{\n        t1 *= t1;\n        n1 = t1 * t1 * dot(float4(grad4\[gi1]\[0],grad4\[gi1]\[2],grad4\[gi1]\[3],grad4\[gi1]\[3]), float4(x1, y1, z1, w1));\n    \}\n    float t2 = 0.6 - x2*x2 - y2*y2 - z2*z2 - w2*w2;\n    if(t2<0) n2 = 0.0;\n    else \{\n        t2 *= t2;\n        n2 = t2 * t2 * dot(float4(grad4\[gi2]\[0],grad4\[gi2]\[2],grad4\[gi2]\[3],grad4\[gi2]\[3]), float4(x2, y2, z2, w2));\n    \}\n    float t3 = 0.6 - x3*x3 - y3*y3 - z3*z3 - w3*w3;\n    if(t3<0) n3 = 0.0;\n    else \{\n        t3 *= t3;\n        n3 = t3 * t3 * dot(float4(grad4\[gi3]\[0],grad4\[gi3]\[2],grad4\[gi3]\[3],grad4\[gi3]\[3]), float4(x3, y3, z3, w3));\n    \}\n    float t4 = 0.6 - x4*x4 - y4*y4 - z4*z4 - w4*w4;\n    if(t4<0) n4 = 0.0;\n    else \{\n        t4 *= t4;\n        n4 = t4 * t4 * dot(float4(grad4\[gi4]\[0],grad4\[gi4]\[2],grad4\[gi4]\[3],grad4\[gi4]\[3]), float4(x4, y4, z4, w4));\n    \}\n    return 27.0 * (n0 + n1 + n2 + n3 + n4);\n\}\ninline float octave_noise_4d( const float octaves, const float persistence, const float scale, const float x, const float y, const float z, const float w, const float lacunarity=2 ) \n\{\n    float total = 0;\n    float frequency = scale;\n    float amplitude = 1;\n    float maxAmplitude = 0;\n    for( int i=0; i < octaves; i++ ) \{\n        total += (float)raw_noise_4d( x * frequency, y * frequency, z * frequency, w * frequency ) * amplitude;\n\n        frequency *= lacunarity;\n        maxAmplitude += amplitude;\n        amplitude *= persistence;\n    \}\n    \n\nreturn float(total / maxAmplitude);\n\}\n\n\n\nkernel noise4DKernel : ImageComputationKernel<ePixelWise>\n\{\n  Image<eRead, eAccessPoint, eEdgeClamped> p;\n  Image<eWrite> dst;\n\n  param:\n    float3 picked; //Center, or white for ramps\n    float3 pickedB; //Black for ramps\n    float4x4 m_r; //Camera or axis matrix.\n    float4x4 m_g; //Camera or axis matrix.\n    float4x4 m_b; //Camera or axis matrix.\n    float4x4 m_a; //Camera or axis matrix.\n\n\n    // Noise parameters\n    float noise_octaves_r;\n    float noise_octaves_g;\n    float noise_octaves_b;\n    float noise_octaves_a;\n    float noise_persistence_r;\n    float noise_persistence_g;\n    float noise_persistence_b;\n    float noise_persistence_a;\n    float noise_lacunarity_r;\n    float noise_lacunarity_g;\n    float noise_lacunarity_b;\n    float noise_lacunarity_a;\n    float noise_offset_r;\n    float noise_offset_g;\n    float noise_offset_b;\n    float noise_offset_a;\n    float noise_add_r;\n    float noise_add_g;\n    float noise_add_b;\n    float noise_add_a;\n    float noise_gain_r;\n    float noise_gain_g;\n    float noise_gain_b;\n    float noise_gain_a;\n    float noise_gamma_r;\n    float noise_gamma_g;\n    float noise_gamma_b;\n    float noise_gamma_a;\n    float noise_scale_r;\n    float noise_scale_g;\n    float noise_scale_b;\n    float noise_scale_a;\n\n\n\n\n\n  void define() \{\n    defineParam(noise_octaves_r, \"noise octaves r\", 0.5f);\n    defineParam(noise_octaves_g, \"noise octaves g\", 1.0f);\n    defineParam(noise_octaves_b, \"noise octaves b\", 2.0f);\n    defineParam(noise_octaves_a, \"noise octaves a\", 2.0f);\n    defineParam(noise_persistence_r, \"noise persistence r\",  0.25f);\n    defineParam(noise_persistence_g, \"noise persistence g\",  0.5f);\n    defineParam(noise_persistence_b, \"noise persistence b\",  0.75f);\n    defineParam(noise_persistence_a, \"noise persistence a\",  0.75f);\n    defineParam(noise_lacunarity_r, \"lacunarity r\",  1.5f);\n    defineParam(noise_lacunarity_g, \"lacunarity g\",  2.0f);\n    defineParam(noise_lacunarity_b, \"lacunarity b\",  2.5f);\n    defineParam(noise_lacunarity_a, \"lacunarity a\",  2.5f);\n    defineParam(noise_scale_r, \"noise scale r\", 50.f);\n    defineParam(noise_scale_g, \"noise scale g\", 60.01f);\n    defineParam(noise_scale_b, \"noise scale b\", 70.01f);\n    defineParam(noise_scale_a, \"noise scale a\", 70.01f);\n\n  \}\n\n\n  inline float rad(float deg)\{ \n    return deg*PI/180;\n  \}\n\n  inline float smoothstep(float edge0, float edge1, float x)\{\n    x = clamp((x - edge0)/(edge1 - edge0), 0.0f, 1.0f);\n    return x*x*x*(x*(x*6-15)+10);\n  \}\n\n  inline float cl(float val)\{\n  return clamp(val,0.0f,1.0f); \n  \}\n\n\n  void process() \{\n    //1. P WORLD\n    // Center the coordinates\n    float3 color_r = float3(p(0)-picked.x,p(1)-picked.y,p(2)-picked.z);\n    float3 color_g = float3(p(0)-picked.x,p(1)-picked.y,p(2)-picked.z);\n    float3 color_b = float3(p(0)-picked.x,p(1)-picked.y,p(2)-picked.z);   \n    float3 color_a = float3(p(0)-picked.x,p(1)-picked.y,p(2)-picked.z); \n    int black = 0;\n    \n    // Matrix!\n    float4x4 mr = m_r;\n    mr = mr.invert();\n    for(int c = 0; c<dst.kComps; c++)\{\n      color_r\[c] = mr\[c]\[0]*color_r\[0] + mr\[c]\[1]*color_r\[1] + mr\[c]\[2]*color_r\[2] + mr\[c]\[3]*1.0f;\n    \}\n\n    \n    float4x4 mg = m_g;\n    mg = mg.invert();\n    for(int c = 0; c<dst.kComps; c++)\{\n      color_g\[c] = mg\[c]\[0]*color_g\[0] + mg\[c]\[1]*color_g\[1] + mg\[c]\[2]*color_g\[2] + mg\[c]\[3]*1.0f;\n    \}\n\n\n    float4x4 mb = m_b;\n    mg = mg.invert();\n    for(int c = 0; c<dst.kComps; c++)\{\n      color_b\[c] = mb\[c]\[0]*color_b\[0] + mb\[c]\[1]*color_b\[1] + mb\[c]\[2]*color_b\[2] + mb\[c]\[3]*1.0f;\n    \}\n\n\n    float4x4 ma = m_a;\n    mg = mg.invert();\n    for(int c = 0; c<dst.kComps; c++)\{\n      color_a\[c] = ma\[c]\[0]*color_a\[0] + ma\[c]\[1]*color_a\[1] + ma\[c]\[2]*color_a\[2] + ma\[c]\[3]*1.0f;\n    \}\n\n\n    float dist;\n\n\n    \n\nfloat noise_r = (float)octave_noise_4d(float(noise_octaves_r),noise_persistence_r,noise_scale_r==0?10000.0f:1/noise_scale_r,color_r\[0],color_r\[1],color_r\[2],noise_offset_r,noise_lacunarity_r);\n    float noise_g = (float)octave_noise_4d(float(noise_octaves_g),noise_persistence_g,noise_scale_g==0?10000.0f:1/noise_scale_g,color_g\[0],color_g\[1],color_g\[2],noise_offset_g,noise_lacunarity_g);\n    float noise_b = (float)octave_noise_4d(float(noise_octaves_b),noise_persistence_b,noise_scale_b==0?10000.0f:1/noise_scale_b,color_b\[0],color_b\[1],color_b\[2],noise_offset_b,noise_lacunarity_b);\n    float noise_a = (float)octave_noise_4d(float(noise_octaves_a),noise_persistence_a,noise_scale_a==0?10000.0f:1/noise_scale_a,color_a\[0],color_a\[1],color_a\[2],noise_offset_a,noise_lacunarity_a);\n\n    noise_r = cl(pow(max((noise_r+noise_add_r)*noise_gain_r,0.0f),noise_gamma_r==0?1:1/noise_gamma_r));\n    noise_g = cl(pow(max((noise_g+noise_add_g)*noise_gain_g,0.0f),noise_gamma_g==0?1:1/noise_gamma_g));\n    noise_b = cl(pow(max((noise_b+noise_add_b)*noise_gain_b,0.0f),noise_gamma_b==0?1:1/noise_gamma_b));\n    noise_a = cl(pow(max((noise_a+noise_add_a)*noise_gain_a,0.0f),noise_gamma_a==0?1:1/noise_gamma_a));\n\n\n\n    float4 result = float4(noise_r, noise_g, noise_b, noise_a);\n\n    dst() = result;\n\n  \}\n\};"
   useGPUIfAvailable false
   vectorize false
   rebuild ""
-  noise4DKernel_picked {{(parent.shape==3&&parent.mirrored)?picker-(black_point-picker):(parent.shape==5&&parent.mirrored)?picker-radius:picker} {(parent.shape==3&&parent.mirrored)?picker-(black_point-picker):(parent.shape==5&&parent.mirrored)?picker-radius:picker} {(parent.shape==3&&parent.mirrored)?picker-(black_point-picker):(parent.shape==5&&parent.mirrored)?picker-radius:picker}}
-  noise4DKernel_pickedB {{parent.shape==5?parent.axis==0?picker+radius+0.0001:picker:black_point} {parent.shape==5?parent.axis==1?picker+radius+0.0001:picker:black_point} {parent.shape==5?parent.axis==2?picker+radius+0.0001:picker+0.00001:black_point}}
   noise4DKernel_m_r {
       {{parent.Axis_r.world_matrix} {parent.Axis_r.world_matrix} {parent.Axis_r.world_matrix} {parent.Axis_r.world_matrix}}
       {{parent.Axis_r.world_matrix} {parent.Axis_r.world_matrix} {parent.Axis_r.world_matrix} {parent.Axis_r.world_matrix}}
@@ -635,7 +632,7 @@ push $Nc897f600
   xpos -1077
   ypos 1965
  }
-set Nc8984600 [stack 0]
+set N1991e600 [stack 0]
  Merge2 {
   inputs 2
   operation mask
@@ -657,9 +654,9 @@ set Nc8984600 [stack 0]
   xpos -1746
   ypos -280
  }
-set Nc8993000 [stack 0]
-push $Nc8975800
-push $Nc8993000
+set N198fe000 [stack 0]
+push $N5ecede00
+push $N198fe000
  Dot {
   name Dot26
   xpos -1541
@@ -724,7 +721,7 @@ add_layer {noiseExtra noiseExtra.red noiseExtra.green noiseExtra.blue noiseExtra
   xpos -2875
   ypos 2328
  }
-set Nc8994e00 [stack 0]
+set N198ffe00 [stack 0]
  Shuffle {
   in noiseExtra
   name Shuffle1
@@ -732,7 +729,7 @@ set Nc8994e00 [stack 0]
   xpos -1349
   ypos 2318
  }
-push $Nc8991e00
+push $N5efe9200
  Switch {
   inputs 2
   which {{parent.inputNoise}}
@@ -745,25 +742,25 @@ push $Nc8991e00
   xpos -1198
   ypos 3017
  }
-set Nc89b6000 [stack 0]
+set N19902c00 [stack 0]
  Dot {
   name Dot32
   xpos -1198
   ypos 3717
  }
-set Nc89b6400 [stack 0]
+set N19903000 [stack 0]
  Dot {
   name Dot4
   xpos -1198
   ypos 3798
  }
-set Nc89b6800 [stack 0]
+set N19925600 [stack 0]
  Dot {
   name Dot6
   xpos -1198
   ypos 4559
  }
-set Nc89b6c00 [stack 0]
+set N19925a00 [stack 0]
  Expression {
   expr0 a
   expr1 0
@@ -778,13 +775,13 @@ set Nc89b6c00 [stack 0]
   xpos -1198
   ypos 4686
  }
-push $Nc8994e00
+push $N198ffe00
  Dot {
   name Dot22
   xpos -2875
   ypos 2443
  }
-push $Nc8984600
+push $N1991e600
  Switch {
   inputs 2
   which {{parent.inputNoise}}
@@ -797,19 +794,19 @@ push $Nc8984600
   xpos -1077
   ypos 2919
  }
-set Nc89b8600 [stack 0]
+set N19927400 [stack 0]
  Dot {
   name Dot5
   xpos -1077
   ypos 3657
  }
-set Nc89b8a00 [stack 0]
+set N19927800 [stack 0]
  Dot {
   name Dot7
   xpos -1077
   ypos 4460
  }
-set Nc89b8e00 [stack 0]
+set N19927c00 [stack 0]
  Expression {
   expr0 0
   expr1 0
@@ -826,20 +823,20 @@ set Nc89b8e00 [stack 0]
   xpos -1110
   ypos 4682
  }
-push $Nc89b6c00
+push $N19925a00
  Dot {
   name Dot33
   xpos -829
   ypos 4558
  }
-set Nc89b9a00 [stack 0]
+set N19928800 [stack 0]
  Expression {
   expr3 a
   name noiseMask4
   xpos -863
   ypos 4594
  }
-push $Nc89b9a00
+push $N19928800
  Expression {
   expr0 0
   expr1 0
@@ -857,7 +854,7 @@ push $Nc89b9a00
   xpos -764
   ypos 4594
  }
-set Nc89bae00 [stack 0]
+set N19929c00 [stack 0]
  Expression {
   expr0 b
   expr1 0
@@ -872,20 +869,20 @@ set Nc89bae00 [stack 0]
   xpos -730
   ypos 4679
  }
-push $Nc89b8e00
+push $N19927c00
  Dot {
   name Dot34
   xpos -762
   ypos 4461
  }
-set Nc89bc200 [stack 0]
+set N1992fc00 [stack 0]
  Expression {
   expr3 a
   name noiseMask5
   xpos -796
   ypos 4498
  }
-push $Nc89bc200
+push $N1992fc00
  Expression {
   expr0 0
   expr1 0
@@ -903,7 +900,7 @@ push $Nc89bc200
   xpos -660
   ypos 4498
  }
-set Nc89bce00 [stack 0]
+set N19930800 [stack 0]
  Merge2 {
   inputs 2
   operation screen
@@ -911,20 +908,20 @@ set Nc89bce00 [stack 0]
   xpos -660
   ypos 4675
  }
-push $Nc89b6400
+push $N19903000
  Expression {
   expr3 a
   name noiseMask2
   xpos -868
   ypos 3713
  }
-push $Nc89b8a00
+push $N19927800
  Dot {
   name Dot31
   xpos -896
   ypos 3657
  }
-set Nc89a6800 [stack 0]
+set N19932400 [stack 0]
  Expression {
   expr0 0
   expr2 0
@@ -942,7 +939,7 @@ set Nc89a6800 [stack 0]
   xpos -753
   ypos 3713
  }
-set Nc89a7000 [stack 0]
+set N19932c00 [stack 0]
  Expression {
   expr0 0
   expr1 0
@@ -957,14 +954,14 @@ set Nc89a7000 [stack 0]
   xpos -719
   ypos 3906
  }
-push $Nc89a6800
+push $N19932400
  Expression {
   expr3 a
   name noiseMask3
   xpos -930
   ypos 3844
  }
-push $Nc89b6800
+push $N19925600
  Expression {
   expr0 0
   expr2 0
@@ -982,7 +979,7 @@ push $Nc89b6800
   xpos -670
   ypos 3844
  }
-set Nc89a8c00 [stack 0]
+set N19934800 [stack 0]
  Merge2 {
   inputs 2
   operation screen
@@ -990,20 +987,20 @@ set Nc89a8c00 [stack 0]
   xpos -670
   ypos 3902
  }
-push $Nc89b6000
+push $N19902c00
  Dot {
   name Dot29
   xpos -862
   ypos 3017
  }
-set Nc89a9c00 [stack 0]
+set N19935800 [stack 0]
  Expression {
   expr3 a
   name noiseMask
   xpos -896
   ypos 3052
  }
-push $Nc89a9c00
+push $N19935800
  Expression {
   expr1 0
   expr2 0
@@ -1012,7 +1009,7 @@ push $Nc89a9c00
   xpos -760
   ypos 3013
  }
-set Nc89aac00 [stack 0]
+set N19936800 [stack 0]
  Merge2 {
   inputs 2
   operation mask
@@ -1036,20 +1033,20 @@ set Nc89aac00 [stack 0]
   xpos -726
   ypos 3136
  }
-push $Nc89b8600
+push $N19927400
  Dot {
   name Dot30
   xpos -772
   ypos 2919
  }
-set Nc89adc00 [stack 0]
+set N19939800 [stack 0]
  Expression {
   expr3 a
   name noiseMask1
   xpos -806
   ypos 2955
  }
-push $Nc89adc00
+push $N19939800
  Expression {
   expr1 0
   expr2 0
@@ -1067,7 +1064,7 @@ push $Nc89adc00
   xpos -670
   ypos 2955
  }
-set Nc89ae800 [stack 0]
+set N1993a400 [stack 0]
  Merge2 {
   inputs 2
   operation screen
@@ -1082,10 +1079,10 @@ set Nc89ae800 [stack 0]
   ypos 4818
   number 2
  }
-push $Nc8974c00
-push $Nc89bae00
-push $Nc89bce00
-push $Nc8974800
+push $N198ad600
+push $N19929c00
+push $N19930800
+push $N5ec23c00
  FilterErode {
   size 2
   name FilterErode1
@@ -1105,8 +1102,8 @@ push $Nc8974800
   xpos -412
   ypos 3672
  }
-set Nc89be400 [stack 0]
-push $Nc89a8c00
+set N1993de00 [stack 0]
+push $N19934800
  Merge2 {
   inputs 2
   operation stencil
@@ -1115,8 +1112,8 @@ push $Nc89a8c00
   xpos -412
   ypos 3844
  }
-push $Nc89be400
-push $Nc89a7000
+push $N1993de00
+push $N19932c00
  Merge2 {
   inputs 2
   operation stencil
@@ -1125,7 +1122,7 @@ push $Nc89a7000
   xpos -412
   ypos 3713
  }
-push $Nc89aac00
+push $N19936800
  Blur {
   channels rgba
   size 5
@@ -1134,8 +1131,8 @@ push $Nc89aac00
   xpos -432
   ypos 3013
  }
-push $Nc89ae800
-push $Nc897c800
+push $N1993a400
+push $N1983e200
  Grade {
   inputs 1+1
   white {0.754167 0.7866666317 0.739166677 0.6100000143}
@@ -1147,7 +1144,6 @@ push $Nc897c800
   name Gradedirt1
   xpos -252
   ypos 2955
-  disable {{1-parent.DirtOn x1001 1 x1037 1}}
  }
  Grade {
   inputs 1+1
@@ -1159,7 +1155,6 @@ push $Nc897c800
   name GradedirtStain1
   xpos -252
   ypos 3013
-  disable {{1-parent.DirtOn x1001 1}}
  }
  ColorCorrect {
   inputs 1+1
@@ -1177,7 +1172,6 @@ push $Nc897c800
   name ColorCorrectContrast1
   xpos -246
   ypos 3713
-  disable {{1-parent.ContrastOn}}
  }
  ColorCorrect {
   inputs 1+1
@@ -1196,7 +1190,6 @@ push $Nc897c800
   name ColorCorrectHigh1
   xpos -246
   ypos 3844
-  disable {{1-parent.ContrastOn}}
  }
  HueShift {
   inputs 1+1
@@ -1208,7 +1201,6 @@ push $Nc897c800
   name HueShift_greener1
   xpos -246
   ypos 4498
-  disable {{1-parent.HueOn x1001 1}}
  }
  HueShift {
   inputs 1+1
@@ -1218,7 +1210,6 @@ push $Nc897c800
   name HueShift1
   xpos -246
   ypos 4594
-  disable {{1-parent.HueOn}}
  }
  Copy {
   inputs 2
@@ -1235,7 +1226,7 @@ push $Nc897c800
   ypos 4672
   disable {{!parent.premultiplied}}
  }
-push $Nc8975000
+push $N5ef4ca00
  Merge2 {
   inputs 2+1
   operation copy
@@ -1263,8 +1254,8 @@ push $Nc8975000
   xpos -212
   ypos 6452
  }
-set Nc89dca00 [stack 0]
-push $Nc8971400
+set N7fab7000 [stack 0]
+push $N7fba2800
  Dot {
   name Dot39
   xpos 790
@@ -1289,7 +1280,7 @@ push $Nc8971400
   xpos -54
   ypos 6559
  }
-push $Nc89dca00
+push $N7fab7000
  Switch {
   inputs 2
   which {{inputData}}
@@ -1370,7 +1361,7 @@ push $Nc89dca00
   addUserKnob {22 hydra_refresh l refresh T "from nuke_weta_base.node.hydra_tab import on_refresh; on_refresh()" +STARTLINE}
   addUserKnob {26 hydra_metadata -STARTLINE +HIDDEN +INVISIBLE T "\{\}"}
  }
-push $Nc8973c00
+push $N5effb000
  NoOp {
   name menu
   xpos -150
