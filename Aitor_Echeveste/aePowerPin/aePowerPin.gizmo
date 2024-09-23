@@ -1,0 +1,467 @@
+Group {
+ name aePowerPin
+ onCreate "n = nuke.thisNode()\nc = n.knob('create').getValue()\n\nif c == 0:\n    \n    if n.inputs()<1:\n        w = nuke.root().width()\n        h = nuke.root().height()\n    else:\n        for a in n.dependencies():\n            w = a.width()\n            h = a.height()\n\n    n.knob('from1').setValue(\[0,0])\n    n.knob('from2').setValue(\[w,0])\n    n.knob('from3').setValue(\[w,h])\n    n.knob('from4').setValue(\[0,h])\n    n.knob('to1').setValue(\[0,0])\n    n.knob('to2').setValue(\[w,0])\n    n.knob('to3').setValue(\[w,h])\n    n.knob('to4').setValue(\[0,h])\n    n.knob('create').setValue(1)"
+ tile_color 0x7e65ceff
+ note_font "Verdana Bold"
+ note_font_color 0xffffffff
+ icon aePowerPin_Node.png
+ addUserKnob {20 aePowerPin}
+ addUserKnob {12 to1}
+ addUserKnob {6 enable1 -STARTLINE}
+ enable1 true
+ addUserKnob {12 to2}
+ to2 {1920 0}
+ addUserKnob {6 enable2 -STARTLINE}
+ enable2 true
+ addUserKnob {12 to3}
+ to3 {1920 1080}
+ addUserKnob {6 enable3 -STARTLINE}
+ enable3 true
+ addUserKnob {12 to4}
+ to4 {0 1080}
+ addUserKnob {6 enable4 -STARTLINE}
+ enable4 true
+ addUserKnob {26 _1 l "" +STARTLINE T "          "}
+ addUserKnob {22 copy_from l "\"Get 'Copy 'from'" t "Copy 'from' " T "nuke.thisNode().knob('to1').fromScript(nuke.thisNode().knob('from1').toScript())\nnuke.thisNode().knob('to2').fromScript(nuke.thisNode().knob('from2').toScript())\nnuke.thisNode().knob('to3').fromScript(nuke.thisNode().knob('from3').toScript())\nnuke.thisNode().knob('to4').fromScript(nuke.thisNode().knob('from4').toScript())\n" +STARTLINE}
+ addUserKnob {26 text_1_2_6 l "" -STARTLINE T " "}
+ addUserKnob {22 get_from l "Get 'corner pin'" -STARTLINE T "c2 = nuke.thisNode()\nmyCornerList = \[]\nwith nuke.root():\n    for i in nuke.allNodes(\"CornerPin2D\"):\n      corner = i\[\"name\"].value()\n      myCornerList.append(corner)\n    \n    def listToString(list):\n      str1 = \" \"\n      return (str1.join(list))\n      \n    if len(myCornerList) > 0: \n        stringCorners = listToString(myCornerList)\n        qBD = nuke.Panel(\"Get 'corner pin'\")\n        qBD.addEnumerationPulldown('Target Corner', stringCorners)\n        qBD.show()\n        myTargetName = qBD.value(\"Target Corner\")\n\n        groupNode = nuke.thisNode()\n        with groupNode:\n            c1 = nuke.toNode(myTargetName)\n            c2\['from1'].setValue(c1\['from1'].getValue())\n            c2\['from2'].setValue(c1\['from2'].getValue())\n            c2\['from3'].setValue(c1\['from3'].getValue())\n            c2\['from4'].setValue(c1\['from4'].getValue())\n            c2\['to1'].copyAnimations(c1\['to1'].animations())\n            c2\['to1'].setValue(c1\['to1'].getValue())\n            c2\['to2'].copyAnimations(c1\['to2'].animations())\n            c2\['to2'].setValue(c1\['to2'].getValue())\n            c2\['to3'].copyAnimations(c1\['to3'].animations())\n            c2\['to3'].setValue(c1\['to3'].getValue())\n            c2\['to4'].copyAnimations(c1\['to4'].animations())\n            c2\['to4'].setValue(c1\['to4'].getValue())\n    else:\n        nuke.message(\"There are no cornerpins in your script\") "}
+ addUserKnob {26 text_1_2_6_2 l "" -STARTLINE T " "}
+ addUserKnob {22 default l "Set to default" -STARTLINE T "n = nuke.thisNode()\nw = nuke.root().width()\nh = nuke.root().height()\n\nk=n.allKnobs()\nfor i in k:\n\ti.clearAnimated()\n\nn.knob('from1').setValue(\[0,0])\nn.knob('from2').setValue(\[w,0])\nn.knob('from3').setValue(\[w,h])\nn.knob('from4').setValue(\[0,h])\nn.knob('to1').setValue(\[0,0])\nn.knob('to2').setValue(\[w,0])\nn.knob('to3').setValue(\[w,h])\nn.knob('to4').setValue(\[0,h])\n\nn.knob('size2').setValue(0)\nn.knob('width').setValue(0)\nn.knob('heigth').setValue(0)\nn.knob('top').setValue(0)\nn.knob('bottom').setValue(0)\nn.knob('right').setValue(0)\nn.knob('left').setValue(0)\n\nn.knob('tl').setValue(1)\nn.knob('tr').setValue(1)\nn.knob('bl').setValue(1)\nn.knob('br').setValue(1)\nn.knob('rt').setValue(1)\nn.knob('rb').setValue(1)\nn.knob('lt').setValue(1)\nn.knob('lb').setValue(1)"}
+ addUserKnob {20 PowerPin l " power Pin" t "This a corner pin improved with x,y offset and different knobs to control the individual cornes, also have guide lines.\n\nAnother improved is that you can export directly from a traker or planar traker.\n\nThanks to my mate Nacho Hoyos, for this awesome idea!" n 1}
+ addUserKnob {26 text_1_2_5 l "" +STARTLINE T "     "}
+ addUserKnob {26 ""}
+ addUserKnob {7 size2 l size t "Control the size of the corners." R -100 100}
+ addUserKnob {26 text_1_2 l "" -STARTLINE T "          "}
+ addUserKnob {7 width l "offset x" t "Move the width to the right/left." R -100 100}
+ addUserKnob {26 text_1_2_1 l "" -STARTLINE T "          "}
+ addUserKnob {7 heigth l "offset y" t "move the height to the top/bottom." R -100 100}
+ addUserKnob {26 text_1_2_1_1 l "" -STARTLINE T "          "}
+ addUserKnob {26 ""}
+ addUserKnob {7 right t "Adjust the right side cornes." R -100 100}
+ addUserKnob {26 text_1_1_1 l "" -STARTLINE T "  "}
+ addUserKnob {6 rt l "" t "Activate/desactivate the top right corner." -STARTLINE}
+ rt true
+ addUserKnob {6 rb l "" t "Activate/desactivate the top left corner." -STARTLINE}
+ rb true
+ addUserKnob {7 left t "Adjust the left side cornes." R -100 100}
+ addUserKnob {26 text_1_1_1_1 l "" -STARTLINE T "  "}
+ addUserKnob {6 lt l "" t "Activate/desactivate the bottom right corner." -STARTLINE}
+ lt true
+ addUserKnob {6 lb l "" t "Activate/desactivate the bottom left corner." -STARTLINE}
+ lb true
+ addUserKnob {7 top t "Adjust the top cornes." R -100 100}
+ addUserKnob {26 text_1 l "" -STARTLINE T "  "}
+ addUserKnob {6 tl l "" t "Activate/desactivate the right top corner." -STARTLINE}
+ tl true
+ addUserKnob {6 tr l "" t "Activate/desactivate the left top corner." -STARTLINE}
+ tr true
+ addUserKnob {7 bottom t "Adjust the bottom cornes." R -100 100}
+ addUserKnob {26 text_1_1 l "" -STARTLINE T "  "}
+ addUserKnob {6 bl l "" t "Activate/desactivate the right bottom corner." -STARTLINE}
+ bl true
+ addUserKnob {6 br l "" t "Activate/desactivate the right bottom corner." -STARTLINE}
+ br true
+ addUserKnob {26 ""}
+ addUserKnob {6 preview l "see guidelines" t "Activate/desactivate guide lines" +STARTLINE}
+ addUserKnob {26 text_1_2_5_1_1_1 l "" -STARTLINE T "     "}
+ addUserKnob {6 block l "block guidelines" t "Block the guide lines to the first corner pin values." -STARTLINE}
+ addUserKnob {26 text_1_2_5_1_1_1_1 l "" -STARTLINE T "     "}
+ addUserKnob {26 text_2_1 l " " T " "}
+ addUserKnob {7 th l thicknes t "Control the guide line thickness" R 1 5}
+ th 4
+ addUserKnob {19 opacity l color t "Change the color of the guide lines."}
+ opacity 1
+ addUserKnob {6 opacity_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 color_rgba_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ color_rgba_panelDropped true
+ addUserKnob {7 add l overscan t "Add overscan to save the outter transform pixels." R 0 1024}
+ addUserKnob {26 ""}
+ addUserKnob {26 _2_1 l "" +STARTLINE T "          "}
+ addUserKnob {20 endGroup n -1}
+ addUserKnob {20 extra l "extra matrix" n 1}
+ extra 0
+ addUserKnob {41 matrix_2 l "" +STARTLINE T Matrix2.matrix}
+ addUserKnob {20 endGroup_1 l endGroup n -1}
+ addUserKnob {26 _3 l "" +STARTLINE T "          "}
+ addUserKnob {6 color_rgb_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+ addUserKnob {6 inv l invert +STARTLINE}
+ addUserKnob {41 filter T Transform1.filter}
+ addUserKnob {6 clamp -STARTLINE}
+ addUserKnob {6 blackOutside l "black outside" -STARTLINE}
+ blackOutside true
+ addUserKnob {6 crop -STARTLINE}
+ crop true
+ addUserKnob {7 motionblur R 0 4}
+ addUserKnob {7 shutter R 0 2}
+ shutter 0.5
+ addUserKnob {41 shutteroffset l "shutter offset" T Transform1.shutteroffset}
+ addUserKnob {41 shuttercustomoffset l "" -STARTLINE T Transform1.shuttercustomoffset}
+ addUserKnob {26 ""}
+ addUserKnob {26 about l "" +STARTLINE T "<span style=\"color:#666\"><br/><b>aePowerPin v2.0</b> - <a  style=\"color:#666;text-decoration: none;\">Aitor Echeveste</a>  © 2021</span>"}
+ addUserKnob {20 From}
+ addUserKnob {12 from1}
+ addUserKnob {12 from2}
+ from2 {1920 0}
+ addUserKnob {12 from3}
+ from3 {1920 1080}
+ addUserKnob {12 from4}
+ from4 {0 1080}
+ addUserKnob {26 text_1_2_6_1_1 l "" +STARTLINE T " "}
+ addUserKnob {22 set_to l "Set to input" t "Set to input format." T "f = None\ntry:\n  f = nuke.thisNode().input(0).format()\nexcept:\n  f = nuke.root().format()\nf1 = nuke.thisNode().knob('from1').fromScript(\"0 0\")\nf2 = nuke.thisNode().knob('from2').fromScript(str(f.width()) + \" 0\")\nf3 = nuke.thisNode().knob('from3').fromScript(str(f.width()) + \" \" + str(f.height()))\nf4 = nuke.thisNode().knob('from4').fromScript(\"0 \" + str(f.height()))" +STARTLINE}
+ addUserKnob {26 text_1_2_6_1 l "" t "Copy to." -STARTLINE T " "}
+ addUserKnob {22 copy_to l "Copy 'to'" t "Copy to." -STARTLINE T "nuke.thisNode().knob('from1').fromScript(nuke.thisNode().knob('to1').toScript())\nnuke.thisNode().knob('from2').fromScript(nuke.thisNode().knob('to2').toScript())\nnuke.thisNode().knob('from3').fromScript(nuke.thisNode().knob('to3').toScript())\nnuke.thisNode().knob('from4').fromScript(nuke.thisNode().knob('to4').toScript())\n"}
+ addUserKnob {6 create +INVISIBLE +STARTLINE}
+ addUserKnob {20 About}
+ addUserKnob {26 _4 l "" +STARTLINE T "   "}
+ addUserKnob {26 _5 l "" +STARTLINE T "   "}
+ addUserKnob {26 aePowerPinv1 l "" +STARTLINE T "<font color=#ffffff><font size=\"7\">aePowerPin</font><font size=\"6\"> v2.0</font>\n"}
+ addUserKnob {26 aitor_echeveste_izquierdo l "" +STARTLINE T "by Aitor Echeveste Izquierdo © 2021"}
+ addUserKnob {26 _7 l "" +STARTLINE T "   "}
+ addUserKnob {26 ""}
+ addUserKnob {26 _6 l "" +STARTLINE T "   "}
+ addUserKnob {26 _8 l "" +STARTLINE T "   "}
+ addUserKnob {26 web l "" +STARTLINE T "<b><a href=\"http://www.aitorecheveste.com\"><span style=\"color:#C8C8C8;\">www.aitorecheveste.com</span></a><b>"}
+}
+ NoOp {
+  inputs 0
+  name lines
+  xpos -275
+  ypos 475
+  hide_input true
+  addUserKnob {20 User}
+  addUserKnob {12 a -STARTLINE}
+  a {{block==0?power2.to4.x-1000:CornerPin2D2.to4.x-1000} {block==0?(lines.a.x)*ecl2.x+ecl2.y:(lines.a.x)*power.ec2.x+power.ec2.y}}
+  addUserKnob {12 b -STARTLINE}
+  b {{block==0?power2.to3.x+1000:CornerPin2D2.to3.x+1000} {block==0?(lines.b.x)*ecl2.x+ecl2.y:(lines.b.x)*power.ec2.x+power.ec2.y}}
+  addUserKnob {12 c}
+  c {{block==0?power2.to1.x-1000:CornerPin2D2.to1.x-1000} {block==0?(lines.c.x)*ecl.x+ecl.y:(lines.c.x)*power.ec.x+power.ec.y}}
+  addUserKnob {12 d -STARTLINE}
+  d {{block==0?power2.to2.x+1000:CornerPin2D2.to2.x+1000} {block==0?(lines.d.x)*ecl.x+ecl.y:(lines.d.x)*power.ec.x+power.ec.y}}
+  addUserKnob {26 ""}
+  addUserKnob {12 e}
+  e {{"block==0?(e.y-ecl3.y)/(ecl3.x)==inf?0.000001:(e.y-ecl3.y)/(ecl3.x)\n\n\n:\n\n(e.y-power2.ec3.y)/(power2.ec3.x)==inf?0.000001:(e.y-power2.ec3.y)/(power2.ec3.x)"} {block==0?power.to4.y+1000:CornerPin2D2.to4.y+1000}}
+  addUserKnob {12 f -STARTLINE}
+  f {{"block==0?(f.y-ecl4.y)/(ecl4.x):\n\n\n(f.y-power2.ec4.y)/(power2.ec4.x)==inf?0.000001:(f.y-power2.ec4.y)/(power2.ec4.x)\n\n\n"} {block==0?power.to3.y+1000:CornerPin2D2.to3.y+1000}}
+  addUserKnob {12 g}
+  g {{"block==0?(g.y-ecl3.y)/(ecl3.x):\n(g.y-power2.ec3.y)/(power2.ec3.x)==-inf?0.000001:(g.y-power2.ec3.y)/(power2.ec3.x)" x1 nan} {block==0?power.to1.y-1000:CornerPin2D2.to1.y-1000 x1 nan}}
+  addUserKnob {12 h -STARTLINE}
+  h {{"block==0?(h.y-ecl4.y)/(ecl4.x):\n\n(h.y-power2.ec4.y)/(power2.ec4.x)==-inf?0.000001:(h.y-power2.ec4.y)/(power2.ec4.x)"} {block==0?power.to2.y-1000:CornerPin2D2.to2.y-1000}}
+  addUserKnob {26 ""}
+  addUserKnob {7 ml}
+  ml {{(power2.to2.y-power2.to1.y)/(power2.to2.x-power2.to1.x)}}
+  addUserKnob {12 ecl -STARTLINE}
+  ecl {{ml} {power2.to1.y+(ml*-power2.to1.x)}}
+  addUserKnob {7 ml2}
+  ml2 {{(power2.to4.y-power2.to3.y)/(power2.to4.x-power2.to3.x)}}
+  addUserKnob {12 ecl2 -STARTLINE}
+  ecl2 {{ml2} {power2.to3.y+(ml2*-power2.to3.x)}}
+  addUserKnob {26 ""}
+  addUserKnob {7 ml3}
+  ml3 {{(power.to4.y-power.to1.y)/(power.to4.x-power.to1.x)}}
+  addUserKnob {12 ecl3 -STARTLINE}
+  ecl3 {{ml3 x1 nan} {power.to1.y+(ml3*-power.to1.x) x1 nan}}
+  addUserKnob {7 ml4}
+  ml4 {{(power.to3.y-power.to2.y)/(power.to3.x-power.to2.x) x1 2.45280612}}
+  addUserKnob {12 ecl4 -STARTLINE}
+  ecl4 {{ml4 x1 nan x29 nan} {power.to3.y+(ml4*-power.to3.x) x1 nan x29 nan}}
+ }
+set N613c5c00 [stack 0]
+ Rectangle {
+  cliptype none
+  area {{curve} {th>1?-th/2:0} {power2.m4==0?3000:hypot(lines.h.x-lines.f.x,lines.h.y-lines.f.y)} {th>1?th/2:1}}
+  color {{parent.Rectangle2.color} {parent.Rectangle2.color} {parent.Rectangle2.color} {parent.Rectangle2.color}}
+  name Rectangle3
+  xpos -29
+  ypos 500
+  disable {{!preview}}
+ }
+ Transform {
+  translate {{power2.m4==0?power.to3:lines.f} {power2.m4==0?power.to3:lines.f}}
+  rotate {{"power2.m4==0?\n\n((power.to2.x>=power.to3.x)?0:180)+degrees(atan((power.to2.y-power.to3.y)/(power.to2.x-power.to3.x))):\n\n((lines.h.x>=lines.f.x)?0:180)+degrees(atan((lines.h.y-lines.f.y)/(lines.h.x-lines.f.x)))\n\n" x1 45}}
+  filter Mitchell
+  name Transform5
+  xpos -29
+  ypos 525
+  disable {{"block==1?(lines.ml4==inf?1:preview==1?0:1):!preview\n" x1 1}}
+ }
+push $N613c5c00
+ Rectangle {
+  cliptype none
+  area {{curve} {th>1?-th/2:0} {power2.m3==0?3000:hypot(lines.g.x-lines.e.x,lines.g.y-lines.e.y)} {th>1?th/2:1}}
+  color {{parent.Rectangle2.color} {parent.Rectangle2.color} {parent.Rectangle2.color} {parent.Rectangle2.color}}
+  name Rectangle1
+  xpos -111
+  ypos 500
+  disable {{!preview}}
+ }
+ Transform {
+  translate {{power2.m3==0?power.to4:lines.e x1 0} {power2.m3==0?power.to4:lines.e x1 0}}
+  rotate {{"power2.m3==0?\n\n((power.to1.x>=power.to4.x)?0:180)+degrees(atan((power.to1.y-power.to4.y)/(power.to1.x-power.to4.x)))\n\n:\n\n((lines.g.x>=lines.e.x)?0:180)+degrees(atan((lines.g.y-lines.e.y)/(lines.g.x-lines.e.x)))\n\n" x1 45}}
+  filter Mitchell
+  name Transform4
+  xpos -111
+  ypos 525
+  disable {{"block==1?(lines.ml3==inf?1:preview==1?0:1):!preview\n" x1 1}}
+ }
+push $N613c5c00
+ Rectangle {
+  cliptype none
+  area {{curve} {th>1?-th/2:0} {hypot(lines.d.x-lines.c.x,lines.d.y-lines.c.y)} {th>1?th/2:1}}
+  color {{parent.Rectangle2.color} {parent.Rectangle2.color} {parent.Rectangle2.color} {parent.Rectangle2.color}}
+  name Rectangle4
+  xpos -193
+  ypos 499
+  disable {{!preview}}
+ }
+ Transform {
+  translate {{lines.c} {lines.c}}
+  rotate {{((lines.d.x>=lines.c.x)?0:180)+degrees(atan((lines.d.y-lines.c.y)/(lines.d.x-lines.c.x))) x1 45}}
+  filter Mitchell
+  name Transform3
+  xpos -193
+  ypos 525
+  disable {{!preview}}
+ }
+push 0
+push $N613c5c00
+ Rectangle {
+  cliptype none
+  area {{curve} {th>1?-th/2:0} {hypot(lines.b.x-lines.a.x,lines.b.y-lines.a.y)} {th>1?th/2:1}}
+  color {{parent.opacity} {parent.opacity} {parent.opacity} {parent.opacity}}
+  name Rectangle2
+  xpos -275
+  ypos 499
+  disable {{!preview}}
+ }
+ Transform {
+  translate {{lines.a} {lines.a}}
+  rotate {{((lines.b.x>=lines.a.x)?0:180)+degrees(atan((lines.b.y-lines.a.y)/(lines.b.x-lines.a.x))) x1 45}}
+  filter Mitchell
+  name Transform2
+  xpos -275
+  ypos 525
+  disable {{!preview}}
+ }
+ Input {
+  inputs 0
+  name img
+  xpos -488
+  ypos 453
+ }
+set N6133f400 [stack 0]
+ Transform {
+  scale {{lerp(1,1.002,size2)}}
+  center {960 540}
+  name scale
+  selected true
+  xpos -488
+  ypos 477
+ }
+ CornerPin2D {
+  to1 {{"parent.CornerPin2D2.to1\n+(power.to1-parent.CornerPin2D2.to1)\n+(power2.to1-parent.CornerPin2D2.to1)"} {"parent.CornerPin2D2.to1\n+(power.to1-parent.CornerPin2D2.to1)\n+(power2.to1-parent.CornerPin2D2.to1)"}}
+  to2 {{"parent.CornerPin2D2.to2\n+(power.to2-parent.CornerPin2D2.to2)\n+(power2.to2-parent.CornerPin2D2.to2)" x89 526} {"parent.CornerPin2D2.to2\n+(power.to2-parent.CornerPin2D2.to2)\n+(power2.to2-parent.CornerPin2D2.to2)" x89 84}}
+  to3 {{"parent.CornerPin2D2.to3\n+(power.to3-parent.CornerPin2D2.to3)\n+(power2.to3-parent.CornerPin2D2.to3)"} {"parent.CornerPin2D2.to3\n+(power.to3-parent.CornerPin2D2.to3)\n+(power2.to3-parent.CornerPin2D2.to3)"}}
+  to4 {{"parent.CornerPin2D2.to4\n+(power.to4-parent.CornerPin2D2.to4)\n+(power2.to4-parent.CornerPin2D2.to4)"} {"parent.CornerPin2D2.to4\n+(power.to4-parent.CornerPin2D2.to4)\n+(power2.to4-parent.CornerPin2D2.to4)"}}
+  "extra matrix" 1
+  transform_matrix {
+      {{parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix}}
+      {{parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix}}
+      {{parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix}}
+      {{parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix} {parent.Matrix2.matrix}}
+    }
+  invert {{parent.inv}}
+  filter {{parent.Transform1.filter x90 2}}
+  clamp {{parent.clamp}}
+  black_outside {{parent.blackOutside}}
+  motionblur {{parent.motionblur}}
+  shutter {{parent.shutter}}
+  shutteroffset {{parent.Transform1.shutteroffset x90 1}}
+  from1 {{parent.CornerPin2D2.from1} {parent.CornerPin2D2.from1}}
+  from2 {{parent.CornerPin2D2.from2} {parent.CornerPin2D2.from2}}
+  from3 {{parent.CornerPin2D2.from3} {parent.CornerPin2D2.from3}}
+  from4 {{parent.CornerPin2D2.from4} {parent.CornerPin2D2.from4}}
+  name powerPin
+  xpos -488
+  ypos 501
+ }
+set N6133ec00 [stack 0]
+ Dot {
+  name Dot1
+  xpos -344
+  ypos 504
+ }
+ Merge2 {
+  inputs 5+1
+  Achannels rgb
+  mix {{opacity.a}}
+  name Merge1
+  xpos -378
+  ypos 525
+  disable {{!preview}}
+ }
+push $N6133ec00
+ Switch {
+  inputs 2
+  which {{"preview + block"}}
+  name Switch1
+  xpos -488
+  ypos 525
+ }
+ Reformat {
+  name Reformat1
+  xpos -488
+  ypos 549
+  disable {{!parent.crop}}
+ }
+ Output {
+  name Output1
+  xpos -488
+  ypos 573
+ }
+push $N6133f400
+ CornerPin2D {
+  to1 {{parent.to1 x57 84} {parent.to1 x57 58}}
+  enable1 {{parent.enable1}}
+  to2 {{parent.to2 x57 630} {parent.to2 x57 84}}
+  enable2 {{parent.enable2}}
+  to3 {{parent.to3 x57 640} {parent.to3 x57 426}}
+  enable3 {{parent.enable3}}
+  to4 {{parent.to4 x1 180 x57 134} {parent.to4 x1 316 x57 340}}
+  enable4 {{parent.enable4}}
+  "extra matrix" 1
+  invert false
+  black_outside false
+  shutteroffset centred
+  from1 {{parent.from1} {parent.from1}}
+  from2 {{parent.from2} {parent.from2}}
+  from3 {{parent.from3} {parent.from3}}
+  from4 {{parent.from4} {parent.from4}}
+  name CornerPin2D2
+  xpos -275
+  ypos 339
+  hide_input true
+  addUserKnob {20 User}
+  addUserKnob {7 fx}
+  fx {{"\[exists parent.input]==0?input.width:width"}}
+  addUserKnob {7 fy}
+  fy {{"\[exists parent.input]==0?input.height:height"}}
+ }
+ CornerPin2D {
+  to1 {{w1} {w1}}
+  to2 {{w2} {w2}}
+  to3 {{w3 x1 561.5} {w3 x1 365}}
+  to4 {{w4} {w4}}
+  invert false
+  black_outside false
+  shutteroffset centred
+  from1 {{parent.CornerPin2D2.to1} {parent.CornerPin2D2.to1}}
+  from2 {{parent.CornerPin2D2.to2} {parent.CornerPin2D2.to2}}
+  from3 {{parent.CornerPin2D2.to3} {parent.CornerPin2D2.to3}}
+  from4 {{parent.CornerPin2D2.to4} {parent.CornerPin2D2.to4}}
+  name power
+  xpos -275
+  ypos 363
+  disable {{m==0?1:0}}
+  addUserKnob {20 User}
+  addUserKnob {26 width}
+  addUserKnob {7 m}
+  m {{(power.from2.y-power.from1.y)/(power.from2.x-power.from1.x)==0?0.000001:(power.from2.y-power.from1.y)/(power.from2.x-power.from1.x)}}
+  addUserKnob {12 ec -STARTLINE}
+  ec {{m} {power.from1.y+(m*-power.from1.x)}}
+  addUserKnob {7 m2}
+  m2 {{(power.from4.y-power.from3.y)/(power.from4.x-power.from3.x)==0?0.000001:(power.from4.y-power.from3.y)/(power.from4.x-power.from3.x)}}
+  addUserKnob {12 ec2 -STARTLINE}
+  ec2 {{m2} {power.from3.y+(m2*-power.from3.x)}}
+  addUserKnob {26 ""}
+  addUserKnob {12 w4}
+  w4 {{power.from4.x+((left*lt)+plusw)} {(w4.x)*power.ec2.x+power.ec2.y}}
+  addUserKnob {12 w3 -STARTLINE}
+  w3 {{(((rigth2*rt))+plusw)+power.from3.x} {(w3.x)*power.ec2.x+power.ec2.y}}
+  addUserKnob {12 w1}
+  w1 {{((left*lb)+plusw)*pro+power.from1.x} {(w1.x)*power.ec.x+power.ec.y}}
+  addUserKnob {12 w2 -STARTLINE}
+  w2 {{pro*(((rigth2*rb))+plusw)+power.from2.x} {(w2.x)*power.ec.x+power.ec.y}}
+  addUserKnob {7 scale}
+  scale {{sqrt(pow2(CornerPin2D2.to2.x-CornerPin2D2.to1.x)+pow2(CornerPin2D2.to2.y-CornerPin2D2.to1.y))}}
+  addUserKnob {7 scale2 -STARTLINE}
+  scale2 {{sqrt(pow2(CornerPin2D2.to4.x-CornerPin2D2.to3.x)+pow2(CornerPin2D2.to4.y-CornerPin2D2.to3.y))}}
+  addUserKnob {7 pro}
+  pro {{scale/scale2}}
+  addUserKnob {26 ""}
+  addUserKnob {7 plusw l width R -100 100}
+  plusw {{parent.knob.width}}
+  addUserKnob {7 left R 0 100}
+  left {{-parent.left}}
+  addUserKnob {7 rigth2 R -100 0}
+  rigth2 {{parent.right x3 -72.4}}
+ }
+ CornerPin2D {
+  to1 {{m3==0?from1:h1} {m3==0?from1-size2+plush+bottom*bl:h1}}
+  to2 {{m4==0?from2+power.plusw*rt:h2} {m4==0?from2-size2+plush+bottom*br:h2}}
+  to3 {{m4==0?from3+power.plusw*rb:h3} {m4==0?from3+top*tr+plush+size2:h3}}
+  to4 {{m3==0?from4:h4} {m3==0?from4+size2+plush+top*tl:h4}}
+  invert false
+  black_outside false
+  shutteroffset centred
+  from1 {{parent.power.from1} {parent.power.from1}}
+  from2 {{parent.power.from2} {parent.power.from2}}
+  from3 {{parent.power.from3} {parent.power.from3}}
+  from4 {{parent.power.from4 x1 182} {parent.power.from4 x1 1382}}
+  name power2
+  xpos -275
+  ypos 387
+  addUserKnob {20 User}
+  addUserKnob {7 m3}
+  m3 {{(power2.from4.y-power2.from1.y)/(power2.from4.x-power2.from1.x)==inf?0:(power2.from4.y-power2.from1.y)/(power2.from4.x-power2.from1.x)}}
+  addUserKnob {12 ec3 -STARTLINE}
+  ec3 {{m3} {power2.from1.y+(m3*-power2.from1.x)}}
+  addUserKnob {7 m4}
+  m4 {{(power.from3.y-power.from2.y)/(power.from3.x-power.from2.x)==inf?0:(power.from3.y-power.from2.y)/(power.from3.x-power.from2.x)}}
+  addUserKnob {12 ec4 -STARTLINE}
+  ec4 {{m4} {power.from3.y+(m4*-power.from3.x)}}
+  addUserKnob {26 ""}
+  addUserKnob {12 h4}
+  h4 {{"m3==0?power2.from4:\n\n(h4.y-power2.ec3.y)/(power2.ec3.x)"} {"m3==0?power2.from4:\npower2.from4.y+(plush2+(top*tl))*proportion\n"}}
+  addUserKnob {12 h3 -STARTLINE}
+  h3 {{"m4==0?power2.from4:\n\n(h3.y-power2.ec4.y)/(power2.ec4.x)"} {"m4==0?power2.from4:\n\npower2.from3.y+plush2+(top*tr)\n"}}
+  addUserKnob {12 h1}
+  h1 {{m3==0?power2.from4:(h1.y-power2.ec3.y)/(power2.ec3.x)} {m3==0?0:power2.from1.y+(plush+(bottom*bl))*proportion}}
+  addUserKnob {12 h2 -STARTLINE}
+  h2 {{"m4==0?power2.from4:\n(h2.y-power2.ec4.y)/(power2.ec4.x)" x57 nan} {"m4==0?power2.from4:\npower2.from2.y+(plush+(bottom*br))" x57 nan}}
+  addUserKnob {7 scale}
+  scale {{sqrt(pow2(CornerPin2D2.to4.x-CornerPin2D2.to1.x)+pow2(CornerPin2D2.to4.y-CornerPin2D2.to1.y))}}
+  addUserKnob {7 scale2 l scale -STARTLINE}
+  scale2 {{sqrt(pow2(CornerPin2D2.to2.x-CornerPin2D2.to3.x)+pow2(CornerPin2D2.to2.y-CornerPin2D2.to3.y))}}
+  addUserKnob {7 proportion}
+  proportion {{scale/scale2}}
+  addUserKnob {7 pro2}
+  pro2 {{"sqrt(pow2(CornerPin2D2.to4.x-CornerPin2D2.to1.x)+pow2(CornerPin2D2.to4.y-CornerPin2D2.to1.y))/\n\nsqrt(pow2(CornerPin2D2.to2.x-CornerPin2D2.to1.x)+pow2(CornerPin2D2.to2.y-CornerPin2D2.to1.y))"}}
+  addUserKnob {7 plush l height R -100 100}
+  plush {{parent.heigth}}
+  addUserKnob {7 plush2 l height2}
+  plush2 {{plush/proportion/1.1}}
+  addUserKnob {7 top R 0 100}
+  top {{parent.top}}
+  addUserKnob {7 bottom R -100 0}
+  bottom {{-parent.bottom}}
+ }
+ Transform {
+  scale {{-nan(ind)} 1}
+  center {-10000000 -10000000}
+  shutteroffset centred
+  name Transform1
+  xpos -275
+  ypos 411
+ }
+ Matrix {
+  matrix {
+      {1 0 0 0}
+      {0 1 0 0}
+      {0 0 1 0}
+      {0 0 0 1}
+    }
+  name Matrix2
+  xpos -275
+  ypos 435
+ }
+end_group
