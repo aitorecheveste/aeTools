@@ -16,3 +16,4 @@ m.addCommand("aeMotionBlur", "nuke.createNode(\"aeMotionBlur\")", icon="aeMotion
 m.addCommand("aePrefMaker", "nuke.createNode(\"aePrefMaker\")", icon="aePrefMaker_icon.png")
 m.addCommand("aeUVChart", "nuke.createNode(\"aeUVChart\")", icon="aeUVChart_icon.png")
 m.addCommand("aeDirtCG", "nuke.createNode(\"aeDirtCG\")", icon="aeDirtCG_icon.png")
+m.addCommand("aeShadows", "nuke.createNode(\"aeShadows\")", icon="aeShadows_icon.png")
