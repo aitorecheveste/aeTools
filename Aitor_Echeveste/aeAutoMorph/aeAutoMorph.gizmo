@@ -1,0 +1,360 @@
+Group {
+ name aeAutoMorph
+ tile_color 0xa57aaaff
+ note_font "Verdana Bold"
+ note_font_color 0xff
+ selected true
+ xpos -67
+ ypos 228
+ addUserKnob {20 aeAutoMorph}
+ addUserKnob {41 channels T IDistort1.channels}
+ addUserKnob {6 useGPUIfAvailable l "Use GPU if available" +STARTLINE}
+ useGPUIfAvailable true
+ addUserKnob {26 ""}
+ addUserKnob {7 morph}
+ morph 1
+ addUserKnob {7 dissolve}
+ addUserKnob {26 ""}
+ addUserKnob {7 blurmap l "blur map" R 0 100}
+ blurmap 25
+ addUserKnob {7 vectorDetail l "vector detail"}
+ vectorDetail 0.75
+ addUserKnob {26 ""}
+ addUserKnob {26 about_1 l "" +STARTLINE T "<span style=\"color:#666\"><br/><b>aeAutoMorph v1.0</b> - <a  style=\"color:#666;text-decoration: none;\">Aitor Echeveste</a>  © 2025</span>"}
+ addUserKnob {20 About}
+ addUserKnob {26 text_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_2 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_4 l "" +STARTLINE T "<font color=#ffffff><font size=\"7\">aeAutoMorph</font><font size=\"4\"> v1.0</font>\n"}
+ addUserKnob {26 about_1_1 l "" +STARTLINE T "by Aitor Echeveste Izquierdo © 2025"}
+ addUserKnob {26 text_1_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_3 l "" +STARTLINE T "   "}
+ addUserKnob {26 website l "" +STARTLINE T "<b><a href=\"http://www.aitorecheveste.com\"><span style=\"color:#C8C8C8;\">www.aitorecheveste.com</span></a><b>"}
+}
+ Input {
+  inputs 0
+  name B
+  xpos -1310
+  ypos -483
+ }
+ Dot {
+  name Dot9
+  xpos -1276
+  ypos -392
+ }
+set N4d49a000 [stack 0]
+ Dot {
+  name Dot10
+  xpos -1030
+  ypos -392
+ }
+ Dot {
+  name Dot8
+  xpos -1030
+  ypos 307
+ }
+set N4d49a800 [stack 0]
+ Input {
+  inputs 0
+  name mask
+  xpos -920
+  ypos -483
+  number 2
+ }
+ Shuffle {
+  name Shuffle1
+  label "(\[value in] to \[value out])"
+  xpos -920
+  ypos -37
+ }
+set N4d49b000 [stack 0]
+push $N4d49b000
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos -920
+  ypos 35
+ }
+ Invert {
+  channels alpha
+  name Invert1
+  xpos -920
+  ypos 83
+ }
+set N4d49b800 [stack 0]
+push $N4d49a000
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 1044
+  output.first 0
+  output.first_lock true
+  output.last 2089
+  speed 0.5
+  before continue
+  after continue
+  filter nearest
+  time ""
+  name Retime21
+  xpos -1310
+  ypos -300
+ }
+set N4d49bc00 [stack 0]
+ Dot {
+  name Dot6
+  xpos -1166
+  ypos -297
+ }
+set N4a20e000 [stack 0]
+ Dot {
+  name Dot4
+  xpos -606
+  ypos -297
+ }
+ Input {
+  inputs 0
+  name A
+  xpos -531
+  ypos -487
+  number 1
+ }
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 1044
+  output.first 0
+  output.first_lock true
+  output.last 2089
+  speed 0.5
+  before continue
+  after continue
+  filter nearest
+  time ""
+  name Retime22
+  xpos -530
+  ypos -300
+ }
+ Dot {
+  name Dot5
+  xpos -496
+  ypos -254
+ }
+set N4a20f000 [stack 0]
+ Dot {
+  name Dot3
+  xpos -496
+  ypos -199
+ }
+set N4a20f400 [stack 0]
+ Switch {
+  inputs 2
+  which {{frame%2}}
+  name Switch11
+  xpos -640
+  ypos -202
+ }
+ VectorGenerator {
+  useGPUIfAvailable {{parent.useGPUIfAvailable}}
+  motionEstimation Regularized
+  vectorDetailReg {{parent.vectorDetail}}
+  name VectorGenerator11
+  xpos -640
+  ypos -136
+ }
+ Blur {
+  channels forward
+  size {{parent.blurmap}}
+  name Blur1
+  xpos -640
+  ypos -99
+ }
+push $N4a20f400
+ ShuffleCopy {
+  inputs 2
+  in forward
+  red red
+  green green
+  blue black
+  alpha black
+  out motion
+  name ShuffleCopy12
+  label "(\[value in] to \[value out] and\n\[value in2] to \[value out2])"
+  xpos -530
+  ypos -105
+ }
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 3213
+  output.first 0
+  output.first_lock true
+  output.last 1606
+  speed 2
+  before continue
+  after continue
+  filter none
+  time ""
+  name Retime24
+  xpos -530
+  ypos -7
+ }
+ Multiply {
+  channels motion
+  value -1
+  name Multiply11
+  xpos -530
+  ypos 35
+ }
+ Multiply {
+  inputs 1+1
+  channels motion
+  value 0
+  name Multiply2
+  xpos -530
+  ypos 83
+  disable {{parent.inputs<3}}
+ }
+ IDistort {
+  channels {{{parent.IDistort1.channels}}}
+  uv forward
+  uv_scale {{1-parent.morph}}
+  name IDistort2
+  xpos -530
+  ypos 131
+ }
+ Dot {
+  name Dot2
+  xpos -496
+  ypos 195
+ }
+push $N4d49b800
+push $N4a20f000
+push $N4a20e000
+ Switch {
+  inputs 2
+  which {{frame%2}}
+  name Switch1
+  xpos -1200
+  ypos -257
+ }
+ VectorGenerator {
+  useGPUIfAvailable {{parent.useGPUIfAvailable}}
+  motionEstimation Regularized
+  vectorDetailReg {{parent.vectorDetail}}
+  name VectorGenerator1
+  xpos -1200
+  ypos -136
+ }
+ Blur {
+  channels forward
+  size {{parent.blurmap}}
+  name Blur2
+  xpos -1200
+  ypos -100
+ }
+push $N4d49bc00
+ ShuffleCopy {
+  inputs 2
+  in forward
+  red red
+  green green
+  blue black
+  alpha black
+  out motion
+  name ShuffleCopy1
+  label "(\[value in] to \[value out] and\n\[value in2] to \[value out2])"
+  xpos -1310
+  ypos -106
+ }
+ Retime {
+  input.first 0
+  input.first_lock true
+  input.last 3213
+  output.first 0
+  output.first_lock true
+  output.last 1606
+  speed 2
+  before continue
+  after continue
+  filter none
+  time ""
+  name Retime1
+  xpos -1310
+  ypos -7
+ }
+ Multiply {
+  channels motion
+  value -1
+  name Multiply1
+  xpos -1310
+  ypos 35
+ }
+ Multiply {
+  inputs 1+1
+  channels motion
+  value 0
+  name Multiply3
+  xpos -1310
+  ypos 83
+  disable {{parent.inputs<3}}
+ }
+ IDistort {
+  channels rgba
+  uv forward
+  uv_scale {{parent.morph}}
+  name IDistort1
+  xpos -1310
+  ypos 131
+ }
+ Dot {
+  name Dot1
+  xpos -1276
+  ypos 195
+ }
+ Dissolve {
+  inputs 2
+  which {{parent.dissolve}}
+  name Dissolve1
+  xpos -920
+  ypos 186
+ }
+ CopyMetaData {
+  inputs 2
+  name CopyMetaData1
+  xpos -920
+  ypos 304
+ }
+ FrameRange {
+  first_frame {{parent.NoOp1.integer}}
+  last_frame {{parent.NoOp1.integer_1}}
+  time ""
+  name FrameRange1
+  xpos -920
+  ypos 324
+ }
+ Remove {
+  channels motion
+  name Remove1
+  xpos -920
+  ypos 348
+ }
+ Output {
+  name Output1
+  xpos -920
+  ypos 489
+ }
+push $N4d49a800
+ NoOp {
+  name NoOp1
+  xpos -1064
+  ypos 325
+  addUserKnob {20 User}
+  addUserKnob {3 integer}
+  integer {{first_frame}}
+  addUserKnob {3 integer_1}
+  integer_1 {{last_frame}}
+  addUserKnob {7 double}
+ }
+end_group
