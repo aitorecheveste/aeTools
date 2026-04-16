@@ -3,8 +3,8 @@ Group {
  tile_color 0xa8905cff
  note_font "Verdana Bold"
  selected true
- xpos 1773
- ypos 461
+ xpos -315
+ ypos -214
  addUserKnob {20 aeVolumeRays}
  addUserKnob {26 maindiv_quality l "" +STARTLINE T "<b><font color=#ffffff>Quality </font><b>"}
  addUserKnob {26 "" -STARTLINE}
@@ -132,6 +132,7 @@ Group {
  }
  Reformat {
   format "2048 2048 0 0 2048 2048 1 square_2K"
+  resize distort
   name Reformat24
   label "To: \[value format]"
   xpos 129
@@ -145,7 +146,7 @@ Group {
   addUserKnob {12 position_2d}
   position_2d {{input.width} {input.height}}
  }
-set Nee7d9c00 [stack 0]
+set Ndbb3e400 [stack 0]
  AdjBBox {
   numpixels {{parent.sr_beauty7.overscan}}
   name AdjBBox1
@@ -224,8 +225,8 @@ set Nee7d9c00 [stack 0]
   xpos 34
   ypos 573
  }
-set Nee81b800 [stack 0]
-push $Nee7d9c00
+set Ndbb76000 [stack 0]
+push $Ndbb3e400
  ScanlineRender {
   inputs 3
   conservative_shader_sampling false
@@ -241,7 +242,7 @@ push $Nee7d9c00
   xpos 34
   ypos 1097
  }
-set Nee84c000 [stack 0]
+set Ndbb76800 [stack 0]
  Shuffle {
   in depth
   name Shuffle15
@@ -332,13 +333,13 @@ set Nee84c000 [stack 0]
   xpos 1080
   ypos 934
  }
-push $Nee81b800
+push $Ndbb76000
  Dot {
   name Dot18
   xpos 761
   ypos 573
  }
-push $Nee7d9c00
+push $Ndbb3e400
  ScanlineRender {
   inputs 3
   conservative_shader_sampling false
@@ -453,7 +454,7 @@ push $Nee7d9c00
   xpos 760
   ypos 1614
  }
-set Nee61c000 [stack 0]
+set Ndd1c0800 [stack 0]
  Dot {
   name Dot22
   xpos 577
@@ -474,14 +475,14 @@ set Nee61c000 [stack 0]
   xpos 543
   ypos 1678
  }
-set Nee61cc00 [stack 0]
+set Ndd1c1400 [stack 0]
  Dot {
   name Dot7
   xpos 577
   ypos 1737
  }
-push $Nee61cc00
-push $Nee84c000
+push $Ndd1c1400
+push $Ndbb76800
  Dot {
   name Dot6
   xpos 443
@@ -508,7 +509,7 @@ push $Nee84c000
   xpos 443
   ypos 1846
  }
-push $Nee61c000
+push $Ndd1c0800
  Switch {
   inputs 2
   which {{parent.preview}}
