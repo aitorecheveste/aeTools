@@ -1,0 +1,524 @@
+Group {
+ name aeVolumeRays6
+ tile_color 0xa8905cff
+ note_font "Verdana Bold"
+ selected true
+ xpos 1773
+ ypos 461
+ addUserKnob {20 aeVolumeRays}
+ addUserKnob {26 maindiv_quality l "" +STARTLINE T "<b><font color=#ffffff>Quality </font><b>"}
+ addUserKnob {26 "" -STARTLINE}
+ addUserKnob {41 format l "output format" T Reformat24.format}
+ addUserKnob {41 main_num_steps l steps T num_steps}
+ addUserKnob {26 text_7 l "  " -STARTLINE T "  "}
+ addUserKnob {6 preview -STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 maindiv_look l "" +STARTLINE T "<b><font color=#ffffff>Look </font><b>"}
+ addUserKnob {26 "" -STARTLINE}
+ addUserKnob {41 main_brightness l brightness T brightness}
+ addUserKnob {41 falloff_exponent_1 l falloff T falloff_exponent}
+ addUserKnob {41 hit_surface_1 l "hit surface" T hit_surface}
+ addUserKnob {26 ""}
+ addUserKnob {26 text l "" +STARTLINE T "<b><font color=#ffffff>Shape  </font><b>"}
+ addUserKnob {26 "" -STARTLINE}
+ addUserKnob {41 main_cone_edge l "cone edge fade" T cone_edge_fade}
+ addUserKnob {41 cookie_strength_link l "cookie strength" T cookie_strength}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_1 l "" +STARTLINE T "<span style=\"color:#666\"><br/><b>aeVolumeRays v1.0</b> - <a  style=\"color:#666;text-decoration: none;\">Aitor Echeveste</a>  © 2026</span>"}
+ addUserKnob {20 Rays}
+ addUserKnob {26 div_look l "" +STARTLINE T "<b><font color=#ffffff>Look </font><b>"}
+ addUserKnob {26 "" -STARTLINE}
+ addUserKnob {7 brightness t "Final intensity multiplier." R 0 50}
+ brightness 5
+ addUserKnob {7 falloff_exponent l falloff t "custom falloff" R 0 100}
+ falloff_exponent 100
+ addUserKnob {7 extinction t "Volume density. Higher = light attenuates faster."}
+ extinction 0.1
+ addUserKnob {18 color_near l color t "Color of samples close to the light."}
+ color_near {1 1 1}
+ addUserKnob {6 color_near_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {6 color_far_panelDropped l "panel dropped state" +HIDDEN +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {6 haze_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {26 text_3 l "" +STARTLINE T "<b><font color=#ffffff>Cone / Shaft </font><b>"}
+ addUserKnob {26 "" -STARTLINE}
+ addUserKnob {7 cone_edge_fade l "cone edge fade" t "Softness of the cone border." R 1 3}
+ cone_edge_fade 2
+ addUserKnob {7 shaft_softness_distance l "softness w/ distance" t "Soften shaft borders with distance from the light." R 0 2}
+ addUserKnob {7 hit_surface l "hit surface"}
+ hit_surface 0.25
+ addUserKnob {7 ambient_scatter l ambient t "Lifts shadowed regions inside the shaft." R 0 0.1}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_2 l "" +STARTLINE T "<b><font color=#ffffff>Cookie / Gobo </font><b>"}
+ addUserKnob {26 "" -STARTLINE}
+ addUserKnob {7 cookie_strength l "alpha strength" t "Cookie alpha modulates intensity."}
+ addUserKnob {7 cookie_color_strength l "color strength" t "Cookie RGB tints the shaft (stained glass)."}
+ addUserKnob {20 Volumetric}
+ addUserKnob {26 div_volume_range l "" +STARTLINE T "<b><font color=#ffffff>Volume Range </font><b>"}
+ addUserKnob {26 "" -STARTLINE}
+ addUserKnob {7 vol_near l near t "Start of raymarch range. Link to camR.near." R 0 10000}
+ vol_near 0.1
+ addUserKnob {7 vol_far l far t "End of raymarch range. Link to camR.far." R 0 100000}
+ vol_far 50
+ addUserKnob {26 ""}
+ addUserKnob {26 div_volumetric_noise l "" +STARTLINE T "<b><font color=#ffffff>Volumetric Noise </font><b>"}
+ addUserKnob {26 text_4 l " " -STARTLINE T " "}
+ addUserKnob {6 noise_enable l "enable noise" t "Enable dual-octave 3D noise on density." -STARTLINE}
+ addUserKnob {7 noise_scale_low l "low scale" t "Size of low-frequency structure." R 0.01 100}
+ noise_scale_low 0.5
+ addUserKnob {7 noise_strength_low l "low strength" t "Intensity of low-frequency noise."}
+ noise_strength_low 1
+ addUserKnob {26 ""}
+ addUserKnob {7 noise_scale_high l "high scale" t "Size of high-frequency detail." R 0.01 50}
+ noise_scale_high 0.05
+ addUserKnob {7 noise_strength_high l "high strength" t "Intensity of high-frequency noise."}
+ noise_strength_high 0.5
+ addUserKnob {13 offsetNoise l offset}
+ addUserKnob {26 ""}
+ addUserKnob {26 div_atmospheric_haze l "" +STARTLINE T "<b><font color=#ffffff>Atmospheric Haze </font><b>"}
+ addUserKnob {26 "" -STARTLINE}
+ addUserKnob {7 haze_density l density t "Strength of the global haze layer."}
+ addUserKnob {7 haze_distance l distance t "Reference distance. Larger = subtler haze." R 0 1000}
+ haze_distance 50
+ addUserKnob {18 haze_color l color t "Tint of the atmospheric haze."}
+ haze_color 1
+ addUserKnob {6 haze_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {20 Setup}
+ addUserKnob {26 div_quality l "" +STARTLINE T "<b><font color=#ffffff>Quality </font><b>"}
+ addUserKnob {26 "" -STARTLINE}
+ addUserKnob {3 num_steps l steps t "Raymarch samples. 32 preview / 128+ final." R 1 512}
+ num_steps 512
+ addUserKnob {7 jitter t "Sampling dithering to break banding." +INVISIBLE}
+ jitter 1
+ addUserKnob {41 overscan T sr_beauty7.overscan}
+ addUserKnob {41 stochastic_samples l stochastic T sr_beauty7.stochastic_samples}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_5 l "" +STARTLINE T "<b><font color=#ffffff>Scattring (Heyyey-Greenstein) </font><b>"}
+ addUserKnob {26 "" -STARTLINE}
+ addUserKnob {7 hg_g l anisotropy t ">0 = forward (god rays), <0 = back, 0 = isotropic." R -0.95 0.95}
+ hg_g 0.5
+ addUserKnob {7 hg_strength l "hg strength" t "Blend isotropic (0) -> HG (1)."}
+ hg_strength 0.8
+ addUserKnob {26 ""}
+ addUserKnob {26 div_holdout l "" +STARTLINE T "<b><font color=#ffffff>Holdout </font><b>"}
+ addUserKnob {26 text_6 l "  " -STARTLINE T "  "}
+ addUserKnob {6 holdout_enable l "enable holdout" t "Cut shaft where opaque geometry occludes it." -STARTLINE}
+ holdout_enable true
+ addUserKnob {7 holdout_epsilon l epsilon t "Min valid depth value." R 0 0.01}
+ holdout_epsilon 0.02
+ addUserKnob {7 holdout_softness l "edge softness" t "Soft fade at the holdout edge (scene units)." R 0 5}
+ addUserKnob {26 ""}
+ addUserKnob {26 div_shadow l "" +STARTLINE T "<b><font color=#ffffff>Shadow  </font><b>"}
+ addUserKnob {26 "" -STARTLINE}
+ addUserKnob {7 shadow_bias l bias t "Removes self-shadow acne." R 0 0.005}
+ shadow_bias 0.0011
+ addUserKnob {7 pcf_radius l softness t "Shadow blur radius in pixels." R 0 20}
+ addUserKnob {20 About}
+ addUserKnob {26 text_1_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_2_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 text_4_1 l "" +STARTLINE T "<font color=#ffffff><font size=\"7\">aeVolumeRays</font><font size=\"2\"> v1.0</font>\n"}
+ addUserKnob {26 about_1_1 l "" +STARTLINE T "by Aitor Echeveste Izquierdo © 2026"}
+ addUserKnob {26 text_1_1_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 ""}
+ addUserKnob {26 text_3_1 l "" +STARTLINE T "   "}
+ addUserKnob {26 website l "" +STARTLINE T "<b><a href=\"http://www.aitorecheveste.com\"><span style=\"color:#C8C8C8;\">www.aitorecheveste.com</span></a><b>"}
+}
+ Constant {
+  inputs 0
+  channels rgb
+  name Constant1
+  xpos 129
+  ypos 813
+ }
+ Reformat {
+  format "2048 2048 0 0 2048 2048 1 square_2K"
+  name Reformat24
+  label "To: \[value format]"
+  xpos 129
+  ypos 885
+ }
+ NoOp {
+  name formatInput
+  xpos 129
+  ypos 933
+  addUserKnob {20 User}
+  addUserKnob {12 position_2d}
+  position_2d {{input.width} {input.height}}
+ }
+set Nee7d9c00 [stack 0]
+ AdjBBox {
+  numpixels {{parent.sr_beauty7.overscan}}
+  name AdjBBox1
+  xpos 129
+  ypos 957
+ }
+ Dot {
+  name Dot3
+  xpos 163
+  ypos 1374
+ }
+ Input {
+  inputs 0
+  name cam
+  xpos -389
+  ypos 66
+  number 1
+ }
+ Camera {
+  projection_mode {{"\[expression \[value the_cam]projection_mode(\[value the_frame])]"}}
+  focal {{"\[expression \[value the_cam]focal(\[value the_frame])]"}}
+  haperture {{"\[expression \[value the_cam]haperture(\[value the_frame])]"}}
+  vaperture {{"\[expression \[value the_cam]vaperture(\[value the_frame])]"}}
+  near {{"\[expression \[value the_cam]near(\[value the_frame])]"}}
+  far {{"\[expression \[value the_cam]far(\[value the_frame])]"}}
+  win_translate {{"\[expression \[value the_cam]win_translate.u(\[value the_frame])]"} {"\[expression \[value the_cam]win_translate.v(\[value the_frame])]"}}
+  win_scale {{"\[expression \[value the_cam]win_scale.u(\[value the_frame])]"} {"\[expression \[value the_cam]win_scale.v(\[value the_frame])]"}}
+  winroll {{"\[expression \[value the_cam]winroll(\[value the_frame])]"}}
+  focal_point {{"\[expression \[value the_cam]focal_point(\[value the_frame])]"}}
+  fstop {{"\[expression \[value the_cam]fstop(\[value the_frame])]"}}
+  name cam_render11
+  help "DummyCam by Adrian Pueyo\n\nCamera that apart from the matrices also grabs all the \"Projection\" values from the upstream camera that it's connected to. Turns into a default Camera if no Camera connected. Can also be used inside of groups and gizmos, as many levels deep as you want :D All using live and super fast TCL.\n\nUpdated v1.1: Now grabs the correct frame too (thanks Erwan Leroy for the idea).\n\nUpdated v1.3: Now accepts Nuke13's Camera3\n\nadrianpueyo.com, 2019-2021"
+  onCreate "n = nuke.thisNode()\nfor k in \[\"projection_mode\",\"focal\",\"haperture\",\"vaperture\",\"near\",\"far\",\"win_translate\",\"win_scale\",\"winroll\",\"focal_point\",\"fstop\"]:\n    n\[k].setFlag(0x0000000010000000)"
+  label "dummy cam"
+  xpos -379
+  ypos 276
+  addUserKnob {20 DummyCam l Defaults}
+  addUserKnob {43 the_cam +INVISIBLE}
+  the_cam "\[\n#DummyCam v1.3 - Updated 5 May 2021.\nset starting_point \"this.input0\"\nset default \"this.d_\"\n\n# If cam has no inputs, return the default.\nif \{\[exists \$starting_point]\} \{\n    set x \[node \$starting_point]\n\} \{ \n    return \$default\n\}\n\nset finished 0\nwhile \{\$finished != 1\} \{\n\n    # First look for a Cam or Input or topnode.\n    while \{\[class \$x] != \"Camera3\" && \[class \$x] != \"Camera2\" && \[class \$x] != \"Camera\" && \[class \$x] != \"Input\" && \$x != \[topnode \$x]\} \{\n        set x \[node \$x.input0]\n    \}\n\n    # Then, check if node is a cam (and return), and otherwise, if it's an input, see if the parent exists and move to it.\n    if \{\[class \$x]==\"Camera3\"||\[class \$x]==\"Camera2\"||\[class \$x]==\"Camera\"\} \{\n        set x \[append x \".\"]\n        return \$x\n    \} \{ \n        if \{ \[class \$x]==\"Input\" \} \{ \n            set inp \"\$x.parent.input\"\n            set inputNum \[value \$x.number]\n            set inp \[append inp \$inputNum]\n            if \{ \[exists \$inp] \} \{\n                set x \[node \$inp]\n            \} \{ \n                set finished 1\n            \}\n        \} \{ \n            set finished 1\n        \}\n    \}\n\}\nreturn \$default\n]"
+  addUserKnob {43 the_frame +INVISIBLE}
+  the_frame "\[\nset the_camera \[string trimright \[value the_cam] .]\nif \{\[exists \$the_camera]\} \{\n    return \[value \$the_camera.frame]\n\} \{ \n    return \[frame]\n\}\n]"
+  addUserKnob {4 d_projection_mode l projection M {perspective orthographic uv spherical ""}}
+  addUserKnob {7 d_focal l "focal length" R 0 100}
+  d_focal 50
+  addUserKnob {7 d_haperture l "horiz aperture" R 0 50}
+  d_haperture 24.576
+  addUserKnob {7 d_vaperture l "vert aperture" R 0 50}
+  d_vaperture 18.672
+  addUserKnob {7 d_near l near R 0 10}
+  d_near 0.1
+  addUserKnob {7 d_far l far R 0 10000}
+  d_far 10000
+  addUserKnob {30 d_win_translate l "window translate"}
+  addUserKnob {30 d_win_scale l "window scale"}
+  d_win_scale {1 1}
+  addUserKnob {7 d_winroll l "window roll" R 0 45}
+  addUserKnob {7 d_focal_point l "focal distance" R 0 10}
+  d_focal_point 2
+  addUserKnob {7 d_fstop l fstop R 0 30}
+  d_fstop 16
+  addUserKnob {26 version l " " t "Updated 5 May 2021" T "<span style=\"color:#666\"><br/><b>DummyCam v1.3</b> - <a href=\"http://www.adrianpueyo.com\" style=\"color:#666;text-decoration: none;\">adrianpueyo.com</a>, 2019-2021</span>"}
+ }
+ Dot {
+  name Dot21
+  xpos -355
+  ypos 936
+ }
+ Input {
+  inputs 0
+  name scene
+  xpos 0
+  ypos 66
+ }
+ Dot {
+  name Dot20
+  xpos 34
+  ypos 573
+ }
+set Nee81b800 [stack 0]
+push $Nee7d9c00
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  antialiasing high
+  overscan 100
+  motion_vectors_type distance
+  name sr_beauty7
+  xpos 0
+  ypos 933
+ }
+ Dot {
+  name Dot5
+  xpos 34
+  ypos 1097
+ }
+set Nee84c000 [stack 0]
+ Shuffle {
+  in depth
+  name Shuffle15
+  label "\[value in] to \[value out]"
+  xpos 0
+  ypos 1161
+ }
+ Dot {
+  name Dot1
+  xpos 34
+  ypos 1319
+ }
+ Input {
+  inputs 0
+  name cookie
+  xpos 927
+  ypos 1200
+  number 3
+ }
+ AddChannels {
+  channels rgba
+  color 1
+  name AddChannels1
+  xpos 927
+  ypos 1292
+ }
+ NoOp {
+  name cookieFormat
+  xpos 927
+  ypos 1316
+  addUserKnob {20 User}
+  addUserKnob {12 position_2d}
+  position_2d {{input.width} {input.height}}
+ }
+ Input {
+  inputs 0
+  name light
+  xpos 1046
+  ypos 66
+  number 2
+ }
+ Camera {
+  projection_mode {{"\[expression \[value the_cam]projection_mode(\[value the_frame])]"}}
+  focal {{"\[expression \[value the_cam]focal(\[value the_frame])]"}}
+  haperture {{"\[expression \[value the_cam]haperture(\[value the_frame])]"}}
+  vaperture {{"\[expression \[value the_cam]vaperture(\[value the_frame])]"}}
+  near {{"\[expression \[value the_cam]near(\[value the_frame])]"}}
+  far {{"\[expression \[value the_cam]far(\[value the_frame])]"}}
+  win_translate {{"\[expression \[value the_cam]win_translate.u(\[value the_frame])]"} {"\[expression \[value the_cam]win_translate.v(\[value the_frame])]"}}
+  win_scale {{"\[expression \[value the_cam]win_scale.u(\[value the_frame])]"} {"\[expression \[value the_cam]win_scale.v(\[value the_frame])]"}}
+  winroll {{"\[expression \[value the_cam]winroll(\[value the_frame])]"}}
+  focal_point {{"\[expression \[value the_cam]focal_point(\[value the_frame])]"}}
+  fstop {{"\[expression \[value the_cam]fstop(\[value the_frame])]"}}
+  name cam_light11
+  help "DummyCam by Adrian Pueyo\n\nCamera that apart from the matrices also grabs all the \"Projection\" values from the upstream camera that it's connected to. Turns into a default Camera if no Camera connected. Can also be used inside of groups and gizmos, as many levels deep as you want :D All using live and super fast TCL.\n\nUpdated v1.1: Now grabs the correct frame too (thanks Erwan Leroy for the idea).\n\nUpdated v1.3: Now accepts Nuke13's Camera3\n\nadrianpueyo.com, 2019-2021"
+  onCreate "n = nuke.thisNode()\nfor k in \[\"projection_mode\",\"focal\",\"haperture\",\"vaperture\",\"near\",\"far\",\"win_translate\",\"win_scale\",\"winroll\",\"focal_point\",\"fstop\"]:\n    n\[k].setFlag(0x0000000010000000)"
+  label "dummy cam"
+  xpos 1056
+  ypos 276
+  addUserKnob {20 DummyCam l Defaults}
+  addUserKnob {43 the_cam +INVISIBLE}
+  the_cam "\[\n#DummyCam v1.3 - Updated 5 May 2021.\nset starting_point \"this.input0\"\nset default \"this.d_\"\n\n# If cam has no inputs, return the default.\nif \{\[exists \$starting_point]\} \{\n    set x \[node \$starting_point]\n\} \{ \n    return \$default\n\}\n\nset finished 0\nwhile \{\$finished != 1\} \{\n\n    # First look for a Cam or Input or topnode.\n    while \{\[class \$x] != \"Camera3\" && \[class \$x] != \"Camera2\" && \[class \$x] != \"Camera\" && \[class \$x] != \"Input\" && \$x != \[topnode \$x]\} \{\n        set x \[node \$x.input0]\n    \}\n\n    # Then, check if node is a cam (and return), and otherwise, if it's an input, see if the parent exists and move to it.\n    if \{\[class \$x]==\"Camera3\"||\[class \$x]==\"Camera2\"||\[class \$x]==\"Camera\"\} \{\n        set x \[append x \".\"]\n        return \$x\n    \} \{ \n        if \{ \[class \$x]==\"Input\" \} \{ \n            set inp \"\$x.parent.input\"\n            set inputNum \[value \$x.number]\n            set inp \[append inp \$inputNum]\n            if \{ \[exists \$inp] \} \{\n                set x \[node \$inp]\n            \} \{ \n                set finished 1\n            \}\n        \} \{ \n            set finished 1\n        \}\n    \}\n\}\nreturn \$default\n]"
+  addUserKnob {43 the_frame +INVISIBLE}
+  the_frame "\[\nset the_camera \[string trimright \[value the_cam] .]\nif \{\[exists \$the_camera]\} \{\n    return \[value \$the_camera.frame]\n\} \{ \n    return \[frame]\n\}\n]"
+  addUserKnob {4 d_projection_mode l projection M {perspective orthographic uv spherical ""}}
+  addUserKnob {7 d_focal l "focal length" R 0 100}
+  d_focal 50
+  addUserKnob {7 d_haperture l "horiz aperture" R 0 50}
+  d_haperture 24.576
+  addUserKnob {7 d_vaperture l "vert aperture" R 0 50}
+  d_vaperture 18.672
+  addUserKnob {7 d_near l near R 0 10}
+  d_near 0.1
+  addUserKnob {7 d_far l far R 0 10000}
+  d_far 10000
+  addUserKnob {30 d_win_translate l "window translate"}
+  addUserKnob {30 d_win_scale l "window scale"}
+  d_win_scale {1 1}
+  addUserKnob {7 d_winroll l "window roll" R 0 45}
+  addUserKnob {7 d_focal_point l "focal distance" R 0 10}
+  d_focal_point 2
+  addUserKnob {7 d_fstop l fstop R 0 30}
+  d_fstop 16
+  addUserKnob {26 version l " " t "Updated 5 May 2021" T "<span style=\"color:#666\"><br/><b>DummyCam v1.3</b> - <a href=\"http://www.adrianpueyo.com\" style=\"color:#666;text-decoration: none;\">adrianpueyo.com</a>, 2019-2021</span>"}
+ }
+ Dot {
+  name Dot12
+  xpos 1080
+  ypos 934
+ }
+push $Nee81b800
+ Dot {
+  name Dot18
+  xpos 761
+  ypos 573
+ }
+push $Nee7d9c00
+ ScanlineRender {
+  inputs 3
+  conservative_shader_sampling false
+  antialiasing high
+  overscan {{parent.sr_beauty7.overscan}}
+  stochastic_samples {{parent.sr_beauty7.stochastic_samples}}
+  motion_vectors_type distance
+  name sr_shadow7
+  xpos 727
+  ypos 931
+ }
+ Shuffle {
+  in depth
+  name Shuffle16
+  label "\[value in] to \[value out]"
+  xpos 727
+  ypos 955
+ }
+ BlinkScript {
+  inputs 3
+  recompileCount 120
+  ProgramGroup 1
+  KernelDescription "3 \"VolumeRays\" iterate pixelWise 8637ebc0737c9817f5cfb6fe29fffd1f7e0355368587df89669151767d996fa2 4 \"zLight\" Read Random \"cookie\" Read Random \"zCam\" Read Random \"dst\" Write Point 58 \"camR_col0\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"camR_col1\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"camR_col2\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"camR_col3\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"camR_focal\" Float 1 AAAAAA== \"camR_haperture\" Float 1 AAAAAA== \"camR_vaperture\" Float 1 AAAAAA== \"camR_width\" Int 1 AAAAAA== \"camR_height\" Int 1 AAAAAA== \"camL_col0\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"camL_col1\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"camL_col2\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"camL_col3\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"camL_focal\" Float 1 AAAAAA== \"camL_haperture\" Float 1 AAAAAA== \"camL_vaperture\" Float 1 AAAAAA== \"camL_near\" Float 1 AAAAAA== \"camL_far\" Float 1 AAAAAA== \"camL_width\" Int 1 AAAAAA== \"camL_height\" Int 1 AAAAAA== \"vol_near\" Float 1 AAAAAA== \"vol_far\" Float 1 AAAAAA== \"num_steps\" Int 1 AAAAAA== \"jitter\" Float 1 AAAAAA== \"shadow_bias\" Float 1 AAAAAA== \"brightness\" Float 1 AAAAAA== \"extinction\" Float 1 AAAAAA== \"color_near\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"color_far\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"falloff_exponent\" Float 1 AAAAAA== \"pcf_radius\" Float 1 AAAAAA== \"cone_edge_fade\" Float 1 AAAAAA== \"cookie_width\" Int 1 AAAAAA== \"cookie_height\" Int 1 AAAAAA== \"cookie_strength\" Float 1 AAAAAA== \"cookie_color_strength\" Float 1 AAAAAA== \"holdout_enable\" Float 1 AAAAAA== \"holdout_epsilon\" Float 1 AAAAAA== \"holdout_softness\" Float 1 AAAAAA== \"hg_g\" Float 1 AAAAAA== \"hg_strength\" Float 1 AAAAAA== \"ambient_scatter\" Float 1 AAAAAA== \"noise_enable\" Float 1 AAAAAA== \"noise_scale_low\" Float 1 AAAAAA== \"noise_strength_low\" Float 1 AAAAAA== \"noise_scale_high\" Float 1 AAAAAA== \"noise_strength_high\" Float 1 AAAAAA== \"noise_offset_x\" Float 1 AAAAAA== \"noise_offset_y\" Float 1 AAAAAA== \"noise_offset_z\" Float 1 AAAAAA== \"haze_density\" Float 1 AAAAAA== \"haze_distance\" Float 1 AAAAAA== \"haze_color\" Float 4 AAAAAAAAAAAAAAAAAAAAAA== \"shaft_softness_distance\" Float 1 AAAAAA== \"frame\" Float 1 AAAAAA== \"area_light_size\" Float 1 AAAAAA== \"surface_hit_enable\" Float 1 AAAAAA== \"surface_hit_intensity\" Float 1 AAAAAA== 58 \"camR_col0\" 4 1 Default \"camR_col1\" 4 1 Default \"camR_col2\" 4 1 Default \"camR_col3\" 4 1 Default \"camR_focal\" 1 1 Default \"camR_haperture\" 1 1 Default \"camR_vaperture\" 1 1 Default \"camR_width\" 1 1 Default \"camR_height\" 1 1 Default \"camL_col0\" 4 1 Default \"camL_col1\" 4 1 Default \"camL_col2\" 4 1 Default \"camL_col3\" 4 1 Default \"camL_focal\" 1 1 Default \"camL_haperture\" 1 1 Default \"camL_vaperture\" 1 1 Default \"camL_near\" 1 1 Default \"camL_far\" 1 1 Default \"camL_width\" 1 1 Default \"camL_height\" 1 1 Default \"vol_near\" 1 1 Default \"vol_far\" 1 1 Default \"num_steps\" 1 1 Default \"jitter\" 1 1 Default \"shadow_bias\" 1 1 Default \"brightness\" 1 1 Default \"extinction\" 1 1 Default \"color_near\" 4 1 Default \"color_far\" 4 1 Default \"falloff_exponent\" 1 1 Default \"pcf_radius\" 1 1 Default \"cone_edge_fade\" 1 1 Default \"cookie_width\" 1 1 Default \"cookie_height\" 1 1 Default \"cookie_strength\" 1 1 Default \"cookie_color_strength\" 1 1 Default \"holdout_enable\" 1 1 Default \"holdout_epsilon\" 1 1 Default \"holdout_softness\" 1 1 Default \"hg_g\" 1 1 Default \"hg_strength\" 1 1 Default \"ambient_scatter\" 1 1 Default \"noise_enable\" 1 1 Default \"noise_scale_low\" 1 1 Default \"noise_strength_low\" 1 1 Default \"noise_scale_high\" 1 1 Default \"noise_strength_high\" 1 1 Default \"noise_offset_x\" 1 1 Default \"noise_offset_y\" 1 1 Default \"noise_offset_z\" 1 1 Default \"haze_density\" 1 1 Default \"haze_distance\" 1 1 Default \"haze_color\" 4 1 Default \"shaft_softness_distance\" 1 1 Default \"frame\" 1 1 Default \"area_light_size\" 1 1 Default \"surface_hit_enable\" 1 1 Default \"surface_hit_intensity\" 1 1 Default 13 \"camR_pos\" Float 3 1 AAAAAAAAAAAAAAAAAAAAAA== \"camR_right\" Float 3 1 AAAAAAAAAAAAAAAAAAAAAA== \"camR_up\" Float 3 1 AAAAAAAAAAAAAAAAAAAAAA== \"camR_fwd\" Float 3 1 AAAAAAAAAAAAAAAAAAAAAA== \"camR_fovx_tan\" Float 1 1 AAAAAA== \"camR_fovy_tan\" Float 1 1 AAAAAA== \"camL_pos\" Float 3 1 AAAAAAAAAAAAAAAAAAAAAA== \"camL_right\" Float 3 1 AAAAAAAAAAAAAAAAAAAAAA== \"camL_up\" Float 3 1 AAAAAAAAAAAAAAAAAAAAAA== \"camL_fwd\" Float 3 1 AAAAAAAAAAAAAAAAAAAAAA== \"camL_fovx_tan\" Float 1 1 AAAAAA== \"camL_fovy_tan\" Float 1 1 AAAAAA== \"camL_range\" Float 1 1 AAAAAA=="
+  kernelSource "// =============================================================================\n// aeVolumerays v1.0 by Aitor Echeveste 2026\n//\n//\n// Volumetric light / god rays kernel for BlinkScript.\n//\n// Main features in this version:\n// - Raymarching through a camera-defined volume\n// - Shadow-map visibility from the light camera\n// - Cookie modulation and cookie colour tinting\n// - Distance-based colour interpolation\n// - Henyey-Greenstein anisotropic scattering\n// - Optional dual-scale 3D noise for density breakup\n// - Optional holdout handling against scene geometry\n// - Optional atmospheric haze\n// - Optional fake surface splash where the light cone hits geometry\n//\n// Notes:\n// - This is an artist-friendly approximation, not a physically exact solution.\n// - zLight is treated as a light-space depth map.\n// - zCam is treated as a camera-space holdout depth input.\n// - Alpha output stores a normalized first-significant-contribution depth.\n//\n// Surface-hit stabilization in this version:\n// - Reconstructs an approximate local surface normal from neighbouring zCam pixels\n// - Uses that normal to estimate true grazing angles on the receiving surface\n// - Measures the pixel footprint in light UV space to adapt shadow filtering size\n// - Keeps surface-hit soft shadows more stable on walls, floors, and grazing views\n// =============================================================================\n\nkernel VolumeRays : ImageComputationKernel<ePixelWise>\n\{\n    // -------------------------------------------------------------------------\n    // Input / output images\n    //\n    // zLight : depth map rendered from the light's point of view.\n    //          Depth is expected in reciprocal form (1 / depth).\n    //\n    // cookie : projected texture from the light. RGBA is used:\n    //          - A controls intensity attenuation\n    //          - RGB can tint the light colour\n    //\n    // zCam   : depth / holdout map from the render camera.\n    //          Also expected in reciprocal depth form.\n    //\n    // dst    : final output:\n    //          - RGB = accumulated volumetric light\n    //          - A   = normalized first-significant scattering depth\n    // -------------------------------------------------------------------------\n    Image<eRead, eAccessRandom, eEdgeClamped> zLight;\n    Image<eRead, eAccessRandom, eEdgeClamped> cookie;\n    Image<eRead, eAccessRandom, eEdgeClamped> zCam;\n    Image<eWrite, eAccessPoint, eEdgeClamped> dst;\n\n    param:\n        // ---------------------------------------------------------------------\n        // Render camera transform and projection parameters\n        //\n        // The 4 float4 values represent the camera transform columns.\n        // These are used to reconstruct world-space rays for each output pixel.\n        // ---------------------------------------------------------------------\n        float4 camR_col0; float4 camR_col1; float4 camR_col2; float4 camR_col3;\n        float camR_focal; float camR_haperture; float camR_vaperture;\n        int camR_width; int camR_height;\n\n        // ---------------------------------------------------------------------\n        // Light camera / projector transform and projection parameters\n        //\n        // These define the light frustum used for:\n        // - shadow-map lookups\n        // - cookie projection\n        // - cone inclusion tests\n        // ---------------------------------------------------------------------\n        float4 camL_col0; float4 camL_col1; float4 camL_col2; float4 camL_col3;\n        float camL_focal; float camL_haperture; float camL_vaperture;\n        float camL_near; float camL_far;\n        int camL_width; int camL_height;\n\n        // ---------------------------------------------------------------------\n        // Volume range along the render-camera ray\n        //\n        // Raymarching starts at vol_near and stops at vol_far,\n        // unless holdout geometry clips it sooner.\n        // ---------------------------------------------------------------------\n        float vol_near; float vol_far;\n\n        // ---------------------------------------------------------------------\n        // Raymarching controls\n        //\n        // num_steps   : number of samples along the view ray\n        // jitter      : randomizes sample positions to reduce visible banding\n        // shadow_bias : depth bias used in shadow comparisons\n        // ---------------------------------------------------------------------\n        int num_steps; float jitter; float shadow_bias;\n\n        // ---------------------------------------------------------------------\n        // Global brightness and extinction\n        //\n        // brightness : final multiplier applied after accumulation\n        // extinction : per-unit attenuation inside the medium\n        // ---------------------------------------------------------------------\n        float brightness; float extinction;\n\n        // ---------------------------------------------------------------------\n        // Colour ramp through the light volume\n        //\n        // The light colour interpolates from color_near to color_far\n        // based on normalized depth inside the light frustum.\n        // ---------------------------------------------------------------------\n        float4 color_near;\n        float4 color_far;\n\n        // ---------------------------------------------------------------------\n        // Distance-based falloff exponent\n        //\n        // Larger values make the light fade faster with distance from the light.\n        // ---------------------------------------------------------------------\n        float falloff_exponent;\n\n        // ---------------------------------------------------------------------\n        // Shadow and cone shaping parameters\n        //\n        // pcf_radius     : base radius used for PCF-style shadow filtering\n        // cone_edge_fade : softens the projector edges in UV space\n        // ---------------------------------------------------------------------\n        float pcf_radius;\n        float cone_edge_fade;\n\n        // ---------------------------------------------------------------------\n        // Cookie texture settings\n        // ---------------------------------------------------------------------\n        int   cookie_width;\n        int   cookie_height;\n        float cookie_strength;\n        float cookie_color_strength;\n\n        // ---------------------------------------------------------------------\n        // Holdout parameters\n        //\n        // holdout_enable   : enables clipping against render-camera geometry\n        // holdout_epsilon  : minimum valid input depth threshold\n        // holdout_softness : soft fade region near the holdout surface\n        // ---------------------------------------------------------------------\n        float holdout_enable;\n        float holdout_epsilon;\n        float holdout_softness;\n\n        // ---------------------------------------------------------------------\n        // Henyey-Greenstein scattering controls\n        //\n        // hg_g        : anisotropy parameter\n        // hg_strength : blends between isotropic and HG phase response\n        // ---------------------------------------------------------------------\n        float hg_g;\n        float hg_strength;\n\n        // ---------------------------------------------------------------------\n        // Constant ambient scattering term added to the lit contribution\n        // ---------------------------------------------------------------------\n        float ambient_scatter;\n\n        // ---------------------------------------------------------------------\n        // Optional procedural density breakup\n        //\n        // Two noise scales are combined:\n        // - low frequency noise for large-scale breakup\n        // - high frequency noise for fine detail\n        // ---------------------------------------------------------------------\n        float noise_enable;\n        float noise_scale_low;\n        float noise_strength_low;\n        float noise_scale_high;\n        float noise_strength_high;\n        float noise_offset_x;\n        float noise_offset_y;\n        float noise_offset_z;\n\n        // ---------------------------------------------------------------------\n        // Optional additive atmospheric haze\n        //\n        // This is separate from the raymarched volume and behaves more like\n        // a broad fog veil along the camera ray.\n        // ---------------------------------------------------------------------\n        float haze_density;\n        float haze_distance;\n        float4 haze_color;\n\n        // ---------------------------------------------------------------------\n        // Additional shaft softening with light depth\n        //\n        // Farther parts of the cone can become softer / broader.\n        // ---------------------------------------------------------------------\n        float shaft_softness_distance;\n\n        // ---------------------------------------------------------------------\n        // Current frame used to animate / stabilize per-pixel jitter\n        // ---------------------------------------------------------------------\n        float frame;\n\n        // ---------------------------------------------------------------------\n        // Approximate area-light broadening factor\n        // ---------------------------------------------------------------------\n        float area_light_size;\n\n        // ---------------------------------------------------------------------\n        // Surface-hit controls\n        //\n        // surface_hit_enable    : enables fake light splash on hit geometry\n        // surface_hit_intensity : brightness of that contribution\n        // ---------------------------------------------------------------------\n        float surface_hit_enable;\n        float surface_hit_intensity;\n\n    local:\n        // ---------------------------------------------------------------------\n        // Cached render camera basis vectors and projection helpers\n        //\n        // camR_fwd is stored as the negated Z axis so it behaves like a forward\n        // direction in world space.\n        //\n        // camR_fovx_tan / camR_fovy_tan store tan(FOV/2)-like projection terms\n        // derived from aperture and focal length.\n        // ---------------------------------------------------------------------\n        float3 camR_pos; float3 camR_right; float3 camR_up; float3 camR_fwd;\n        float  camR_fovx_tan; float camR_fovy_tan;\n\n        // ---------------------------------------------------------------------\n        // Cached light camera basis vectors and projection helpers\n        // ---------------------------------------------------------------------\n        float3 camL_pos; float3 camL_right; float3 camL_up; float3 camL_fwd;\n        float  camL_fovx_tan; float camL_fovy_tan;\n        float  camL_range;\n\n    void init() \{\n        // ---------------------------------------------------------------------\n        // Decode render-camera transform\n        // ---------------------------------------------------------------------\n        camR_pos      = float3(camR_col3.x, camR_col3.y, camR_col3.z);\n        camR_right    = float3( camR_col0.x,  camR_col0.y,  camR_col0.z);\n        camR_up       = float3( camR_col1.x,  camR_col1.y,  camR_col1.z);\n        camR_fwd      = float3(-camR_col2.x, -camR_col2.y, -camR_col2.z);\n\n        // Compute projection helper values used to generate camera rays.\n        camR_fovx_tan = (camR_haperture * 0.5f) / camR_focal;\n        camR_fovy_tan = camR_fovx_tan * (float(camR_height) / float(camR_width));\n\n        // ---------------------------------------------------------------------\n        // Decode light-camera transform\n        // ---------------------------------------------------------------------\n        camL_pos      = float3(camL_col3.x, camL_col3.y, camL_col3.z);\n        camL_right    = float3( camL_col0.x,  camL_col0.y,  camL_col0.z);\n        camL_up       = float3( camL_col1.x,  camL_col1.y,  camL_col1.z);\n        camL_fwd      = float3(-camL_col2.x, -camL_col2.y, -camL_col2.z);\n\n        // Compute projection helper values for the light frustum.\n        camL_fovx_tan = (camL_haperture * 0.5f) / camL_focal;\n        camL_fovy_tan = camL_fovx_tan * (float(camL_height) / float(camL_width));\n\n        // Safe near/far range used for normalized light-depth calculations.\n        camL_range    = max(camL_far - camL_near, 0.0001f);\n    \}\n\n    // -------------------------------------------------------------------------\n    // 2D deterministic hash\n    //\n    // Generates a pseudo-random value in \[0,1) from a 2D position.\n    // Used for per-pixel jitter and stable random rotations.\n    // -------------------------------------------------------------------------\n    float hash(float2 p) \{\n        float h = p.x * 127.1f + p.y * 311.7f;\n        float v = sin(h) * 43758.5453123f;\n        return v - floor(v);\n    \}\n\n    // -------------------------------------------------------------------------\n    // Local smoothstep implementation\n    //\n    // Unlike a naïve implementation, this safely handles the case where\n    // edge0 and edge1 are equal or extremely close together.\n    // It also supports reversed edges, which are used in this kernel when\n    // fading from the right or top edge of the cone.\n    // -------------------------------------------------------------------------\n    float smoothstep(float edge0, float edge1, float x) \{\n        float denom = edge1 - edge0;\n        if (denom > -0.000001f && denom < 0.000001f) \{\n            return (x < edge0) ? 0.0f : 1.0f;\n        \}\n        float t = (x - edge0) / denom;\n        t = max(0.0f, min(1.0f, t));\n        return t * t * (3.0f - 2.0f * t);\n    \}\n\n    // -------------------------------------------------------------------------\n    // Scalar absolute value helper\n    // -------------------------------------------------------------------------\n    float absf(float x) \{\n        return (x < 0.0f) ? -x : x;\n    \}\n\n    // -------------------------------------------------------------------------\n    // Safe vector normalization\n    //\n    // Returns a normalized vector when possible.\n    // If the input is near zero length, returns a fallback unit vector.\n    // -------------------------------------------------------------------------\n    float3 normalizeSafe3(float3 v) \{\n        float l = sqrt(v.x*v.x + v.y*v.y + v.z*v.z);\n        if (l < 0.0001f) return float3(0.0f, 0.0f, 1.0f);\n        return float3(v.x / l, v.y / l, v.z / l);\n    \}\n\n    // -------------------------------------------------------------------------\n    // Basic 3x3 PCF shadow lookup for the raymarched volume\n    //\n    // uv        : projected coordinate in light UV space\n    // depth_cam : sample depth in the light camera\n    // radius    : spacing multiplier for the 3x3 filter taps\n    //\n    // Returns a visibility factor in \[0,1]:\n    // - 1 = fully lit\n    // - 0 = fully shadowed\n    //\n    // This function is intentionally relatively cheap because it is called\n    // inside the main raymarch loop.\n    // -------------------------------------------------------------------------\n    float sampleShadowPCF(float2 uv, float depth_cam, float radius) \{\n        if (uv.x < 0.0f || uv.x > 1.0f || uv.y < 0.0f || uv.y > 1.0f) return 0.0f;\n\n        // Convert normalized UVs to light-image pixel coordinates.\n        float cx = uv.x * float(camL_width);\n        float cy = uv.y * float(camL_height);\n\n        float sum = 0.0f;\n        float count = 0.0f;\n        float r = radius;\n\n        // 3x3 PCF filter around the projected light-space coordinate.\n        for (int dy = -1; dy <= 1; ++dy) \{\n            for (int dx = -1; dx <= 1; ++dx) \{\n                float px = cx + float(dx) * r;\n                float py = cy + float(dy) * r;\n\n                // Read reciprocal depth and convert back to linear depth.\n                float raw = zLight(px, py).x;\n                float sdepth = (raw > 0.0001f) ? (1.0f / raw) : camL_far;\n\n                // Compare sample depth to stored blocker depth with bias.\n                sum += (depth_cam <= sdepth + shadow_bias) ? 1.0f : 0.0f;\n                count += 1.0f;\n            \}\n        \}\n\n        return sum / max(count, 1.0f);\n    \}\n\n    // -------------------------------------------------------------------------\n    // Bilinear light-depth lookup\n    //\n    // Blink random access does not guarantee filtered sampling here, so this\n    // function reconstructs bilinear interpolation manually.\n    //\n    // The stored depth is reciprocal, so each tap is converted back to linear\n    // depth before interpolation.\n    //\n    // Used by the higher-quality soft shadow path for surface hits.\n    // -------------------------------------------------------------------------\n    float sampleDepthBilinear(float px, float py) \{\n        float x0 = floor(px);\n        float y0 = floor(py);\n        float fx = px - x0;\n        float fy = py - y0;\n\n        float r00 = zLight(x0,        y0       ).x;\n        float r10 = zLight(x0 + 1.0f, y0       ).x;\n        float r01 = zLight(x0,        y0 + 1.0f).x;\n        float r11 = zLight(x0 + 1.0f, y0 + 1.0f).x;\n\n        float d00 = (r00 > 0.0001f) ? (1.0f / r00) : camL_far;\n        float d10 = (r10 > 0.0001f) ? (1.0f / r10) : camL_far;\n        float d01 = (r01 > 0.0001f) ? (1.0f / r01) : camL_far;\n        float d11 = (r11 > 0.0001f) ? (1.0f / r11) : camL_far;\n\n        float dx0 = d00 * (1.0f - fx) + d10 * fx;\n        float dx1 = d01 * (1.0f - fx) + d11 * fx;\n        return dx0 * (1.0f - fy) + dx1 * fy;\n    \}\n\n    // -------------------------------------------------------------------------\n    // High-quality soft shadow lookup\n    //\n    // This path is mainly used for surface-hit lighting, where shadow-map\n    // artefacts are much more visible than inside the volumetric integration.\n    //\n    // Strategy:\n    // 1. Use a rotated Poisson disk for non-grid-like sampling.\n    // 2. Perform a blocker search to estimate penumbra size.\n    // 3. Use a soft depth comparison rather than a hard binary test.\n    // 4. Increase bias and filter width on grazing surfaces.\n    //\n    // Parameters:\n    // - uv          : projected light UV\n    // - depth_cam   : receiver depth in light camera space\n    // - base_radius : base filter size\n    // - grazing     : surface/view grazing amount in \[0,1]\n    // - rot_seed    : stable random seed for kernel rotation\n    // -------------------------------------------------------------------------\n    float sampleShadowSoft(float2 uv, float depth_cam, float base_radius,\n                           float grazing, float rot_seed)\n    \{\n        if (uv.x < 0.0f || uv.x > 1.0f || uv.y < 0.0f || uv.y > 1.0f) return 0.0f;\n\n        float cx = uv.x * float(camL_width);\n        float cy = uv.y * float(camL_height);\n\n        // Precomputed Poisson disk sample pattern.\n        // This breaks up regular grid artefacts much better than a square kernel.\n        float2 poisson\[32];\n        poisson\[0]  = float2(-0.613392f,  0.617481f);\n        poisson\[1]  = float2( 0.170019f, -0.040254f);\n        poisson\[2]  = float2(-0.299417f,  0.791925f);\n        poisson\[3]  = float2( 0.645680f,  0.493210f);\n        poisson\[4]  = float2(-0.651784f,  0.717887f);\n        poisson\[5]  = float2( 0.421003f,  0.027070f);\n        poisson\[6]  = float2(-0.817194f, -0.271096f);\n        poisson\[7]  = float2(-0.705374f, -0.668203f);\n        poisson\[8]  = float2( 0.977050f, -0.108615f);\n        poisson\[9]  = float2( 0.063326f,  0.142369f);\n        poisson\[10] = float2( 0.203528f,  0.214331f);\n        poisson\[11] = float2(-0.667531f,  0.326090f);\n        poisson\[12] = float2(-0.098422f, -0.295755f);\n        poisson\[13] = float2(-0.885922f,  0.215369f);\n        poisson\[14] = float2( 0.566637f,  0.605213f);\n        poisson\[15] = float2( 0.039766f, -0.396100f);\n        poisson\[16] = float2( 0.751946f,  0.453352f);\n        poisson\[17] = float2( 0.078707f, -0.715323f);\n        poisson\[18] = float2(-0.075838f, -0.529344f);\n        poisson\[19] = float2( 0.724479f, -0.580798f);\n        poisson\[20] = float2( 0.222999f, -0.215125f);\n        poisson\[21] = float2(-0.467574f, -0.405438f);\n        poisson\[22] = float2(-0.248268f, -0.814753f);\n        poisson\[23] = float2( 0.354411f, -0.887570f);\n        poisson\[24] = float2( 0.175817f,  0.965873f);\n        poisson\[25] = float2( 0.872120f,  0.190453f);\n        poisson\[26] = float2(-0.930615f, -0.109392f);\n        poisson\[27] = float2(-0.430418f,  0.902211f);\n        poisson\[28] = float2( 0.958640f, -0.283971f);\n        poisson\[29] = float2(-0.187154f,  0.457021f);\n        poisson\[30] = float2( 0.489032f, -0.872156f);\n        poisson\[31] = float2(-0.542517f, -0.044133f);\n\n        // Rotate the Poisson pattern per shading point to reduce structured artefacts.\n        float ang = rot_seed * 6.2831853f;\n        float ca  = cos(ang);\n        float sa  = sin(ang);\n\n        // Increase bias and soft comparison width on grazing surfaces.\n        // This helps suppress self-shadow acne and hard striping.\n        float eff_bias = shadow_bias * (1.0f + grazing * 8.0f);\n        float compare_soft = eff_bias * (2.0f + grazing * 8.0f);\n        compare_soft = max(compare_soft, 0.0005f);\n\n        // ---------------------------------------------------------------------\n        // Blocker search pass\n        //\n        // Estimate how far the nearest blockers are from the receiver.\n        // This is used to derive an approximate penumbra expansion factor.\n        // ---------------------------------------------------------------------\n        float blocker_sum   = 0.0f;\n        float blocker_count = 0.0f;\n        float search_r      = base_radius * 2.0f;\n\n        for (int i = 0; i < 12; ++i) \{\n            float ox = poisson\[i].x * ca - poisson\[i].y * sa;\n            float oy = poisson\[i].x * sa + poisson\[i].y * ca;\n\n            float px = cx + ox * search_r;\n            float py = cy + oy * search_r;\n\n            float sdepth = sampleDepthBilinear(px, py);\n\n            if (sdepth + eff_bias < depth_cam) \{\n                blocker_sum   += sdepth;\n                blocker_count += 1.0f;\n            \}\n        \}\n\n        // If blockers were found, estimate a widened penumbra.\n        // If none were found, treat the point as fully lit.\n        float penumbra = 1.0f;\n        if (blocker_count > 0.5f) \{\n            float avg_blocker = blocker_sum / blocker_count;\n            penumbra = (depth_cam - avg_blocker) / max(avg_blocker, 0.0001f);\n            penumbra = max(penumbra, 0.0f);\n            penumbra = min(1.0f + penumbra * 8.0f, 6.0f);\n        \} else \{\n            return 1.0f;\n        \}\n\n        // Expand the filter more on grazing surfaces.\n        float grazing_boost = 1.0f + grazing * 3.0f;\n        float final_radius  = base_radius * penumbra * grazing_boost;\n        final_radius = max(final_radius, 0.75f);\n\n        // ---------------------------------------------------------------------\n        // Main filtered shadow pass\n        //\n        // Each tap does a soft comparison rather than a binary comparison,\n        // giving a smoother and more stable visibility response.\n        // ---------------------------------------------------------------------\n        float sum = 0.0f;\n        for (int i = 0; i < 32; ++i) \{\n            float ox = poisson\[i].x * ca - poisson\[i].y * sa;\n            float oy = poisson\[i].x * sa + poisson\[i].y * ca;\n\n            float px = cx + ox * final_radius;\n            float py = cy + oy * final_radius;\n\n            float sdepth = sampleDepthBilinear(px, py);\n\n            float edge0 = sdepth + eff_bias - compare_soft;\n            float edge1 = sdepth + eff_bias + compare_soft;\n            float lit   = 1.0f - smoothstep(edge0, edge1, depth_cam);\n            sum += lit;\n        \}\n\n        return sum / 32.0f;\n    \}\n\n    // -------------------------------------------------------------------------\n    // Mixed tight + wide shadow response\n    //\n    // A single shadow lookup can still look too \"hard\" or too close to the\n    // underlying shadow map. This function blends:\n    // - a tighter version that keeps local definition\n    // - a wider version that gives a softer, more projected light splash feel\n    //\n    // The wider response is blended in more strongly on grazing surfaces.\n    // -------------------------------------------------------------------------\n    float sampleShadowMixed(float2 uv, float depth_cam, float base_radius,\n                            float grazing, float rot_seed)\n    \{\n        float tight = sampleShadowSoft(\n            uv,\n            depth_cam,\n            base_radius,\n            grazing,\n            rot_seed + 0.07f\n        );\n\n        float wide_radius = base_radius * (1.35f + grazing * 0.35f);\n\n        float wide = sampleShadowSoft(\n            uv,\n            depth_cam,\n            wide_radius,\n            grazing,\n            rot_seed + 0.31f\n        );\n\n        float wide_mix = 0.30f + grazing * 0.45f;\n        wide_mix = max(0.0f, min(0.85f, wide_mix));\n\n        return tight * (1.0f - wide_mix) + wide * wide_mix;\n    \}\n\n    // -------------------------------------------------------------------------\n    // Surface-hit visibility evaluation\n    //\n    // This function adds a second layer of smoothing by evaluating the mixed\n    // shadow response several times around the current UV and averaging them.\n    //\n    // Conceptually this is a tiny post-filter of the final visibility, which\n    // helps surface hits look more like a soft light splash and less like\n    // direct shadow-map projection.\n    // -------------------------------------------------------------------------\n    float sampleSurfaceHitVisibility(float2 uv, float depth_cam, float base_radius,\n                                     float grazing, float rot_seed)\n    \{\n        // Offset size in UV space.\n        // It scales slightly with the current radius so larger filters also\n        // receive a slightly broader local blur.\n        float du = (1.0f / max(float(camL_width),  1.0f)) * (0.75f + base_radius * 0.12f);\n        float dv = (1.0f / max(float(camL_height), 1.0f)) * (0.75f + base_radius * 0.12f);\n\n        float h0 = sampleShadowMixed(\n            uv,\n            depth_cam,\n            base_radius,\n            grazing,\n            rot_seed + 0.11f\n        );\n\n        float h1 = sampleShadowMixed(\n            float2(uv.x + du, uv.y),\n            depth_cam,\n            base_radius,\n            grazing,\n            rot_seed + 0.23f\n        );\n\n        float h2 = sampleShadowMixed(\n            float2(uv.x - du, uv.y),\n            depth_cam,\n            base_radius,\n            grazing,\n            rot_seed + 0.41f\n        );\n\n        float h3 = sampleShadowMixed(\n            float2(uv.x, uv.y + dv),\n            depth_cam,\n            base_radius,\n            grazing,\n            rot_seed + 0.59f\n        );\n\n        float h4 = sampleShadowMixed(\n            float2(uv.x, uv.y - dv),\n            depth_cam,\n            base_radius,\n            grazing,\n            rot_seed + 0.73f\n        );\n\n        // Weighted average:\n        // the centre sample is given extra weight to preserve shape.\n        return (h0 * 2.0f + h1 + h2 + h3 + h4) / 6.0f;\n    \}\n\n    // -------------------------------------------------------------------------\n    // Bilinear cookie lookup\n    //\n    // Cookie projection can look coarse if sampled with point filtering,\n    // especially when used for both intensity and colour tinting.\n    // This function performs manual bilinear interpolation.\n    // -------------------------------------------------------------------------\n    float4 sampleCookieRGBA(float2 uv) \{\n        if (uv.x < 0.0f || uv.x > 1.0f || uv.y < 0.0f || uv.y > 1.0f)\n            return float4(0.0f, 0.0f, 0.0f, 0.0f);\n\n        float px = uv.x * float(cookie_width  - 1);\n        float py = uv.y * float(cookie_height - 1);\n\n        float x0 = floor(px);\n        float y0 = floor(py);\n        float fx = px - x0;\n        float fy = py - y0;\n\n        float4 c00 = cookie(x0,        y0       );\n        float4 c10 = cookie(x0 + 1.0f, y0       );\n        float4 c01 = cookie(x0,        y0 + 1.0f);\n        float4 c11 = cookie(x0 + 1.0f, y0 + 1.0f);\n\n        float4 cx0 = c00 * (1.0f - fx) + c10 * fx;\n        float4 cx1 = c01 * (1.0f - fx) + c11 * fx;\n        return cx0 * (1.0f - fy) + cx1 * fy;\n    \}\n\n    // -------------------------------------------------------------------------\n    // Henyey-Greenstein phase function\n    //\n    // This controls how much light is scattered toward the viewer depending on\n    // the angle between view direction and light direction.\n    //\n    // g =  0 : isotropic scattering\n    // g >  0 : forward scattering\n    // g <  0 : backward scattering\n    // -------------------------------------------------------------------------\n    float henyeyGreenstein(float cos_theta, float g) \{\n        float g2 = g * g;\n        float denom = 1.0f + g2 + 2.0f * g * cos_theta;\n        denom = max(denom, 0.0001f);\n        return (1.0f - g2) / (4.0f * 3.14159265f * pow(denom, 1.5f));\n    \}\n\n    // -------------------------------------------------------------------------\n    // 3D hash for procedural noise generation\n    // -------------------------------------------------------------------------\n    float hash3(float3 p) \{\n        float h = p.x * 127.1f + p.y * 311.7f + p.z * 74.7f;\n        float v = sin(h) * 43758.5453123f;\n        return v - floor(v);\n    \}\n\n    // -------------------------------------------------------------------------\n    // Trilinear value noise\n    //\n    // This is a simple procedural noise used to modulate density inside the\n    // volume. It is not a physically based turbulence model, but it is cheap\n    // and gives useful artistic breakup.\n    // -------------------------------------------------------------------------\n    float valueNoise3D(float3 p) \{\n        float3 i = float3(floor(p.x), floor(p.y), floor(p.z));\n        float3 f = float3(p.x - i.x, p.y - i.y, p.z - i.z);\n\n        // Hermite interpolation weights for smooth transitions between cells.\n        float3 u = float3(\n            f.x * f.x * (3.0f - 2.0f * f.x),\n            f.y * f.y * (3.0f - 2.0f * f.y),\n            f.z * f.z * (3.0f - 2.0f * f.z)\n        );\n\n        // Sample the eight lattice corners.\n        float n000 = hash3(float3(i.x,        i.y,        i.z));\n        float n100 = hash3(float3(i.x + 1.0f, i.y,        i.z));\n        float n010 = hash3(float3(i.x,        i.y + 1.0f, i.z));\n        float n110 = hash3(float3(i.x + 1.0f, i.y + 1.0f, i.z));\n        float n001 = hash3(float3(i.x,        i.y,        i.z + 1.0f));\n        float n101 = hash3(float3(i.x + 1.0f, i.y,        i.z + 1.0f));\n        float n011 = hash3(float3(i.x,        i.y + 1.0f, i.z + 1.0f));\n        float n111 = hash3(float3(i.x + 1.0f, i.y + 1.0f, i.z + 1.0f));\n\n        float nx00 = n000 * (1.0f - u.x) + n100 * u.x;\n        float nx10 = n010 * (1.0f - u.x) + n110 * u.x;\n        float nx01 = n001 * (1.0f - u.x) + n101 * u.x;\n        float nx11 = n011 * (1.0f - u.x) + n111 * u.x;\n\n        float nxy0 = nx00 * (1.0f - u.y) + nx10 * u.y;\n        float nxy1 = nx01 * (1.0f - u.y) + nx11 * u.y;\n\n        return nxy0 * (1.0f - u.z) + nxy1 * u.z;\n    \}\n\n    // -------------------------------------------------------------------------\n    // Reconstruct the ray distance for a neighbouring render-camera pixel\n    //\n    // zCam stores depth relative to the render camera in reciprocal form.\n    // This function:\n    // 1. Rebuilds that neighbour's view ray\n    // 2. Converts reciprocal depth back to camera depth\n    // 3. Converts camera-forward depth into distance along the actual pixel ray\n    //\n    // This is used later for local geometric reconstruction around a surface hit.\n    // -------------------------------------------------------------------------\n    float reconstructPixelRayDepth(int px, int py) \{\n        float n_ndc_x = (float(px) + 0.5f) / float(camR_width)  * 2.0f - 1.0f;\n        float n_ndc_y = (float(py) + 0.5f) / float(camR_height) * 2.0f - 1.0f;\n\n        float3 nd = float3(\n            camR_right.x*(n_ndc_x*camR_fovx_tan) + camR_up.x*(n_ndc_y*camR_fovy_tan) + camR_fwd.x,\n            camR_right.y*(n_ndc_x*camR_fovx_tan) + camR_up.y*(n_ndc_y*camR_fovy_tan) + camR_fwd.y,\n            camR_right.z*(n_ndc_x*camR_fovx_tan) + camR_up.z*(n_ndc_y*camR_fovy_tan) + camR_fwd.z\n        );\n\n        float nlen = sqrt(nd.x*nd.x + nd.y*nd.y + nd.z*nd.z);\n        nd = float3(nd.x / nlen, nd.y / nlen, nd.z / nlen);\n\n        float raw = zCam(px, py).x;\n        if (raw <= 0.0001f) return 0.0f;\n\n        float t_cam = 1.0f / raw;\n\n        float cos_fwd = nd.x*camR_fwd.x + nd.y*camR_fwd.y + nd.z*camR_fwd.z;\n        cos_fwd = max(cos_fwd, 0.0001f);\n\n        return t_cam / cos_fwd;\n    \}\n\n    // -------------------------------------------------------------------------\n    // Reconstruct the world-space position of a neighbouring render-camera pixel\n    //\n    // This uses the neighbour's ray and reconstructed ray depth.\n    // It is used to estimate local tangents and therefore an approximate normal\n    // around the current surface hit.\n    // -------------------------------------------------------------------------\n    float3 reconstructPixelWorldPos(int px, int py) \{\n        float n_ndc_x = (float(px) + 0.5f) / float(camR_width)  * 2.0f - 1.0f;\n        float n_ndc_y = (float(py) + 0.5f) / float(camR_height) * 2.0f - 1.0f;\n\n        float3 nd = float3(\n            camR_right.x*(n_ndc_x*camR_fovx_tan) + camR_up.x*(n_ndc_y*camR_fovy_tan) + camR_fwd.x,\n            camR_right.y*(n_ndc_x*camR_fovx_tan) + camR_up.y*(n_ndc_y*camR_fovy_tan) + camR_fwd.y,\n            camR_right.z*(n_ndc_x*camR_fovx_tan) + camR_up.z*(n_ndc_y*camR_fovy_tan) + camR_fwd.z\n        );\n\n        float nlen = sqrt(nd.x*nd.x + nd.y*nd.y + nd.z*nd.z);\n        nd = float3(nd.x / nlen, nd.y / nlen, nd.z / nlen);\n\n        float t_ray = reconstructPixelRayDepth(px, py);\n\n        return float3(\n            camR_pos.x + nd.x * t_ray,\n            camR_pos.y + nd.y * t_ray,\n            camR_pos.z + nd.z * t_ray\n        );\n    \}\n\n    // -------------------------------------------------------------------------\n    // Convert a world-space point to linear depth in the light camera\n    //\n    // This is simply the point projected onto the light forward axis.\n    // -------------------------------------------------------------------------\n    float lightCameraDepth(float3 wp) \{\n        float dx = wp.x - camL_pos.x;\n        float dy = wp.y - camL_pos.y;\n        float dz = wp.z - camL_pos.z;\n\n        return camL_fwd.x*dx + camL_fwd.y*dy + camL_fwd.z*dz;\n    \}\n\n    // -------------------------------------------------------------------------\n    // Convert a world-space point to light UV coordinates\n    //\n    // This performs a full point-to-light-camera transform and perspective\n    // projection into normalized \[0,1] UV space.\n    // -------------------------------------------------------------------------\n    float2 worldToLightUV(float3 wp) \{\n        float dx = wp.x - camL_pos.x;\n        float dy = wp.y - camL_pos.y;\n        float dz = wp.z - camL_pos.z;\n\n        float x_cam = camL_right.x*dx + camL_right.y*dy + camL_right.z*dz;\n        float y_cam = camL_up.x   *dx + camL_up.y   *dy + camL_up.z   *dz;\n        float z_cam = camL_fwd.x  *dx + camL_fwd.y  *dy + camL_fwd.z  *dz;\n\n        float inv_z = 1.0f / max(z_cam, 0.0001f);\n\n        return float2(\n            (x_cam * inv_z) / camL_fovx_tan * 0.5f + 0.5f,\n            (y_cam * inv_z) / camL_fovy_tan * 0.5f + 0.5f\n        );\n    \}\n\n    void process(int2 pos) \{\n        // ---------------------------------------------------------------------\n        // Reconstruct the primary render-camera ray for this output pixel\n        // ---------------------------------------------------------------------\n        float ndc_x = (float(pos.x) + 0.5f) / float(camR_width)  * 2.0f - 1.0f;\n        float ndc_y = (float(pos.y) + 0.5f) / float(camR_height) * 2.0f - 1.0f;\n\n        float3 ray_dir = float3(\n            camR_right.x*(ndc_x*camR_fovx_tan) + camR_up.x*(ndc_y*camR_fovy_tan) + camR_fwd.x,\n            camR_right.y*(ndc_x*camR_fovx_tan) + camR_up.y*(ndc_y*camR_fovy_tan) + camR_fwd.y,\n            camR_right.z*(ndc_x*camR_fovx_tan) + camR_up.z*(ndc_y*camR_fovy_tan) + camR_fwd.z\n        );\n\n        float len = sqrt(ray_dir.x*ray_dir.x + ray_dir.y*ray_dir.y + ray_dir.z*ray_dir.z);\n        ray_dir = ray_dir / len;\n\n        // ---------------------------------------------------------------------\n        // Holdout preparation\n        //\n        // If holdouts are enabled, zCam tells us where the render-camera ray\n        // first hits solid geometry.\n        //\n        // t_max       : maximum raymarch distance\n        // z_solid_ray : distance to the first hit surface\n        // has_solid   : whether valid holdout geometry exists at this pixel\n        // ---------------------------------------------------------------------\n        float t_max = vol_far;\n        float z_solid_ray = vol_far;\n        float has_solid = 0.0f;\n\n        if (holdout_enable > 0.5f) \{\n            float z_perp = zCam(pos.x, pos.y).x;\n\n            if (z_perp > holdout_epsilon) \{\n                // Convert reciprocal camera depth back to linear depth.\n                z_perp = 1.0f / z_perp;\n\n                // Convert camera-forward depth to distance along this exact pixel ray.\n                float cos_ray = ray_dir.x * camR_fwd.x\n                              + ray_dir.y * camR_fwd.y\n                              + ray_dir.z * camR_fwd.z;\n                cos_ray = max(cos_ray, 0.0001f);\n\n                z_solid_ray = z_perp / cos_ray;\n\n                // Allow the volume to continue a little past the surface and\n                // fade out softly instead of clipping hard.\n                t_max = min(vol_far, z_solid_ray + holdout_softness);\n                has_solid = 1.0f;\n            \}\n        \}\n\n        // ---------------------------------------------------------------------\n        // Accumulators for final RGB light contribution\n        // ---------------------------------------------------------------------\n        float accumulated_r = 0.0f;\n        float accumulated_g = 0.0f;\n        float accumulated_b = 0.0f;\n\n        // ---------------------------------------------------------------------\n        // Alpha stores the normalized distance of the first meaningful visible\n        // contribution in the volume.\n        // ---------------------------------------------------------------------\n        float depth_out = 0.0f;\n        float depth_found = 0.0f;\n        float depth_threshold = 0.0001f;\n\n        // ---------------------------------------------------------------------\n        // Beer-Lambert transmittance through the medium\n        //\n        // Starts at 1 and gets multiplied down as we march through the volume.\n        // ---------------------------------------------------------------------\n        float transmittance = 1.0f;\n\n        // ---------------------------------------------------------------------\n        // Main volumetric raymarch\n        // ---------------------------------------------------------------------\n        if (t_max > vol_near) \{\n            float step_size = (t_max - vol_near) / float(num_steps);\n\n            // Per-pixel offset to reduce visible stepping / banding.\n            float j = hash(float2(\n                float(pos.x) + frame * 17.0f,\n                float(pos.y) + frame * 23.0f\n            )) * step_size * jitter;\n\n            // Per-step extinction and transmittance.\n            float step_ext = extinction * step_size;\n            float step_T   = exp(-step_ext);\n\n            for (int i = 0; i < num_steps; ++i) \{\n                // Distance along the render-camera ray for this sample.\n                float t = vol_near + j + (float(i) + 0.5f) * step_size;\n\n                // World-space sample position.\n                float3 sp = float3(\n                    camR_pos.x + ray_dir.x * t,\n                    camR_pos.y + ray_dir.y * t,\n                    camR_pos.z + ray_dir.z * t\n                );\n\n                // -------------------------------------------------------------\n                // Transform sample point into light-camera space\n                // -------------------------------------------------------------\n                float dx = sp.x - camL_pos.x;\n                float dy = sp.y - camL_pos.y;\n                float dz = sp.z - camL_pos.z;\n\n                float x_cam = camL_right.x*dx + camL_right.y*dy + camL_right.z*dz;\n                float y_cam = camL_up.x   *dx + camL_up.y   *dy + camL_up.z   *dz;\n                float z_cam = camL_fwd.x  *dx + camL_fwd.y  *dy + camL_fwd.z  *dz;\n\n                // Reject samples outside the light frustum depth range.\n                if (z_cam <= camL_near) continue;\n                if (z_cam >  camL_far)  continue;\n\n                // Project the point into normalized light UV space.\n                float inv_z = 1.0f / max(z_cam, 0.0001f);\n                float uv_x  = (x_cam * inv_z) / camL_fovx_tan * 0.5f + 0.5f;\n                float uv_y  = (y_cam * inv_z) / camL_fovy_tan * 0.5f + 0.5f;\n\n                // Reject points outside the projector cone.\n                if (uv_x < 0.0f || uv_x > 1.0f || uv_y < 0.0f || uv_y > 1.0f) continue;\n\n                float2 uv = float2(uv_x, uv_y);\n\n                // Normalized light depth used for falloff, colour ramp, and softening.\n                float t_norm = (z_cam - camL_near) / camL_range;\n\n                // -------------------------------------------------------------\n                // Depth-based softening\n                //\n                // Farther regions can use broader PCF and softer cone edges.\n                // This helps the shafts feel less uniform and more atmospheric.\n                // -------------------------------------------------------------\n                float softness_boost = 1.0f + t_norm * shaft_softness_distance * 10.0f;\n                float dynamic_pcf = pcf_radius * softness_boost;\n                float dynamic_fade = cone_edge_fade * (1.0f + t_norm * shaft_softness_distance * 2.0f);\n\n                // Approximate area lights by broadening the edge fade.\n                float area_mult = max(area_light_size, 0.01f);\n                dynamic_fade *= area_mult;\n\n                // Shadow visibility at this volume sample.\n                float lit = sampleShadowPCF(uv, z_cam, dynamic_pcf);\n\n                // Default cookie tint is neutral white.\n                float cookie_tint_r = 1.0f;\n                float cookie_tint_g = 1.0f;\n                float cookie_tint_b = 1.0f;\n\n                // -------------------------------------------------------------\n                // Cookie projection\n                //\n                // Alpha attenuates intensity.\n                // RGB optionally tints the light colour.\n                // -------------------------------------------------------------\n                if (cookie_strength > 0.0f) \{\n                    float4 ck = sampleCookieRGBA(uv);\n                    lit *= (1.0f - cookie_strength) + cookie_strength * ck.w;\n\n                    cookie_tint_r = (1.0f - cookie_color_strength) + cookie_color_strength * ck.x;\n                    cookie_tint_g = (1.0f - cookie_color_strength) + cookie_color_strength * ck.y;\n                    cookie_tint_b = (1.0f - cookie_color_strength) + cookie_color_strength * ck.z;\n                \}\n\n                // -------------------------------------------------------------\n                // Cone edge fade\n                //\n                // This prevents a hard projector rectangle and gives the cone\n                // a softer, more natural boundary.\n                // -------------------------------------------------------------\n                if (cone_edge_fade > 0.0f) \{\n                    float fade_w = dynamic_fade * 0.15f;\n                    float fx = smoothstep(0.0f, fade_w, uv_x) * smoothstep(1.0f, 1.0f - fade_w, uv_x);\n                    float fy = smoothstep(0.0f, fade_w, uv_y) * smoothstep(1.0f, 1.0f - fade_w, uv_y);\n                    lit *= fx * fy;\n                \}\n\n                // -------------------------------------------------------------\n                // Distance falloff inside the light frustum\n                // -------------------------------------------------------------\n                float base = max(1.0f - t_norm, 0.0f);\n                float falloff = pow(base, falloff_exponent);\n\n                // Interpolate light colour along the frustum depth.\n                float cr = color_near.x + (color_far.x - color_near.x) * t_norm;\n                float cg = color_near.y + (color_far.y - color_near.y) * t_norm;\n                float cb = color_near.z + (color_far.z - color_near.z) * t_norm;\n\n                // Apply cookie colour tint.\n                cr *= cookie_tint_r;\n                cg *= cookie_tint_g;\n                cb *= cookie_tint_b;\n\n                // -------------------------------------------------------------\n                // Compute direction toward the light from the sample point\n                // -------------------------------------------------------------\n                float lx = camL_pos.x - sp.x;\n                float ly = camL_pos.y - sp.y;\n                float lz = camL_pos.z - sp.z;\n\n                float llen = sqrt(lx*lx + ly*ly + lz*lz);\n                lx /= llen; ly /= llen; lz /= llen;\n\n                float cos_theta = ray_dir.x * lx + ray_dir.y * ly + ray_dir.z * lz;\n\n                // Blend isotropic and HG phase functions.\n                float phase_iso = 1.0f / (4.0f * 3.14159265f);\n                float phase_hg  = henyeyGreenstein(cos_theta, hg_g);\n\n                float phase = phase_iso * (1.0f - hg_strength) + phase_hg * hg_strength;\n\n                // Rescale so the HG control behaves more like an artistic multiplier.\n                phase *= 4.0f * 3.14159265f;\n\n                // Final lit scattering term, including optional ambient fill.\n                float lit_total = lit * phase + ambient_scatter;\n\n                // -------------------------------------------------------------\n                // Procedural density breakup\n                //\n                // Two independent value-noise layers are combined to modulate\n                // the density of the medium.\n                // -------------------------------------------------------------\n                float density = 1.0f;\n\n                if (noise_enable > 0.5f) \{\n                    float inv_low  = 1.0f / max(noise_scale_low,  0.0001f);\n                    float inv_high = 1.0f / max(noise_scale_high, 0.0001f);\n\n                    float3 np_low = float3(\n                        sp.x * inv_low - noise_offset_x,\n                        sp.y * inv_low - noise_offset_y,\n                        sp.z * inv_low - noise_offset_z\n                    );\n\n                    float3 np_high = float3(\n                        sp.x * inv_high - noise_offset_x,\n                        sp.y * inv_high - noise_offset_y,\n                        sp.z * inv_high - noise_offset_z\n                    );\n\n                    float n_low  = valueNoise3D(np_low);\n                    float n_high = valueNoise3D(np_high);\n\n                    // Remap noise so 1.0 remains the neutral density.\n                    float d_low  = 1.0f + (n_low  - 0.5f) * 2.0f * noise_strength_low;\n                    float d_high = 1.0f + (n_high - 0.5f) * 2.0f * noise_strength_high;\n\n                    density = d_low * d_high;\n                    density = max(density, 0.0f);\n                \}\n\n                // -------------------------------------------------------------\n                // Holdout softness mask\n                //\n                // As we approach the first solid surface, fade the volume\n                // contribution down smoothly rather than clipping abruptly.\n                // -------------------------------------------------------------\n                float softness_mask = 1.0f;\n                if (has_solid > 0.5f && holdout_softness > 0.0001f) \{\n                    float dist_to_solid = z_solid_ray - t;\n                    softness_mask = smoothstep(0.0f, holdout_softness, dist_to_solid);\n                \}\n\n                // -------------------------------------------------------------\n                // Single-step in-scattering contribution\n                //\n                // lit_total    : visibility and phase response\n                // falloff      : distance attenuation from the light\n                // density      : procedural medium modulation\n                // softness_mask: fade near holdout surfaces\n                // transmittance: attenuation from previous steps\n                // (1-step_T)   : amount of energy contributed by this slice\n                // -------------------------------------------------------------\n                float contrib = lit_total * falloff * density * softness_mask * transmittance * (1.0f - step_T);\n\n                accumulated_r += contrib * cr;\n                accumulated_g += contrib * cg;\n                accumulated_b += contrib * cb;\n\n                // Update cumulative transmittance through the medium.\n                transmittance *= step_T;\n\n                // Store the first meaningful depth where the effect becomes visible.\n                if (depth_found < 0.5f && contrib > depth_threshold) \{\n                    depth_out = t;\n                    depth_found = 1.0f;\n                \}\n\n                // Early exit if almost all light has been extinguished.\n                if (transmittance < 0.001f) break;\n            \}\n        \}\n\n        // ---------------------------------------------------------------------\n        // Surface hit contribution\n        //\n        // If the render-camera ray intersects solid geometry, add an extra\n        // \"light splash\" where the cone touches that geometry.\n        //\n        // This is not a full physically based shading model. It is a stylized,\n        // artist-friendly approximation designed to make the light feel like it\n        // interacts with surfaces instead of simply stopping at the holdout.\n        // ---------------------------------------------------------------------\n        if (surface_hit_enable > 0.5f && has_solid > 0.5f) \{\n            // World-space hit position of the first solid surface.\n            float3 hit_pos = float3(\n                camR_pos.x + ray_dir.x * z_solid_ray,\n                camR_pos.y + ray_dir.y * z_solid_ray,\n                camR_pos.z + ray_dir.z * z_solid_ray\n            );\n\n            // Transform hit point into light-camera space.\n            float hdx = hit_pos.x - camL_pos.x;\n            float hdy = hit_pos.y - camL_pos.y;\n            float hdz = hit_pos.z - camL_pos.z;\n\n            float hx_cam = camL_right.x*hdx + camL_right.y*hdy + camL_right.z*hdz;\n            float hy_cam = camL_up.x   *hdx + camL_up.y   *hdy + camL_up.z   *hdz;\n            float hz_cam = camL_fwd.x  *hdx + camL_fwd.y  *hdy + camL_fwd.z  *hdz;\n\n            // Only evaluate if the point lies inside the light depth range.\n            if (hz_cam > camL_near && hz_cam < camL_far) \{\n                float h_inv_z = 1.0f / max(hz_cam, 0.0001f);\n                float h_uv_x = (hx_cam * h_inv_z) / camL_fovx_tan * 0.5f + 0.5f;\n                float h_uv_y = (hy_cam * h_inv_z) / camL_fovy_tan * 0.5f + 0.5f;\n\n                // Only continue if the hit lies inside the projected light cone.\n                if (h_uv_x >= 0.0f && h_uv_x <= 1.0f && h_uv_y >= 0.0f && h_uv_y <= 1.0f) \{\n                    // ---------------------------------------------------------\n                    // Gather 4-neighbour depth samples around the current pixel\n                    // in the render camera so we can estimate local geometry.\n                    // ---------------------------------------------------------\n                    int pxm = (pos.x > 0) ? (pos.x - 1) : pos.x;\n                    int pxp = (pos.x < camR_width  - 1) ? (pos.x + 1) : pos.x;\n                    int pym = (pos.y > 0) ? (pos.y - 1) : pos.y;\n                    int pyp = (pos.y < camR_height - 1) ? (pos.y + 1) : pos.y;\n\n                    float dL = reconstructPixelRayDepth(pxm, pos.y);\n                    float dR = reconstructPixelRayDepth(pxp, pos.y);\n                    float dD = reconstructPixelRayDepth(pos.x, pym);\n                    float dU = reconstructPixelRayDepth(pos.x, pyp);\n\n                    // Default neighbour positions are initialized to the hit point.\n                    float3 pL = hit_pos;\n                    float3 pR = hit_pos;\n                    float3 pD = hit_pos;\n                    float3 pU = hit_pos;\n\n                    float normal_valid = 0.0f;\n                    float3 surf_n = float3(0.0f, 0.0f, 1.0f);\n\n                    // ---------------------------------------------------------\n                    // Try to reconstruct a local surface normal.\n                    //\n                    // To avoid using neighbours from different depth layers\n                    // (for example across silhouettes), only accept neighbours\n                    // whose depth is reasonably close to the current hit depth.\n                    // ---------------------------------------------------------\n                    if (dL > 0.0f && dR > 0.0f && dD > 0.0f && dU > 0.0f) \{\n                        float max_jump = z_solid_ray * 0.02f + 0.01f;\n\n                        if (absf(dL - z_solid_ray) < max_jump &&\n                            absf(dR - z_solid_ray) < max_jump &&\n                            absf(dD - z_solid_ray) < max_jump &&\n                            absf(dU - z_solid_ray) < max_jump)\n                        \{\n                            pL = reconstructPixelWorldPos(pxm, pos.y);\n                            pR = reconstructPixelWorldPos(pxp, pos.y);\n                            pD = reconstructPixelWorldPos(pos.x, pym);\n                            pU = reconstructPixelWorldPos(pos.x, pyp);\n\n                            // Estimate local tangent directions across the surface.\n                            float3 tx = float3(\n                                pR.x - pL.x,\n                                pR.y - pL.y,\n                                pR.z - pL.z\n                            );\n\n                            float3 ty = float3(\n                                pU.x - pD.x,\n                                pU.y - pD.y,\n                                pU.z - pD.z\n                            );\n\n                            // Surface normal from the cross product of local tangents.\n                            float3 nn = float3(\n                                tx.y * ty.z - tx.z * ty.y,\n                                tx.z * ty.x - tx.x * ty.z,\n                                tx.x * ty.y - tx.y * ty.x\n                            );\n\n                            surf_n = normalizeSafe3(nn);\n                            normal_valid = 1.0f;\n                        \}\n                    \}\n\n                    // Direction from hit point toward the light.\n                    float3 L = normalizeSafe3(float3(\n                        camL_pos.x - hit_pos.x,\n                        camL_pos.y - hit_pos.y,\n                        camL_pos.z - hit_pos.z\n                    ));\n\n                    // ---------------------------------------------------------\n                    // Grazing estimation\n                    //\n                    // We combine:\n                    // - a camera/light heuristic (robust fallback)\n                    // - a geometry-based estimate from the reconstructed normal\n                    //\n                    // This hybrid approach keeps the result stable while still\n                    // responding to actual surface orientation when possible.\n                    // ---------------------------------------------------------\n                    float cam_grazing = 1.0f - absf(\n                        ray_dir.x * camL_fwd.x +\n                        ray_dir.y * camL_fwd.y +\n                        ray_dir.z * camL_fwd.z\n                    );\n                    cam_grazing = max(0.0f, min(1.0f, cam_grazing));\n\n                    float grazing = cam_grazing;\n\n                    if (normal_valid > 0.5f) \{\n                        float ndotl_abs = absf(surf_n.x * L.x + surf_n.y * L.y + surf_n.z * L.z);\n                        float geom_grazing = 1.0f - ndotl_abs;\n\n                        // Artistic mix:\n                        // - geometry-based grazing gives physically plausible behaviour\n                        // - the camera-based term preserves some of the earlier\n                        //   visually pleasing softness in difficult cases\n                        grazing = max(geom_grazing, cam_grazing * 0.6f);\n                    \}\n\n                    grazing = max(0.25f, min(1.0f, grazing));\n                    float surface_radius = pcf_radius;\n\n                    // ---------------------------------------------------------\n                    // Estimate the receiver footprint in light UV space\n                    //\n                    // If neighbouring receiver pixels cover a large UV footprint\n                    // on the light map, we widen the filter to keep the response\n                    // more stable and less aliased.\n                    // ---------------------------------------------------------\n                    if (normal_valid > 0.5f) \{\n                        float zL = lightCameraDepth(pL);\n                        float zR = lightCameraDepth(pR);\n                        float zD = lightCameraDepth(pD);\n                        float zU = lightCameraDepth(pU);\n\n                        if (zL > camL_near && zR > camL_near && zD > camL_near && zU > camL_near) \{\n                            float2 uvL = worldToLightUV(pL);\n                            float2 uvR = worldToLightUV(pR);\n                            float2 uvD = worldToLightUV(pD);\n                            float2 uvU = worldToLightUV(pU);\n\n                            float dux = (uvR.x - uvL.x) * 0.5f * float(camL_width);\n                            float duy = (uvR.y - uvL.y) * 0.5f * float(camL_height);\n                            float dvx = (uvU.x - uvD.x) * 0.5f * float(camL_width);\n                            float dvy = (uvU.y - uvD.y) * 0.5f * float(camL_height);\n\n                            float fp_u = sqrt(dux*dux + duy*duy);\n                            float fp_v = sqrt(dvx*dvx + dvy*dvy);\n                            float footprint = max(fp_u, fp_v);\n\n                            surface_radius = max(surface_radius, footprint * 0.55f + 0.5f);\n                        \}\n                    \}\n\n                    // Final artistic shaping of the surface-hit filter radius.\n                    surface_radius = max(surface_radius, pcf_radius * 1.15f + 0.5f);\n                    surface_radius *= (1.0f + grazing * 0.35f);\n                    surface_radius = min(surface_radius, 20.0f);\n\n                    // ---------------------------------------------------------\n                    // Stable random seed in world space\n                    //\n                    // This avoids visible screen-space tiling while keeping the\n                    // random rotation stable under camera motion.\n                    // ---------------------------------------------------------\n                    float rot_seed = hash(float2(\n                        hit_pos.x * 3.173f + hit_pos.z * 2.417f,\n                        hit_pos.y * 2.713f - hit_pos.x * 1.931f\n                    ));\n\n                    // Additional depth bias for the surface-hit path.\n                    // This is stronger than the base bias because self-shadow\n                    // artefacts are particularly noticeable on solid surfaces.\n                    float surface_bias_push = max(\n                        shadow_bias * (1.75f + grazing * 4.0f),\n                        0.00015f * hz_cam\n                    );\n\n                    // High-quality visibility for the surface-hit light splash.\n                    float h_lit = sampleSurfaceHitVisibility(\n                        float2(h_uv_x, h_uv_y),\n                        hz_cam - surface_bias_push,\n                        surface_radius,\n                        grazing,\n                        rot_seed\n                    );\n\n                    // Apply the same cone edge shaping to the surface hit.\n                    if (cone_edge_fade > 0.0f) \{\n                        float h_fade_w = cone_edge_fade * 0.15f;\n                        float h_fx = smoothstep(0.0f, h_fade_w, h_uv_x) * smoothstep(1.0f, 1.0f - h_fade_w, h_uv_x);\n                        float h_fy = smoothstep(0.0f, h_fade_w, h_uv_y) * smoothstep(1.0f, 1.0f - h_fade_w, h_uv_y);\n                        h_lit *= h_fx * h_fy;\n                    \}\n\n                    // Apply cookie intensity at the surface point.\n                    if (cookie_strength > 0.0f) \{\n                        float4 h_ck = sampleCookieRGBA(float2(h_uv_x, h_uv_y));\n                        h_lit *= (1.0f - cookie_strength) + cookie_strength * h_ck.w;\n                    \}\n\n                    // Light-depth-based falloff and colour for the surface hit.\n                    float h_t_norm = (hz_cam - camL_near) / camL_range;\n                    float h_base = max(1.0f - h_t_norm, 0.0f);\n                    float h_falloff = pow(h_base, falloff_exponent);\n\n                    float h_cr = color_near.x + (color_far.x - color_near.x) * h_t_norm;\n                    float h_cg = color_near.y + (color_far.y - color_near.y) * h_t_norm;\n                    float h_cb = color_near.z + (color_far.z - color_near.z) * h_t_norm;\n\n                    // Surface-hit contribution is attenuated by the remaining\n                    // transmittance so it still feels embedded in the medium.\n                    float h_contrib = h_lit * h_falloff * surface_hit_intensity * transmittance;\n\n                    accumulated_r += h_contrib * h_cr;\n                    accumulated_g += h_contrib * h_cg;\n                    accumulated_b += h_contrib * h_cb;\n                \}\n            \}\n        \}\n\n        // ---------------------------------------------------------------------\n        // Final global brightness multiplier\n        // ---------------------------------------------------------------------\n        accumulated_r *= brightness;\n        accumulated_g *= brightness;\n        accumulated_b *= brightness;\n\n        // ---------------------------------------------------------------------\n        // Optional atmospheric haze\n        //\n        // This is an extra broad fog contribution along the camera ray.\n        // It does not use the detailed raymarch and instead depends only on\n        // distance to the holdout or volume end.\n        // ---------------------------------------------------------------------\n        if (haze_density > 0.0f) \{\n            float haze_dist_ray = (has_solid > 0.5f) ? z_solid_ray : vol_far;\n            float haze_ref = max(haze_distance, 0.0001f);\n\n            float haze_amount = 1.0f - exp(-haze_dist_ray / haze_ref);\n            haze_amount *= haze_density;\n\n            accumulated_r += haze_color.x * haze_amount;\n            accumulated_g += haze_color.y * haze_amount;\n            accumulated_b += haze_color.z * haze_amount;\n        \}\n\n        // ---------------------------------------------------------------------\n        // Normalize the stored depth into \[0,1] across the configured volume\n        // range. If no significant contribution was found, alpha is 0.\n        // ---------------------------------------------------------------------\n        float depth_normalized =\n            (depth_out > 0.0001f)\n            ? (depth_out - vol_near) / max(vol_far - vol_near, 0.0001f)\n            : 0.0f;\n\n        // ---------------------------------------------------------------------\n        // Final output\n        //\n        // RGB = accumulated volumetric lighting\n        // A   = normalized first-significant depth\n        // ---------------------------------------------------------------------\n        dst() = float4(\n            accumulated_r,\n            accumulated_g,\n            accumulated_b,\n            depth_normalized\n        );\n    \}\n\};"
+  rebuild ""
+  VolumeRays_camR_col0 {{parent.cam_render11.world_matrix.0} {parent.cam_render11.world_matrix.4} {parent.cam_render11.world_matrix.8} {parent.cam_render11.world_matrix.12}}
+  VolumeRays_camR_col1 {{parent.cam_render11.world_matrix.1} {parent.cam_render11.world_matrix.5} {parent.cam_render11.world_matrix.9} {parent.cam_render11.world_matrix.13}}
+  VolumeRays_camR_col2 {{parent.cam_render11.world_matrix.2} {parent.cam_render11.world_matrix.6} {parent.cam_render11.world_matrix.10} {parent.cam_render11.world_matrix.14}}
+  VolumeRays_camR_col3 {{parent.cam_render11.world_matrix.3} {parent.cam_render11.world_matrix.7} {parent.cam_render11.world_matrix.11} {parent.cam_render11.world_matrix.15}}
+  VolumeRays_camR_focal {{parent.cam_render11.focal}}
+  VolumeRays_camR_haperture {{parent.cam_render11.haperture}}
+  VolumeRays_camR_vaperture {{parent.cam_render11.vaperture}}
+  VolumeRays_camR_width {{formatInput.position_2d.x}}
+  VolumeRays_camR_height {{formatInput.position_2d.y}}
+  VolumeRays_camL_col0 {{parent.cam_light11.world_matrix.0} {parent.cam_light11.world_matrix.4} {parent.cam_light11.world_matrix.8} {parent.cam_light11.world_matrix.12}}
+  VolumeRays_camL_col1 {{parent.cam_light11.world_matrix.1} {parent.cam_light11.world_matrix.5} {parent.cam_light11.world_matrix.9} {parent.cam_light11.world_matrix.13}}
+  VolumeRays_camL_col2 {{parent.cam_light11.world_matrix.2} {parent.cam_light11.world_matrix.6} {parent.cam_light11.world_matrix.10} {parent.cam_light11.world_matrix.14}}
+  VolumeRays_camL_col3 {{parent.cam_light11.world_matrix.3} {parent.cam_light11.world_matrix.7} {parent.cam_light11.world_matrix.11} {parent.cam_light11.world_matrix.15}}
+  VolumeRays_camL_focal {{parent.cam_light11.focal}}
+  VolumeRays_camL_haperture {{parent.cam_light11.haperture}}
+  VolumeRays_camL_vaperture {{parent.cam_light11.vaperture}}
+  VolumeRays_camL_near {{parent.cam_light11.near}}
+  VolumeRays_camL_far {{parent.cam_light11.far}}
+  VolumeRays_camL_width {{formatInput.position_2d.x}}
+  VolumeRays_camL_height {{formatInput.position_2d.y}}
+  VolumeRays_vol_near {{parent.vol_near}}
+  VolumeRays_vol_far {{parent.vol_far}}
+  VolumeRays_num_steps {{parent.num_steps}}
+  VolumeRays_jitter {{parent.jitter}}
+  VolumeRays_shadow_bias {{parent.shadow_bias}}
+  VolumeRays_brightness {{parent.brightness*cone_edge_fade}}
+  VolumeRays_extinction {{parent.extinction}}
+  VolumeRays_color_near {{parent.color_near.r} {parent.color_near.g} {parent.color_near.b} {parent.color_near}}
+  VolumeRays_color_far {{parent.color_near.r} {parent.color_near.g} {parent.color_near.b} {parent.color_near}}
+  VolumeRays_falloff_exponent {{parent.falloff_exponent}}
+  VolumeRays_pcf_radius {{parent.pcf_radius}}
+  VolumeRays_cone_edge_fade {{parent.cone_edge_fade}}
+  VolumeRays_cookie_width {{parent.cookieFormat.position_2d.x}}
+  VolumeRays_cookie_height {{parent.cookieFormat.position_2d.y}}
+  VolumeRays_cookie_strength {{parent.cookie_strength}}
+  VolumeRays_cookie_color_strength {{parent.cookie_color_strength}}
+  VolumeRays_holdout_enable {{parent.holdout_enable}}
+  VolumeRays_holdout_epsilon {{parent.holdout_epsilon}}
+  VolumeRays_holdout_softness {{parent.holdout_softness}}
+  VolumeRays_hg_g {{-parent.hg_g}}
+  VolumeRays_hg_strength {{parent.hg_strength}}
+  VolumeRays_ambient_scatter {{parent.ambient_scatter}}
+  VolumeRays_noise_enable {{parent.noise_enable}}
+  VolumeRays_noise_scale_low {{parent.noise_scale_low}}
+  VolumeRays_noise_strength_low {{parent.noise_strength_low}}
+  VolumeRays_noise_scale_high {{parent.noise_scale_high}}
+  VolumeRays_noise_strength_high {{parent.noise_strength_high}}
+  VolumeRays_noise_offset_x {{parent.offsetNoise.x}}
+  VolumeRays_noise_offset_y {{parent.offsetNoise.y}}
+  VolumeRays_noise_offset_z {{parent.offsetNoise.z}}
+  VolumeRays_haze_density {{parent.haze_density}}
+  VolumeRays_haze_distance {{parent.haze_distance}}
+  VolumeRays_haze_color {{parent.haze_color.r}}
+  VolumeRays_shaft_softness_distance {{parent.shaft_softness_distance}}
+  VolumeRays_frame {{parent.frame}}
+  VolumeRays_area_light_size 1
+  VolumeRays_surface_hit_enable 1
+  VolumeRays_surface_hit_intensity {{parent.hit_surface_1}}
+  format "512 512 0 0 512 512 1 square_512"
+  rebuild_finalise ""
+  name kernel
+  xpos 727
+  ypos 1310
+  addUserKnob {20 User}
+ }
+ CopyBBox {
+  inputs 2
+  name CopyBBox1
+  xpos 727
+  ypos 1371
+ }
+ Expression {
+  expr3 max(r,g,b)
+  name Expression1
+  xpos 727
+  ypos 1395
+ }
+ Remove {
+  operation keep
+  channels rgba
+  name Remove1
+  xpos 727
+  ypos 1419
+ }
+ Dot {
+  name Dot4
+  xpos 760
+  ypos 1614
+ }
+set Nee61c000 [stack 0]
+ Dot {
+  name Dot22
+  xpos 577
+  ypos 1614
+ }
+ Expression {
+  expr0 max(r,gb)
+  expr1 max(r,gb)
+  expr2 max(r,gb)
+  expr3 max(r,gb)
+  name Expression3
+  xpos 543
+  ypos 1654
+ }
+ Grade {
+  white {1 0 0 1}
+  name Grade1
+  xpos 543
+  ypos 1678
+ }
+set Nee61cc00 [stack 0]
+ Dot {
+  name Dot7
+  xpos 577
+  ypos 1737
+ }
+push $Nee61cc00
+push $Nee84c000
+ Dot {
+  name Dot6
+  xpos 443
+  ypos 1097
+ }
+ Merge2 {
+  inputs 2
+  bbox B
+  name Merge1
+  xpos 409
+  ypos 1678
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  bbox B
+  name Copy1
+  xpos 409
+  ypos 1728
+ }
+ Dot {
+  name Dot8
+  xpos 443
+  ypos 1846
+ }
+push $Nee61c000
+ Switch {
+  inputs 2
+  which {{parent.preview}}
+  name Switch1
+  xpos 726
+  ypos 1843
+ }
+ Output {
+  name Output1
+  xpos 727
+  ypos 2121
+ }
+end_group
