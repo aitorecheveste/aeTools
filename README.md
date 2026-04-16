@@ -18,10 +18,21 @@ ____
 
 ____
 
-# aeTools
+
+# aeVolumeRays
+Create cinematic volumetric light rays directly in Nuke using a physically inspired raymarching approach, with integrated shadow maps, anisotropic scattering, and exponential light attenuation.
+
+# aeAutoMoprh
+Easy way to moprh to elements with independent disolve and smart mask control
 
 ## aeDirtCG
-Quickly add more complexity to your CG environments. By Aitor Echeveste.
+Quickly add more complexity to your CG environments.
+
+## aeAutoMoprh
+Quickly add more complexity to your CG environments.
+
+## aeDirtCG
+Quickly add more complexity to your CG environments.
 
 ## aePrefMaker
 Use aePrefMaker yo create a pref pass with your geo and camera directly in nuke.
